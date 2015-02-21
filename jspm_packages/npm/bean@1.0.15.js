@@ -1,0 +1,1 @@
+module.exports = require("npm:bean@1.0.15/bean");
