@@ -35,7 +35,7 @@ _Harmony_ is the ng-base-class for all other endeavours.
             }
             for (let [key, fn] of this.iterate(this.constructor.prototype)) {
                 if (typeof fn !== "function" ||
-                    ["constructor", "initialize"].indexOf(key) !== -1 ||
+                    !!~["constructor", "initialize"].indexOf(key) ||
                     key[0] === "_") {
                     continue;
                 }
@@ -78,6 +78,12 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
                 }
             }
         }
+```
+A nice toString foo that should in theory pretty nicely return the Classe's name as declared
+```javascript
+        toString () {
+            return this.name || this.constructor.toString().match(/function\s*(.*?)\(/)[1]);
+        }
     }
 ```
 
@@ -98,13 +104,13 @@ Iterating over the prototype, filtering private properties and initialization, w
 ```javascript
             for (let [key, fn] of this.iterate(this.constructor.prototype)) {
                 if (typeof fn !== "function" ||
-                    ["constructor", "initialize"].indexOf(key) !== -1 ||
+                    !!~["constructor", "initialize"].indexOf(key) ||
                     key[0] === "_") {
                     continue;
                 }
                 if (key.match("::")) {
                     let tokens = key.split("::");
-                    if ((tokens[2] !== undefined && tokens[2] !== null) && tokens[2].indexOf(">") !== -1) {
+                    if ((tokens[2] !== undefined && tokens[2] !== null) && !!~tokens[2].indexOf(">")) {
                         tokens = tokens.splice(0, 2).concat(tokens[0].split(">"));
                     }
                     el = this.$element ? this.$element.context : zest("[ng-app]", document.body)[0];
@@ -270,7 +276,7 @@ The DynamicDataService provides some convenience mechanisms for cooperation of D
             })
         }
         setData (opts) {
-            if (opts.i === -1) {
+            if (!~opts.i) {
                 for (let [doc, i] of this.db.store.entries()) {
                     doc[opts.prop] = typeof opts.val === "function" ? opts.val(this.db, doc.id) : opts.val;
                 }
@@ -316,4 +322,111 @@ The DynamicDataService provides some convenience mechanisms for cooperation of D
             return true;
         }
     }
+```
+The _Component_ class is building on top of the Controller and taking advantage of the DynamicDataService ... it
+* automatically hooks up to all injected DataServices
+* provides for a default data-transformation
+* provides a default css-driving UI/UX-state mechansim
+```javascript
+    class Component extends Controller {
+        initialize () {
+```
+Aspect Oriented Feature here.
+You can actually initialize a db-store (api-result-set) with a value or set values each api-cycle
+Syntax is:
+
+this.transform = {
+	descriptor: name, //of DataService without the DataService-suffix in small letters
+	init: [
+		// i is the id ... 0 - length-1 ... or -1 for all datasets
+		{ i: 0, prop: "loading", val: false }
+		{ i: -1, prop: "selected", val: (db, id) => { return id is 0; } }
+	],
+	digest: [
+		{ i: -1, prop: "selected", val: (db, id) -> (db.store.find((el, i, arr) => { return el.id is id; }).special is this.$scope.someConditional }
+	]
+}
+
+```javascript
+            this.$scope.model = {};
+            this.transform = {
+                init: [],
+                digest: []
+            };
+```
+The state var is a CSS-state-descriptor/helper
+```javascript
+            this.$scope.state = {
+                loading: true,
+                selected: null,
+                busy: null,
+                error: null
+            };
+```
+Injecting the aspects defined in this.transform --- default actions for data transformation
+```javascript
+            for (let [i, dataset] of this.constructor.iterate(this.transform)) {
+                let Service = this[`${dataset.descriptor[0].toUpperCase()}DataService`];
+                for (let [i, rule] of dataset.init.entries()) {
+                    Service.aspects(() => { Service.set(rule) }, true);
+                }
+                for (let [i, rule] of dataset.digest.entries()) {
+                    Service.aspects(() => { Service.set(rule) });
+                }
+            }
+        }
+    }
+```
+Hooking up the injected DataServices
+* the transform member method is automatically called
+    * it has 2 params(descriptor = _Name_ DataService, db = NameDataService.db.store)
+    * always call super(descriptor, db) first and return if it returns false -> that's when something didn't work out with the AJAX call and there's nothing to be processed
+    * it takes care of a special obj-var "current" which reflects the currently "selected = true" dataset
+```javascript
+            for (let [key, Service] of this.constructor.iterate(this)) {
+                if (!/DataService/.test(key)) { continue; }
+                descriptor = key.remove("DataService").toLowerCase();
+                Service.subscribe(this._transform.bind(this, descriptor));
+                if (Service.db && Service.db.ready === true) { Service.digest(); }
+            }
+```
+Taking care of the state watchers
+* Applying the state descriptors/names as CSS-classes to the container
+* Emitting an event that bubbles up to the Routing-Controller and allows for global State-Handling
+```javascript
+            for (let [k, v] of this.constructor.iterate(this.$scope.state)) {
+                let className = this.$element.className.split(/\s+/);
+                let hasClass = !!~className.indexOf(k);
+                if (v === true && !hasClass) { this.$element.addClass(k); }
+                ((_k, _v, _hasClass, _className) => {
+                    this.$scope.$watch(`state.${_k}`, (after, before) => {
+                        if (after === true && !_hasClass) { this.$element.className += ` ${_k}`; }
+                        else if (_hasClass) { this.$element.className = _className.filter((el, i, arr) => { return el !== _k }).join(" "); }
+                        if (before === after || ((before === undefined || before === null) && (after === undefined || after === null))) { return null; }
+                        this.$scope.$emit(`state.${_k}`, {
+                            obj: this.toString()
+                            val: after
+                        });
+                    })
+                })(k, v, hasClass, className);
+            }
+        }
+```
+The actual default _transform_ function - as described at the hook-up-section
+```javascript
+        _transform (descriptor, db) =>  {
+            if (this.$scope.model[descriptor] === undefined || this.$scope.model[descriptor] === null) {
+                this.$scope.model[descriptor] = this[descriptor[1]).toUpperCase() + descriptor.substring(1) + "DataService"].db.store;
+            }
+            if (this.$scope.model.current === undefined || this.$scope.model.current === null) {
+                this.$scope.model.current = {};
+            }
+            this.$scope.model.current[descriptor] = db.current || null;
+            if (this.$scope.model[descriptor] === undefined || this.$scope.model[descriptor] === null || this.$scope.model[descriptor].length === 0) {
+                console.warn(`${this.toString()}::_transform: the dataset of ${descriptor} was empty`)
+                return false;
+            } else { return true; }
+        }
+    }
+    Component.$inject = "$element";
 ```
