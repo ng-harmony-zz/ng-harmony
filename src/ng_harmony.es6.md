@@ -240,7 +240,7 @@ Iterating over the new datasets we
             }
         }
     }
-    DataService.$inject = ["$resource", "$interval", "$q", "$timeout"]
+    DataService.$inject = ["$resource", "$interval", "$q", "$timeout"];
 ```
 The DynamicDataService provides some convenience mechanisms for cooperation of DataServices and Controllers
 * Event Subscription
@@ -249,6 +249,71 @@ The DynamicDataService provides some convenience mechanisms for cooperation of D
 * Getter and Setter to the in-memory db
 ```javascript
     export class DynamicDataService extends DataService {
-        subscribe
+        subscribe (callback, oneshot = false) {
+            if (this.subscribers === undefined || this.subscribers === null) { this.subscribers = []; }
+            if (this.once_subscribers === undefined || this.once_subscribers === null) { this.once_subscribers = []; }
+            if (onehost === true) { this.once_subscribers.push(callback); }
+            else { this.subscribers.push(callback); }
+        }
+        aspects (injection, oneshot = false) {
+            if (this.aspects === undefined || this.aspects === null) { this.aspects = []; }
+            if (this.once_aspects === undefined || this.once_aspects === null) { this.once_aspects = []; }
+            if (onehost === true) { this.once_aspects.push(injection); }
+            else { this.aspects.push(injection); }
+        }
+        getData (matcher) {
+            return this.db.store.filter((el, i, arr) => {
+                for (let [k, v] of this.constructor.iterate(matcher)) {
+                    if (!(typeof v === "function" && v(el[k]) || (el[k] === v))) { return false; }
+                }
+                return true;
+            })
+        }
+        setData (opts) {
+            if (opts.i === -1) {
+                for (let [doc, i] of this.db.store.entries()) {
+                    doc[opts.prop] = typeof opts.val === "function" ? opts.val(this.db, doc.id) : opts.val;
+                }
+            } else {
+                let foo = this.db.store[typeof opts.i === "function" ? opts.i(this.db) : opts.i];
+                if (foo !== undefined && foo !== null) {
+                    foo[opts.prop] = typeof opts.val === "function" ?
+                        opts.val(this.db, this.db.store[
+                            typeof opts.i === "function" ?
+                                opts.i(this.db) :
+                                opts.i
+                        ]) :
+                        opts.val
+                }
+            }
+        }
+        digest () {
+            if (this.db.ready === false) { return null; }
+            if (this.db.resolved === undefined || this.db.resolved === null) { this.db.resolved = false; }
+
+            for (let [i, once_aspect] of this.once_aspects.entries()) {
+                typeof once_aspect === "function" && once_aspect(this.db);
+                this.once_aspects[i] = null;
+            }
+            this.once_aspects = [];
+            for (let [i, aspect] of this.aspects.entries()) { aspect(this.db); }
+
+            for (let [i, d] of this.db.store.entries()) {
+                if (d.deleted === true) { d.selected = false; }
+                else if (d.selected === true) { this.db.current = d; }
+                else if (d.selected === undefined || d.selected === null) { d.selected = false; }
+            }
+
+            this.db.resolved = true;
+
+            for (let [i, once_cb] of this.once_subscribers.entries()) {
+                typeof once_cb === "function" && once_cb(this.db);
+                this.once_subscribers[i] = null;
+            }
+            this.once_subscribers = [];
+            for (let [i, cb] of this.subscribers.entries()) { cb(this.db); }
+
+            return true;
+        }
     }
 ```
