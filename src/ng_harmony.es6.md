@@ -82,7 +82,7 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
 A nice toString foo that should in theory pretty nicely return the Classe's name as declared
 ```javascript
         toString () {
-            return this.name || this.constructor.toString().match(/function\s*(.*?)\(/)[1]);
+            return this.name || this.constructor.toString().match(/function\s*(.*?)\(/)[1];
         }
     }
 ```
@@ -177,7 +177,7 @@ Initiate and trigger
             if (this.oneshot === false) {
                 this.q.promise.then(
                     () => { true; },
-                    (notification) => { this.$timeout(this._api, @this.interval); },
+                    (notification) => { this.$timeout(this._api, this.interval); },
                     () => { false; }
                 )
             }
@@ -189,10 +189,10 @@ Initiate and trigger
 AJAX Mechanism
 ```javascript
         _api () {
-            if (@db.busy === true) { return null; }
+            if (this.db.busy === true) { return null; }
             this.db.busy = true;
             this.db.handle.get().$promise
-                .then((data) =>
+                .then((data) => {
                     console.info(`${(new Date()).toLocaleTimeString('en-US')}: API/${this.name}: success`);
                     this._store(data[this.name] || data);
                     this.db.busy = false;
@@ -200,7 +200,7 @@ AJAX Mechanism
                         this.q && this.q.resolve();
                         this.q = this.$q.defer();
                     } else { this.q.notify(true); }
-                ).catch((err) =>
+                }).catch((err) => {
                     console.warn(`${(new Date()).toLocaleTimeString('en-US')}: API/${this.name}: ${err.toString()}`);
                     if (this.oneshot !== false) {
                         this.q && this.q.reject();
@@ -208,7 +208,7 @@ AJAX Mechanism
                     } else {
                         this.q.notify(false);
                     }
-                );
+                });
         }
 ```
 Storage Mechanism
@@ -346,7 +346,6 @@ this.transform = {
 		{ i: -1, prop: "selected", val: (db, id) -> (db.store.find((el, i, arr) => { return el.id is id; }).special is this.$scope.someConditional }
 	]
 }
-
 ```javascript
             this.$scope.model = {};
             this.transform = {
@@ -374,14 +373,12 @@ Injecting the aspects defined in this.transform --- default actions for data tra
                     Service.aspects(() => { Service.set(rule) });
                 }
             }
-        }
-    }
 ```
 Hooking up the injected DataServices
 * the transform member method is automatically called
-    * it has 2 params(descriptor = _Name_ DataService, db = NameDataService.db.store)
-    * always call super(descriptor, db) first and return if it returns false -> that's when something didn't work out with the AJAX call and there's nothing to be processed
-    * it takes care of a special obj-var "current" which reflects the currently "selected = true" dataset
+* it has 2 params(descriptor = _Name_ DataService, db = NameDataService.db.store)
+* always call super(descriptor, db) first and return if it returns false -> that's when something didn't work out with the AJAX call and there's nothing to be processed
+* it takes care of a special obj-var "current" which reflects the currently "selected = true" dataset
 ```javascript
             for (let [key, Service] of this.constructor.iterate(this)) {
                 if (!/DataService/.test(key)) { continue; }
@@ -404,7 +401,7 @@ Taking care of the state watchers
                         else if (_hasClass) { this.$element.className = _className.filter((el, i, arr) => { return el !== _k }).join(" "); }
                         if (before === after || ((before === undefined || before === null) && (after === undefined || after === null))) { return null; }
                         this.$scope.$emit(`state.${_k}`, {
-                            obj: this.toString()
+                            obj: this.toString(),
                             val: after
                         });
                     })
@@ -414,9 +411,9 @@ Taking care of the state watchers
 ```
 The actual default _transform_ function - as described at the hook-up-section
 ```javascript
-        _transform (descriptor, db) =>  {
+        _transform (descriptor, db) {
             if (this.$scope.model[descriptor] === undefined || this.$scope.model[descriptor] === null) {
-                this.$scope.model[descriptor] = this[descriptor[1]).toUpperCase() + descriptor.substring(1) + "DataService"].db.store;
+                this.$scope.model[descriptor] = this[descriptor[1].toUpperCase() + descriptor.substring(1) + "DataService"].db.store;
             }
             if (this.$scope.model.current === undefined || this.$scope.model.current === null) {
                 this.$scope.model.current = {};
