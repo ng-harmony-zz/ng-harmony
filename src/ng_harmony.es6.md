@@ -34,17 +34,16 @@ _Harmony_ is the ng-base-class for all other endeavours.
                 this[injectee] = args[i];
             }
             for (let [key, fn] of this.iterate(this.constructor.prototype)) {
-                if (typeof fn !== "function" ||
-                    !!~["constructor", "initialize"].indexOf(key) ||
-                    key[0] === "_") {
+                if (typeof fn !== "function" || 
+                    key === "constructor" ||
+                    key[0] === "_" ||
+                    key.match("::")) {
                     continue;
                 }
-                if (!key.match("::")) { this.$scope[key] = (...args) => { return fn.apply(this, args); } }
+                this.$scope[key] = (...args) => { return fn.apply(this, args); }
             }
-            this.initialize && typeof this.initialize === "function" && this.initialize();
-            return this;
         }
-```
+````
 Getter and Setter for the static $inject variable
 ```javascript
         static get $inject () {
@@ -52,6 +51,15 @@ Getter and Setter for the static $inject variable
         }
         static set $inject (injectees) {
             this._$inject = this.$inject.concat(injectees);
+        }
+```
+
+Setter for the ng-registration of a service or controller
+```javascript
+        static set $register (descriptor, type) {
+            for (let [module, klass] of this.iterate(descriptor)) {
+                angular.module(module)[type](klass, this);
+            }
         }
 ```
 An iterator factory allowing for easy _for .. of_ iteration es6-style
@@ -82,7 +90,7 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
 A nice toString foo that should in theory pretty nicely return the Classe's name as declared
 ```javascript
         toString () {
-            return this.name || this.constructor.toString().match(/function\s*(.*?)\(/)[1];
+            return this.name || super.constructor.toString().match(/function\s*(.*?)\(/)[1];
         }
     }
 ```
@@ -93,12 +101,14 @@ The Controller Base-Class is a starting point for all ng-controllers.
 
 Import bean, a dependency-less eventing lib, and zest, a tiny and fast selector-engine.
 ```javascript
+
     import bean from 'bean';
     import zest from 'zest';
 
     export class Controller extends Harmony {
         constructor (...args) {
-            super(...args)
+            super(...args);
+
 ```
 Iterating over the prototype, filtering private properties and initialization, we look for evented methods and hook em up using bean, the eventing lib, and zest, the selector engine
 ```javascript
@@ -140,6 +150,9 @@ Iterating over the prototype, filtering private properties and initialization, w
                 }
             }
         }
+        static set $register(descriptor) {
+            super.$register(descriptor, "controller");
+        }
         _digest () {
             try { this.$scope.$digest(); }
             catch (ng_ex) { "noop"; }
@@ -147,9 +160,21 @@ Iterating over the prototype, filtering private properties and initialization, w
     }
     Controller.$inject = "$element";
 ```
+The _Service_ Class is a tiny base for Services that don't extend the more sophisticated DataServices
+
+```javascript
+    export class Service extends Harmony {
+        constructor(...args) { super(...args); }
+
+        static set $register(descriptor) {
+            super.$register(descriptor, "service");
+        }
+    }
+```
 The _DataService_ Class is a starting point for API-consuming Services, that provide linkable Data-Objects
 ```javascript
-    export class DataService extends Harmony {
+    export class DataService extends Service {
+        constructor(...args) { super(...args); }
 ```
 Initiate and trigger
 ```javascript
@@ -248,13 +273,16 @@ Iterating over the new datasets we
     }
     DataService.$inject = ["$resource", "$interval", "$q", "$timeout"];
 ```
+
 The DynamicDataService provides some convenience mechanisms for cooperation of DataServices and Controllers
 * Event Subscription
 * Auto Notification on Ajax-Data
 * Pre-Configuration of Ajax-Data
 * Getter and Setter to the in-memory db
+
 ```javascript
     export class DynamicDataService extends DataService {
+        constructor(...args) { super(...args); }
         subscribe (callback, oneshot = false) {
             if (this.subscribers === undefined || this.subscribers === null) { this.subscribers = []; }
             if (this.once_subscribers === undefined || this.once_subscribers === null) { this.once_subscribers = []; }
@@ -323,13 +351,15 @@ The DynamicDataService provides some convenience mechanisms for cooperation of D
         }
     }
 ```
+
 The _Component_ class is building on top of the Controller and taking advantage of the DynamicDataService ... it
 * automatically hooks up to all injected DataServices
 * provides for a default data-transformation
 * provides a default css-driving UI/UX-state mechansim
+
 ```javascript
     class Component extends Controller {
-        initialize () {
+        constructor () {
 ```
 Aspect Oriented Feature here.
 You can actually initialize a db-store (api-result-set) with a value or set values each api-cycle
