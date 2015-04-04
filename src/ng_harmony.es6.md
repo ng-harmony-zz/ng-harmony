@@ -90,7 +90,7 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
 A nice toString foo that should in theory pretty nicely return the Classe's name as declared
 ```javascript
         toString () {
-            return this.name || super.constructor.toString().match(/function\s*(.*?)\(/)[1];
+            return this.name || super.toString().match(/function\s*(.*?)\(/)[1];
         }
     }
 ```
