@@ -56,9 +56,9 @@ Getter and Setter for the static $inject variable
 
 Setter for the ng-registration of a service or controller
 ```javascript
-        static set $register (descriptor, type) {
+        static set $register (descriptor) {
             for (let [module, klass] of this.iterate(descriptor)) {
-                angular.module(module)[type](klass, this);
+                angular.module(module)[klass.type](klass.name, this);
             }
         }
 ```
@@ -151,7 +151,8 @@ Iterating over the prototype, filtering private properties and initialization, w
             }
         }
         static set $register(descriptor) {
-            super.$register(descriptor, "controller");
+            descriptor.type = "controller";
+            super.$register(descriptor);
         }
         _digest () {
             try { this.$scope.$digest(); }
@@ -167,7 +168,8 @@ The _Service_ Class is a tiny base for Services that don't extend the more sophi
         constructor(...args) { super(...args); }
 
         static set $register(descriptor) {
-            super.$register(descriptor, "service");
+            descriptor.type = "service";
+            super.$register(descriptor);
         }
     }
 ```
@@ -359,29 +361,27 @@ The _Component_ class is building on top of the Controller and taking advantage 
 
 ```javascript
     class Component extends Controller {
-        constructor () {
+        constructor (...args) {
+            super(...args); 
 ```
+
 Aspect Oriented Feature here.
 You can actually initialize a db-store (api-result-set) with a value or set values each api-cycle
 Syntax is:
 
-this.transform = {
-	descriptor: name, //of DataService without the DataService-suffix in small letters
-	init: [
-		// i is the id ... 0 - length-1 ... or -1 for all datasets
-		{ i: 0, prop: "loading", val: false }
-		{ i: -1, prop: "selected", val: (db, id) => { return id is 0; } }
-	],
-	digest: [
-		{ i: -1, prop: "selected", val: (db, id) -> (db.store.find((el, i, arr) => { return el.id is id; }).special is this.$scope.someConditional }
-	]
-}
 ```javascript
             this.$scope.model = {};
-            this.transform = {
-                init: [],
-                digest: []
-            };
+            this.transform = [{
+                descriptor: "Name", //of DataService without the DataService-suffix
+                init: [
+                    // i is the id ... 0 - length-1 ... or -1 for all datasets
+                    //{ i: 0, prop: "loading", val: false },
+                    //{ i: -1, prop: "selected", val: (db, id) => { return id is 0; } }
+                ],
+                digest: [
+                    //{ i: -1, prop: "selected", val: (db, id) -> (db.store.find((el, i, arr) => { return el.id is id; }).special is this.$scope.someConditional }
+                ]
+            }];
 ```
 The state var is a CSS-state-descriptor/helper
 ```javascript
@@ -394,8 +394,8 @@ The state var is a CSS-state-descriptor/helper
 ```
 Injecting the aspects defined in this.transform --- default actions for data transformation
 ```javascript
-            for (let [i, dataset] of this.constructor.iterate(this.transform)) {
-                let Service = this[`${dataset.descriptor[0].toUpperCase()}DataService`];
+            for (let [i, dataset] of this.transform.entries()) {
+                let Service = this[`${dataset.descriptor[0].toUpperCase()}${dataset.descriptor.substr(1)}DataService`];
                 for (let [i, rule] of dataset.init.entries()) {
                     Service.aspects(() => { Service.set(rule) }, true);
                 }
