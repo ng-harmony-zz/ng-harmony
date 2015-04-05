@@ -1,6 +1,6 @@
 {
   "name": "ng-harmony",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "AngularJS ES6 style class lib for writing dynamic code - best used in conjunction with sweet-at-angular",
   "main": "src/ng_harmony.es6.js",
   "dependencies": {},

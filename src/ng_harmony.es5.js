@@ -423,7 +423,33 @@ var Controller = (function (_Harmony) {
         key: "$register",
         set: function (descriptor) {
             descriptor.type = "controller";
-            _get(Object.getPrototypeOf(Controller), "$register", this).call(this, descriptor);
+            var _iteratorNormalCompletion9 = true;
+            var _didIteratorError9 = false;
+            var _iteratorError9 = undefined;
+
+            try {
+                for (var _iterator9 = this.iterate(descriptor)[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+                    var _step9$value = _slicedToArray(_step9.value, 2);
+
+                    var _module3 = _step9$value[0];
+                    var klass = _step9$value[1];
+
+                    angular.module(_module3)[klass.type](klass.name, this);
+                }
+            } catch (err) {
+                _didIteratorError9 = true;
+                _iteratorError9 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion9 && _iterator9["return"]) {
+                        _iterator9["return"]();
+                    }
+                } finally {
+                    if (_didIteratorError9) {
+                        throw _iteratorError9;
+                    }
+                }
+            }
         }
     }]);
 
@@ -451,7 +477,33 @@ var Service = (function (_Harmony2) {
         key: "$register",
         set: function (descriptor) {
             descriptor.type = "service";
-            _get(Object.getPrototypeOf(Service), "$register", this).call(this, descriptor);
+            var _iteratorNormalCompletion10 = true;
+            var _didIteratorError10 = false;
+            var _iteratorError10 = undefined;
+
+            try {
+                for (var _iterator10 = this.iterate(descriptor)[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+                    var _step10$value = _slicedToArray(_step10.value, 2);
+
+                    var _module4 = _step10$value[0];
+                    var klass = _step10$value[1];
+
+                    angular.module(_module4)[klass.type](klass.name, this);
+                }
+            } catch (err) {
+                _didIteratorError10 = true;
+                _iteratorError10 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion10 && _iterator10["return"]) {
+                        _iterator10["return"]();
+                    }
+                } finally {
+                    if (_didIteratorError10) {
+                        throw _iteratorError10;
+                    }
+                }
+            }
         }
     }]);
 
@@ -546,132 +598,18 @@ var DataService = (function (_Service) {
             var _this5 = this;
 
             var _data = Object.prototype.toString.call(data) === "[object Array]" ? data : [data];
-            var _iteratorNormalCompletion9 = true;
-            var _didIteratorError9 = false;
-            var _iteratorError9 = undefined;
-
-            try {
-                for (var _iterator9 = this.db.store.entries()[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                    var _step9$value = _slicedToArray(_step9.value, 2);
-
-                    var i = _step9$value[0];
-                    var o = _step9$value[1];
-
-                    o.deleted = true;
-                }
-            } catch (err) {
-                _didIteratorError9 = true;
-                _iteratorError9 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion9 && _iterator9["return"]) {
-                        _iterator9["return"]();
-                    }
-                } finally {
-                    if (_didIteratorError9) {
-                        throw _iteratorError9;
-                    }
-                }
-            }
-
-            var _iteratorNormalCompletion10 = true;
-            var _didIteratorError10 = false;
-            var _iteratorError10 = undefined;
-
-            try {
-                var _loop2 = function () {
-                    _step10$value = _slicedToArray(_step10.value, 2);
-                    var i = _step10$value[0];
-                    var o = _step10$value[1];
-
-                    var current = null;
-                    if (current = _data.filter(function (el, i, arr) {
-                        return el.id === o.id;
-                    })[0]) {
-                        _iteratorNormalCompletion12 = true;
-                        _didIteratorError12 = false;
-                        _iteratorError12 = undefined;
-
-                        try {
-                            for (_iterator12 = _this5.constructor.iterate(current)[Symbol.iterator](); !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-                                _step12$value = _slicedToArray(_step12.value, 2);
-                                var k = _step12$value[0];
-                                var v = _step12$value[1];
-
-                                _this5.db.store[i][k] = v;
-                            }
-                        } catch (err) {
-                            _didIteratorError12 = true;
-                            _iteratorError12 = err;
-                        } finally {
-                            try {
-                                if (!_iteratorNormalCompletion12 && _iterator12["return"]) {
-                                    _iterator12["return"]();
-                                }
-                            } finally {
-                                if (_didIteratorError12) {
-                                    throw _iteratorError12;
-                                }
-                            }
-                        }
-
-                        _this5.db.store[i].deleted = false;
-                    }
-                };
-
-                for (var _iterator10 = this.db.store.entries()[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-                    var _step10$value;
-
-                    var _iteratorNormalCompletion12;
-
-                    var _didIteratorError12;
-
-                    var _iteratorError12;
-
-                    var _iterator12, _step12;
-
-                    var _step12$value;
-
-                    _loop2();
-                }
-            } catch (err) {
-                _didIteratorError10 = true;
-                _iteratorError10 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion10 && _iterator10["return"]) {
-                        _iterator10["return"]();
-                    }
-                } finally {
-                    if (_didIteratorError10) {
-                        throw _iteratorError10;
-                    }
-                }
-            }
-
             var _iteratorNormalCompletion11 = true;
             var _didIteratorError11 = false;
             var _iteratorError11 = undefined;
 
             try {
-                var _loop3 = function () {
-                    _step11$value = _slicedToArray(_step11.value, 2);
+                for (var _iterator11 = this.db.store.entries()[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+                    var _step11$value = _slicedToArray(_step11.value, 2);
+
                     var i = _step11$value[0];
                     var o = _step11$value[1];
 
-                    var current = null;
-                    if (_this5.db.store.filter(function (el, i, arr) {
-                        return el.id === o.id;
-                    }).length === 0) {
-                        _this5.db.store.push(o);
-                        _this5.db.store[_this5.db.store.length - 1].deleted = false;
-                    }
-                };
-
-                for (var _iterator11 = _data.entries()[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-                    var _step11$value;
-
-                    _loop3();
+                    o.deleted = true;
                 }
             } catch (err) {
                 _didIteratorError11 = true;
@@ -684,6 +622,120 @@ var DataService = (function (_Service) {
                 } finally {
                     if (_didIteratorError11) {
                         throw _iteratorError11;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion12 = true;
+            var _didIteratorError12 = false;
+            var _iteratorError12 = undefined;
+
+            try {
+                var _loop2 = function () {
+                    _step12$value = _slicedToArray(_step12.value, 2);
+                    var i = _step12$value[0];
+                    var o = _step12$value[1];
+
+                    var current = null;
+                    if (current = _data.filter(function (el, i, arr) {
+                        return el.id === o.id;
+                    })[0]) {
+                        _iteratorNormalCompletion14 = true;
+                        _didIteratorError14 = false;
+                        _iteratorError14 = undefined;
+
+                        try {
+                            for (_iterator14 = _this5.constructor.iterate(current)[Symbol.iterator](); !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+                                _step14$value = _slicedToArray(_step14.value, 2);
+                                var k = _step14$value[0];
+                                var v = _step14$value[1];
+
+                                _this5.db.store[i][k] = v;
+                            }
+                        } catch (err) {
+                            _didIteratorError14 = true;
+                            _iteratorError14 = err;
+                        } finally {
+                            try {
+                                if (!_iteratorNormalCompletion14 && _iterator14["return"]) {
+                                    _iterator14["return"]();
+                                }
+                            } finally {
+                                if (_didIteratorError14) {
+                                    throw _iteratorError14;
+                                }
+                            }
+                        }
+
+                        _this5.db.store[i].deleted = false;
+                    }
+                };
+
+                for (var _iterator12 = this.db.store.entries()[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+                    var _step12$value;
+
+                    var _iteratorNormalCompletion14;
+
+                    var _didIteratorError14;
+
+                    var _iteratorError14;
+
+                    var _iterator14, _step14;
+
+                    var _step14$value;
+
+                    _loop2();
+                }
+            } catch (err) {
+                _didIteratorError12 = true;
+                _iteratorError12 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion12 && _iterator12["return"]) {
+                        _iterator12["return"]();
+                    }
+                } finally {
+                    if (_didIteratorError12) {
+                        throw _iteratorError12;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion13 = true;
+            var _didIteratorError13 = false;
+            var _iteratorError13 = undefined;
+
+            try {
+                var _loop3 = function () {
+                    _step13$value = _slicedToArray(_step13.value, 2);
+                    var i = _step13$value[0];
+                    var o = _step13$value[1];
+
+                    var current = null;
+                    if (_this5.db.store.filter(function (el, i, arr) {
+                        return el.id === o.id;
+                    }).length === 0) {
+                        _this5.db.store.push(o);
+                        _this5.db.store[_this5.db.store.length - 1].deleted = false;
+                    }
+                };
+
+                for (var _iterator13 = _data.entries()[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+                    var _step13$value;
+
+                    _loop3();
+                }
+            } catch (err) {
+                _didIteratorError13 = true;
+                _iteratorError13 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion13 && _iterator13["return"]) {
+                        _iterator13["return"]();
+                    }
+                } finally {
+                    if (_didIteratorError13) {
+                        throw _iteratorError13;
                     }
                 }
             }
@@ -750,32 +802,32 @@ var DynamicDataService = (function (_DataService) {
             var _this6 = this;
 
             return this.db.store.filter(function (el, i, arr) {
-                var _iteratorNormalCompletion13 = true;
-                var _didIteratorError13 = false;
-                var _iteratorError13 = undefined;
+                var _iteratorNormalCompletion15 = true;
+                var _didIteratorError15 = false;
+                var _iteratorError15 = undefined;
 
                 try {
-                    for (var _iterator13 = _this6.constructor.iterate(matcher)[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-                        var _step13$value = _slicedToArray(_step13.value, 2);
+                    for (var _iterator15 = _this6.constructor.iterate(matcher)[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
+                        var _step15$value = _slicedToArray(_step15.value, 2);
 
-                        var k = _step13$value[0];
-                        var v = _step13$value[1];
+                        var k = _step15$value[0];
+                        var v = _step15$value[1];
 
                         if (!(typeof v === "function" && v(el[k]) || el[k] === v)) {
                             return false;
                         }
                     }
                 } catch (err) {
-                    _didIteratorError13 = true;
-                    _iteratorError13 = err;
+                    _didIteratorError15 = true;
+                    _iteratorError15 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion13 && _iterator13["return"]) {
-                            _iterator13["return"]();
+                        if (!_iteratorNormalCompletion15 && _iterator15["return"]) {
+                            _iterator15["return"]();
                         }
                     } finally {
-                        if (_didIteratorError13) {
-                            throw _iteratorError13;
+                        if (_didIteratorError15) {
+                            throw _iteratorError15;
                         }
                     }
                 }
@@ -787,30 +839,30 @@ var DynamicDataService = (function (_DataService) {
         key: "setData",
         value: function setData(opts) {
             if (! ~opts.i) {
-                var _iteratorNormalCompletion14 = true;
-                var _didIteratorError14 = false;
-                var _iteratorError14 = undefined;
+                var _iteratorNormalCompletion16 = true;
+                var _didIteratorError16 = false;
+                var _iteratorError16 = undefined;
 
                 try {
-                    for (var _iterator14 = this.db.store.entries()[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
-                        var _step14$value = _slicedToArray(_step14.value, 2);
+                    for (var _iterator16 = this.db.store.entries()[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
+                        var _step16$value = _slicedToArray(_step16.value, 2);
 
-                        var doc = _step14$value[0];
-                        var i = _step14$value[1];
+                        var doc = _step16$value[0];
+                        var i = _step16$value[1];
 
                         doc[opts.prop] = typeof opts.val === "function" ? opts.val(this.db, doc.id) : opts.val;
                     }
                 } catch (err) {
-                    _didIteratorError14 = true;
-                    _iteratorError14 = err;
+                    _didIteratorError16 = true;
+                    _iteratorError16 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion14 && _iterator14["return"]) {
-                            _iterator14["return"]();
+                        if (!_iteratorNormalCompletion16 && _iterator16["return"]) {
+                            _iterator16["return"]();
                         }
                     } finally {
-                        if (_didIteratorError14) {
-                            throw _iteratorError14;
+                        if (_didIteratorError16) {
+                            throw _iteratorError16;
                         }
                     }
                 }
@@ -830,82 +882,19 @@ var DynamicDataService = (function (_DataService) {
             if (this.db.resolved === undefined || this.db.resolved === null) {
                 this.db.resolved = false;
             }
-            var _iteratorNormalCompletion15 = true;
-            var _didIteratorError15 = false;
-            var _iteratorError15 = undefined;
-
-            try {
-                for (var _iterator15 = this.once_aspects.entries()[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-                    var _step15$value = _slicedToArray(_step15.value, 2);
-
-                    var i = _step15$value[0];
-                    var once_aspect = _step15$value[1];
-
-                    typeof once_aspect === "function" && once_aspect(this.db);
-                    this.once_aspects[i] = null;
-                }
-            } catch (err) {
-                _didIteratorError15 = true;
-                _iteratorError15 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion15 && _iterator15["return"]) {
-                        _iterator15["return"]();
-                    }
-                } finally {
-                    if (_didIteratorError15) {
-                        throw _iteratorError15;
-                    }
-                }
-            }
-
-            this.once_aspects = [];
-            var _iteratorNormalCompletion16 = true;
-            var _didIteratorError16 = false;
-            var _iteratorError16 = undefined;
-
-            try {
-                for (var _iterator16 = this.aspects.entries()[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
-                    var _step16$value = _slicedToArray(_step16.value, 2);
-
-                    var i = _step16$value[0];
-                    var aspect = _step16$value[1];
-
-                    aspect(this.db);
-                }
-            } catch (err) {
-                _didIteratorError16 = true;
-                _iteratorError16 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion16 && _iterator16["return"]) {
-                        _iterator16["return"]();
-                    }
-                } finally {
-                    if (_didIteratorError16) {
-                        throw _iteratorError16;
-                    }
-                }
-            }
-
             var _iteratorNormalCompletion17 = true;
             var _didIteratorError17 = false;
             var _iteratorError17 = undefined;
 
             try {
-                for (var _iterator17 = this.db.store.entries()[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
+                for (var _iterator17 = this.once_aspects.entries()[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
                     var _step17$value = _slicedToArray(_step17.value, 2);
 
                     var i = _step17$value[0];
-                    var d = _step17$value[1];
+                    var once_aspect = _step17$value[1];
 
-                    if (d.deleted === true) {
-                        d.selected = false;
-                    } else if (d.selected === true) {
-                        this.db.current = d;
-                    } else if (d.selected === undefined || d.selected === null) {
-                        d.selected = false;
-                    }
+                    typeof once_aspect === "function" && once_aspect(this.db);
+                    this.once_aspects[i] = null;
                 }
             } catch (err) {
                 _didIteratorError17 = true;
@@ -922,20 +911,19 @@ var DynamicDataService = (function (_DataService) {
                 }
             }
 
-            this.db.resolved = true;
+            this.once_aspects = [];
             var _iteratorNormalCompletion18 = true;
             var _didIteratorError18 = false;
             var _iteratorError18 = undefined;
 
             try {
-                for (var _iterator18 = this.once_subscribers.entries()[Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
+                for (var _iterator18 = this.aspects.entries()[Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
                     var _step18$value = _slicedToArray(_step18.value, 2);
 
                     var i = _step18$value[0];
-                    var once_cb = _step18$value[1];
+                    var aspect = _step18$value[1];
 
-                    typeof once_cb === "function" && once_cb(this.db);
-                    this.once_subscribers[i] = null;
+                    aspect(this.db);
                 }
             } catch (err) {
                 _didIteratorError18 = true;
@@ -952,19 +940,24 @@ var DynamicDataService = (function (_DataService) {
                 }
             }
 
-            this.once_subscribers = [];
             var _iteratorNormalCompletion19 = true;
             var _didIteratorError19 = false;
             var _iteratorError19 = undefined;
 
             try {
-                for (var _iterator19 = this.subscribers.entries()[Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
+                for (var _iterator19 = this.db.store.entries()[Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
                     var _step19$value = _slicedToArray(_step19.value, 2);
 
                     var i = _step19$value[0];
-                    var cb = _step19$value[1];
+                    var d = _step19$value[1];
 
-                    cb(this.db);
+                    if (d.deleted === true) {
+                        d.selected = false;
+                    } else if (d.selected === true) {
+                        this.db.current = d;
+                    } else if (d.selected === undefined || d.selected === null) {
+                        d.selected = false;
+                    }
                 }
             } catch (err) {
                 _didIteratorError19 = true;
@@ -977,6 +970,65 @@ var DynamicDataService = (function (_DataService) {
                 } finally {
                     if (_didIteratorError19) {
                         throw _iteratorError19;
+                    }
+                }
+            }
+
+            this.db.resolved = true;
+            var _iteratorNormalCompletion20 = true;
+            var _didIteratorError20 = false;
+            var _iteratorError20 = undefined;
+
+            try {
+                for (var _iterator20 = this.once_subscribers.entries()[Symbol.iterator](), _step20; !(_iteratorNormalCompletion20 = (_step20 = _iterator20.next()).done); _iteratorNormalCompletion20 = true) {
+                    var _step20$value = _slicedToArray(_step20.value, 2);
+
+                    var i = _step20$value[0];
+                    var once_cb = _step20$value[1];
+
+                    typeof once_cb === "function" && once_cb(this.db);
+                    this.once_subscribers[i] = null;
+                }
+            } catch (err) {
+                _didIteratorError20 = true;
+                _iteratorError20 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion20 && _iterator20["return"]) {
+                        _iterator20["return"]();
+                    }
+                } finally {
+                    if (_didIteratorError20) {
+                        throw _iteratorError20;
+                    }
+                }
+            }
+
+            this.once_subscribers = [];
+            var _iteratorNormalCompletion21 = true;
+            var _didIteratorError21 = false;
+            var _iteratorError21 = undefined;
+
+            try {
+                for (var _iterator21 = this.subscribers.entries()[Symbol.iterator](), _step21; !(_iteratorNormalCompletion21 = (_step21 = _iterator21.next()).done); _iteratorNormalCompletion21 = true) {
+                    var _step21$value = _slicedToArray(_step21.value, 2);
+
+                    var i = _step21$value[0];
+                    var cb = _step21$value[1];
+
+                    cb(this.db);
+                }
+            } catch (err) {
+                _didIteratorError21 = true;
+                _iteratorError21 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion21 && _iterator21["return"]) {
+                        _iterator21["return"]();
+                    }
+                } finally {
+                    if (_didIteratorError21) {
+                        throw _iteratorError21;
                     }
                 }
             }
@@ -1013,113 +1065,113 @@ var Component = (function (_Controller) {
             busy: null,
             error: null
         };
-        var _iteratorNormalCompletion20 = true;
-        var _didIteratorError20 = false;
-        var _iteratorError20 = undefined;
+        var _iteratorNormalCompletion22 = true;
+        var _didIteratorError22 = false;
+        var _iteratorError22 = undefined;
 
         try {
-            for (var _iterator20 = this.transform.entries()[Symbol.iterator](), _step20; !(_iteratorNormalCompletion20 = (_step20 = _iterator20.next()).done); _iteratorNormalCompletion20 = true) {
-                var _step20$value = _slicedToArray(_step20.value, 2);
+            for (var _iterator22 = this.transform.entries()[Symbol.iterator](), _step22; !(_iteratorNormalCompletion22 = (_step22 = _iterator22.next()).done); _iteratorNormalCompletion22 = true) {
+                var _step22$value = _slicedToArray(_step22.value, 2);
 
-                var i = _step20$value[0];
-                var dataset = _step20$value[1];
+                var i = _step22$value[0];
+                var dataset = _step22$value[1];
 
                 var _Service2 = this["" + dataset.descriptor[0].toUpperCase() + "" + dataset.descriptor.substr(1) + "DataService"];
-                var _iteratorNormalCompletion23 = true;
-                var _didIteratorError23 = false;
-                var _iteratorError23 = undefined;
+                var _iteratorNormalCompletion25 = true;
+                var _didIteratorError25 = false;
+                var _iteratorError25 = undefined;
 
                 try {
                     var _loop4 = function () {
-                        _step23$value = _slicedToArray(_step23.value, 2);
-                        var i = _step23$value[0];
-                        var rule = _step23$value[1];
+                        _step25$value = _slicedToArray(_step25.value, 2);
+                        var i = _step25$value[0];
+                        var rule = _step25$value[1];
 
                         Service.aspects(function () {
                             Service.set(rule);
                         }, true);
                     };
 
-                    for (var _iterator23 = dataset.init.entries()[Symbol.iterator](), _step23; !(_iteratorNormalCompletion23 = (_step23 = _iterator23.next()).done); _iteratorNormalCompletion23 = true) {
-                        var _step23$value;
+                    for (var _iterator25 = dataset.init.entries()[Symbol.iterator](), _step25; !(_iteratorNormalCompletion25 = (_step25 = _iterator25.next()).done); _iteratorNormalCompletion25 = true) {
+                        var _step25$value;
 
                         _loop4();
                     }
                 } catch (err) {
-                    _didIteratorError23 = true;
-                    _iteratorError23 = err;
+                    _didIteratorError25 = true;
+                    _iteratorError25 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion23 && _iterator23["return"]) {
-                            _iterator23["return"]();
+                        if (!_iteratorNormalCompletion25 && _iterator25["return"]) {
+                            _iterator25["return"]();
                         }
                     } finally {
-                        if (_didIteratorError23) {
-                            throw _iteratorError23;
+                        if (_didIteratorError25) {
+                            throw _iteratorError25;
                         }
                     }
                 }
 
-                var _iteratorNormalCompletion24 = true;
-                var _didIteratorError24 = false;
-                var _iteratorError24 = undefined;
+                var _iteratorNormalCompletion26 = true;
+                var _didIteratorError26 = false;
+                var _iteratorError26 = undefined;
 
                 try {
                     var _loop5 = function () {
-                        _step24$value = _slicedToArray(_step24.value, 2);
-                        var i = _step24$value[0];
-                        var rule = _step24$value[1];
+                        _step26$value = _slicedToArray(_step26.value, 2);
+                        var i = _step26$value[0];
+                        var rule = _step26$value[1];
 
                         Service.aspects(function () {
                             Service.set(rule);
                         });
                     };
 
-                    for (var _iterator24 = dataset.digest.entries()[Symbol.iterator](), _step24; !(_iteratorNormalCompletion24 = (_step24 = _iterator24.next()).done); _iteratorNormalCompletion24 = true) {
-                        var _step24$value;
+                    for (var _iterator26 = dataset.digest.entries()[Symbol.iterator](), _step26; !(_iteratorNormalCompletion26 = (_step26 = _iterator26.next()).done); _iteratorNormalCompletion26 = true) {
+                        var _step26$value;
 
                         _loop5();
                     }
                 } catch (err) {
-                    _didIteratorError24 = true;
-                    _iteratorError24 = err;
+                    _didIteratorError26 = true;
+                    _iteratorError26 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion24 && _iterator24["return"]) {
-                            _iterator24["return"]();
+                        if (!_iteratorNormalCompletion26 && _iterator26["return"]) {
+                            _iterator26["return"]();
                         }
                     } finally {
-                        if (_didIteratorError24) {
-                            throw _iteratorError24;
+                        if (_didIteratorError26) {
+                            throw _iteratorError26;
                         }
                     }
                 }
             }
         } catch (err) {
-            _didIteratorError20 = true;
-            _iteratorError20 = err;
+            _didIteratorError22 = true;
+            _iteratorError22 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion20 && _iterator20["return"]) {
-                    _iterator20["return"]();
+                if (!_iteratorNormalCompletion22 && _iterator22["return"]) {
+                    _iterator22["return"]();
                 }
             } finally {
-                if (_didIteratorError20) {
-                    throw _iteratorError20;
+                if (_didIteratorError22) {
+                    throw _iteratorError22;
                 }
             }
         }
 
-        var _iteratorNormalCompletion21 = true;
-        var _didIteratorError21 = false;
-        var _iteratorError21 = undefined;
+        var _iteratorNormalCompletion23 = true;
+        var _didIteratorError23 = false;
+        var _iteratorError23 = undefined;
 
         try {
-            for (var _iterator21 = this.constructor.iterate(this)[Symbol.iterator](), _step21; !(_iteratorNormalCompletion21 = (_step21 = _iterator21.next()).done); _iteratorNormalCompletion21 = true) {
-                var _step21$value = _slicedToArray(_step21.value, 2);
+            for (var _iterator23 = this.constructor.iterate(this)[Symbol.iterator](), _step23; !(_iteratorNormalCompletion23 = (_step23 = _iterator23.next()).done); _iteratorNormalCompletion23 = true) {
+                var _step23$value = _slicedToArray(_step23.value, 2);
 
-                var key = _step21$value[0];
-                var _Service3 = _step21$value[1];
+                var key = _step23$value[0];
+                var _Service3 = _step23$value[1];
 
                 if (!/DataService/.test(key)) {
                     continue;
@@ -1131,30 +1183,30 @@ var Component = (function (_Controller) {
                 }
             }
         } catch (err) {
-            _didIteratorError21 = true;
-            _iteratorError21 = err;
+            _didIteratorError23 = true;
+            _iteratorError23 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion21 && _iterator21["return"]) {
-                    _iterator21["return"]();
+                if (!_iteratorNormalCompletion23 && _iterator23["return"]) {
+                    _iterator23["return"]();
                 }
             } finally {
-                if (_didIteratorError21) {
-                    throw _iteratorError21;
+                if (_didIteratorError23) {
+                    throw _iteratorError23;
                 }
             }
         }
 
-        var _iteratorNormalCompletion22 = true;
-        var _didIteratorError22 = false;
-        var _iteratorError22 = undefined;
+        var _iteratorNormalCompletion24 = true;
+        var _didIteratorError24 = false;
+        var _iteratorError24 = undefined;
 
         try {
-            for (var _iterator22 = this.constructor.iterate(this.$scope.state)[Symbol.iterator](), _step22; !(_iteratorNormalCompletion22 = (_step22 = _iterator22.next()).done); _iteratorNormalCompletion22 = true) {
-                var _step22$value = _slicedToArray(_step22.value, 2);
+            for (var _iterator24 = this.constructor.iterate(this.$scope.state)[Symbol.iterator](), _step24; !(_iteratorNormalCompletion24 = (_step24 = _iterator24.next()).done); _iteratorNormalCompletion24 = true) {
+                var _step24$value = _slicedToArray(_step24.value, 2);
 
-                var k = _step22$value[0];
-                var v = _step22$value[1];
+                var k = _step24$value[0];
+                var v = _step24$value[1];
 
                 var className = this.$element.className.split(/\s+/);
                 var hasClass = !! ~className.indexOf(k);
@@ -1181,16 +1233,16 @@ var Component = (function (_Controller) {
                 })(k, v, hasClass, className);
             }
         } catch (err) {
-            _didIteratorError22 = true;
-            _iteratorError22 = err;
+            _didIteratorError24 = true;
+            _iteratorError24 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion22 && _iterator22["return"]) {
-                    _iterator22["return"]();
+                if (!_iteratorNormalCompletion24 && _iterator24["return"]) {
+                    _iterator24["return"]();
                 }
             } finally {
-                if (_didIteratorError22) {
-                    throw _iteratorError22;
+                if (_didIteratorError24) {
+                    throw _iteratorError24;
                 }
             }
         }

@@ -98,7 +98,9 @@ export class Controller extends Harmony {
     }
     static set $register(descriptor) {
         descriptor.type = "controller";
-        super.$register(descriptor);
+        for (let [module, klass] of this.iterate(descriptor)) {
+            angular.module(module)[klass.type](klass.name, this);
+        }
     }
     _digest() {
         try {
@@ -115,7 +117,9 @@ export class Service extends Harmony {
     }
     static set $register(descriptor) {
         descriptor.type = "service";
-        super.$register(descriptor);
+        for (let [module, klass] of this.iterate(descriptor)) {
+            angular.module(module)[klass.type](klass.name, this);
+        }
     }
 }
 export class DataService extends Service {

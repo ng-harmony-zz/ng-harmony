@@ -152,7 +152,9 @@ Iterating over the prototype, filtering private properties and initialization, w
         }
         static set $register(descriptor) {
             descriptor.type = "controller";
-            super.$register(descriptor);
+            for (let [module, klass] of this.iterate(descriptor)) {
+                 angular.module(module)[klass.type](klass.name, this);
+            }
         }
         _digest () {
             try { this.$scope.$digest(); }
@@ -169,7 +171,9 @@ The _Service_ Class is a tiny base for Services that don't extend the more sophi
 
         static set $register(descriptor) {
             descriptor.type = "service";
-            super.$register(descriptor);
+            for (let [module, klass] of this.iterate(descriptor)) {
+                angular.module(module)[klass.type](klass.name, this);
+            }
         }
     }
 ```
