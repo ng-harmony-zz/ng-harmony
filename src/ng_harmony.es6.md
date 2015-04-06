@@ -105,7 +105,7 @@ Import bean, a dependency-less eventing lib, and zest, a tiny and fast selector-
     import bean from 'bean';
     import zest from 'zest';
 
-    export class Controller extends Harmony {
+    export class Ctrl extends Harmony {
         constructor (...args) {
             super(...args);
 
@@ -161,7 +161,7 @@ Iterating over the prototype, filtering private properties and initialization, w
             catch (ng_ex) { "noop"; }
         }
     }
-    Controller.$inject = "$element";
+    Ctrl.$inject = "$element";
 ```
 The _Service_ Class is a tiny base for Services that don't extend the more sophisticated DataServices
 
@@ -364,7 +364,7 @@ The _Component_ class is building on top of the Controller and taking advantage 
 * provides a default css-driving UI/UX-state mechansim
 
 ```javascript
-    class Component extends Controller {
+    export class Component extends Ctrl {
         constructor (...args) {
             super(...args); 
 ```
