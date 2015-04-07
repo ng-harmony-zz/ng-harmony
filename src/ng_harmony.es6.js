@@ -54,7 +54,7 @@ export class Harmony {
 }
 import bean from 'bean';
 import zest from 'zest';
-export class Ctrl extends Harmony {
+export class Controller extends Harmony {
     constructor(...args) {
         super(...args);
         for (let [key, fn] of this.iterate(this.constructor.prototype)) {
@@ -110,7 +110,7 @@ export class Ctrl extends Harmony {
         }
     }
 }
-Ctrl.$inject = "$element";
+Controller.$inject = "$element";
 export class Service extends Harmony {
     constructor(...args) {
         super(...args);
@@ -310,7 +310,7 @@ export class DynamicDataService extends DataService {
         return true;
     }
 }
-export class Component extends Ctrl {
+class Component extends Controller {
     constructor(...args) {
         super(...args);
         this.$scope.model = {};

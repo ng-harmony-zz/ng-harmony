@@ -166,7 +166,7 @@ Iterating over the prototype, filtering private properties and initialization, w
 The _Service_ Class is a tiny base for Services that don't extend the more sophisticated DataServices
 
 ```javascript
-    export class Service extends Harmony {
+    export class Srvc extends Harmony {
         constructor(...args) { super(...args); }
 
         static set $register(descriptor) {
@@ -179,7 +179,7 @@ The _Service_ Class is a tiny base for Services that don't extend the more sophi
 ```
 The _DataService_ Class is a starting point for API-consuming Services, that provide linkable Data-Objects
 ```javascript
-    export class DataService extends Service {
+    export class DataService extends Srvc {
         constructor(...args) { super(...args); }
 ```
 Initiate and trigger
