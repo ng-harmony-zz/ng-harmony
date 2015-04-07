@@ -12,9 +12,49 @@ var _get = function get(object, property, receiver) { var desc = Object.getOwnPr
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
+exports.Directive = Directive;
+exports.Controller = Controller;
+exports.Service = Service;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+function Directive(val) {
+    return function decorator(target) {
+        angular.module(val.module).directive(val.tag, function () {
+            return {
+                controller: target,
+                restrict: val.restrict || "A",
+                replace: val.replace || false,
+                templateUrl: val.templateUrl || null,
+                template: val.template || null,
+                scope: val.scope === true ? {} : val.scope || null
+            };
+        });
+    };
+}
+
+function Controller(val) {
+    return function decorator(target) {
+        var r = {};
+        r[val.module] = {
+            type: "controller",
+            name: val.name
+        };
+        target.$register = r;
+    };
+}
+
+function Service(val) {
+    return function decorator(target) {
+        var r = {};
+        r[val.module] = {
+            type: "service",
+            name: val.name
+        };
+        target.$register = r;
+    };
+}
 
 var Harmony = exports.Harmony = (function () {
     function Harmony() {
@@ -454,20 +494,20 @@ var Ctrl = exports.Ctrl = (function (_Harmony) {
 
 Ctrl.$inject = "$element";
 
-var Service = exports.Service = (function (_Harmony2) {
-    function Service() {
+var Srvc = exports.Srvc = (function (_Harmony2) {
+    function Srvc() {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        _classCallCheck(this, Service);
+        _classCallCheck(this, Srvc);
 
-        _get(Object.getPrototypeOf(Service.prototype), "constructor", this).apply(this, args);
+        _get(Object.getPrototypeOf(Srvc.prototype), "constructor", this).apply(this, args);
     }
 
-    _inherits(Service, _Harmony2);
+    _inherits(Srvc, _Harmony2);
 
-    _createClass(Service, null, {
+    _createClass(Srvc, null, {
         $register: {
             set: function (descriptor) {
                 descriptor.type = "service";
@@ -502,10 +542,10 @@ var Service = exports.Service = (function (_Harmony2) {
         }
     });
 
-    return Service;
+    return Srvc;
 })(Harmony);
 
-var DataService = exports.DataService = (function (_Service) {
+var DataService = exports.DataService = (function (_Srvc) {
     function DataService() {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
@@ -516,7 +556,7 @@ var DataService = exports.DataService = (function (_Service) {
         _get(Object.getPrototypeOf(DataService.prototype), "constructor", this).apply(this, args);
     }
 
-    _inherits(DataService, _Service);
+    _inherits(DataService, _Srvc);
 
     _createClass(DataService, {
         _db: {
@@ -733,7 +773,7 @@ var DataService = exports.DataService = (function (_Service) {
     });
 
     return DataService;
-})(Service);
+})(Srvc);
 
 DataService.$inject = ["$resource", "$interval", "$q", "$timeout"];
 
@@ -1173,15 +1213,15 @@ var Component = exports.Component = (function (_Ctrl) {
                 var _step4$value = _slicedToArray(_step4.value, 2);
 
                 var key = _step4$value[0];
-                var _Service2 = _step4$value[1];
+                var _Service = _step4$value[1];
 
                 if (!/DataService/.test(key)) {
                     continue;
                 }
                 descriptor = key.remove("DataService").toLowerCase();
-                _Service2.subscribe(this._transform.bind(this, descriptor));
-                if (_Service2.db && _Service2.db.ready === true) {
-                    _Service2.digest();
+                _Service.subscribe(this._transform.bind(this, descriptor));
+                if (_Service.db && _Service.db.ready === true) {
+                    _Service.digest();
                 }
             }
         } catch (err) {

@@ -1,3 +1,37 @@
+export function Directive(val) {
+    return function decorator(target) {
+        angular.module(val.module).directive(val.tag, () => {
+            return {
+                controller: target,
+                restrict: val.restrict || "A",
+                replace: val.replace || false,
+                templateUrl: val.templateUrl || null,
+                template: val.template || null,
+                scope: val.scope === true ? {} : (val.scope || null)
+            };
+        })
+    }
+}
+export function Controller(val) {
+    return function decorator(target) {
+        let r = {};
+        r[val.module] = {
+            type: "controller",
+            name: val.name
+        }
+        target.$register = r;
+    }
+}
+export function Service(val) {
+    return function decorator(target) {
+        let r = {};
+        r[val.module] = {
+            type: "service",
+            name: val.name
+        }
+        target.$register = r;
+    }
+}
 export class Harmony {
     constructor(...args) {
         this.constructor.$inject = ["$scope"]
@@ -54,7 +88,7 @@ export class Harmony {
 }
 import bean from 'bean';
 import zest from 'zest';
-export class Controller extends Harmony {
+export class Ctrl extends Harmony {
     constructor(...args) {
         super(...args);
         for (let [key, fn] of this.iterate(this.constructor.prototype)) {
@@ -110,8 +144,8 @@ export class Controller extends Harmony {
         }
     }
 }
-Controller.$inject = "$element";
-export class Service extends Harmony {
+Ctrl.$inject = "$element";
+export class Srvc extends Harmony {
     constructor(...args) {
         super(...args);
     }
@@ -122,7 +156,7 @@ export class Service extends Harmony {
         }
     }
 }
-export class DataService extends Service {
+export class DataService extends Srvc {
     constructor(...args) {
         super(...args);
     }
@@ -310,7 +344,7 @@ export class DynamicDataService extends DataService {
         return true;
     }
 }
-class Component extends Controller {
+export class Component extends Ctrl {
     constructor(...args) {
         super(...args);
         this.$scope.model = {};

@@ -22,6 +22,48 @@ This serves as literate-programming compiler-directive
 
 ## JS Compilation
 
+The Decorator foos are annotation-driving translators that allow you to use Angular 2.0 like styles!
+
+```javascript
+    export function Directive(val) {
+        return function decorator(target) {
+            angular.module(val.module).directive(val.tag, () => {
+                return {
+                    controller: target,
+                    restrict: val.restrict || "A",
+                    replace: val.replace || false,
+                    templateUrl: val.templateUrl || null,
+                    template: val.template || null,
+                    scope: val.scope === true ? {} : (val.scope || null)
+                };
+            })
+        }
+    }
+
+    export function Controller(val) {
+        return function decorator(target) {
+            let r = {};
+            r[val.module] = {
+                type: "controller",
+                name: val.name
+            }
+            target.$register = r;
+        }
+    }
+
+    export function Service(val) {
+        return function decorator(target) {
+            let r = {};
+            r[val.module] = {
+                type: "service",
+                name: val.name
+            }
+            target.$register = r;
+        }
+    }
+```
+
+
 _Harmony_ is the ng-base-class for all other endeavours.
 * It provides all _injected dependencies_ as *member-vars*
 * It polyfills mixin support
