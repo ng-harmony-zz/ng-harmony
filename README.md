@@ -1,6 +1,8 @@
 ng-harmony
 ============
 
+[![Join the chat at https://gitter.im/joehannes/ng-harmony](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joehannes/ng-harmony?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Development
 
 To start developing in the project run:
