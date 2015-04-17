@@ -3,6 +3,9 @@
 
 [![Join the chat at https://gitter.im/joehannes/ng_harmony](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joehannes/ng_harmony?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Development
+>>>>>>> 630bb295adc30f31c1b2e197db7e20e3785fbb5c
+
 These is the bazz-klasses for writing nice ES-Next Angular 2.0 --- right now!
 
 But not only that ...
