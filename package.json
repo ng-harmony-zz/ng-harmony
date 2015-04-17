@@ -1,57 +1,27 @@
 {
   "name": "ng-harmony",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "AngularJS ES6 style class lib for writing dynamic code",
-  "main": "build/dynamic.es6.js",
+  "main": "dist/es5/system_module.js",
   "dependencies": {},
   "devDependencies": {
-    "babel": "^4.3.0",
-    "bower": "^1.3.12",
-    "event-stream": "^3.1.5",
-    "gulp": "^3.8.11",
-    "gulp-angular-filesort": "^1.0.3",
-    "gulp-cached": "^1.0.1",
-    "gulp-concat": "^2.2.0",
-    "gulp-csslint": "~0.1.4",
-    "gulp-embedlr": "~0.5.2",
-    "gulp-header": "^1.0.2",
-    "gulp-htmlmin": "~0.1.2",
-    "gulp-inject": "^1.0.1",
-    "gulp-jshint": "^1.6.1",
-    "gulp-karma": "~0.0.4",
-    "gulp-livereload": "^2.1.0",
-    "gulp-load-plugins": "~0.5.1",
-    "gulp-minify-css": "~0.3.4",
-    "gulp-ng-annotate": "~0.2.0",
-    "gulp-ng-html2js": "~0.1.7",
-    "gulp-rename": "^1.2.0",
-    "gulp-sass": "^0.7.1",
-    "gulp-serve": "~0.2.0",
-    "gulp-shell": "^0.3.0",
-    "gulp-uglify": "~0.3.0",
-    "gulp-util": "^2.2.14",
-    "jshint-stylish": "~0.4.0",
-    "jspm": "^0.14.0",
-    "karma": "~0.12.16",
-    "karma-chai": "~0.1.0",
-    "karma-chrome-launcher": "~0.1.4",
-    "karma-firefox-launcher": "~0.1.3",
-    "karma-mocha": "~0.1.3",
-    "karma-phantomjs-launcher": "~0.1.4",
-    "karma-script-launcher": "~0.1.0",
-    "lazypipe": "~0.2.1",
-    "literate-programming": "^0.8.4",
-    "main-bower-files": "^1.0.1",
-    "rimraf": "^2.2.8",
-    "streamqueue": "~0.1.1"
+    "babel": "^5.1.10",
+    "js-beautify": "^1.5.5",
+    "literate-programming": "^0.8.4"
   },
   "scripts": {
-    "test": "gulp",
-    "transpile": "dotlit --print-all ./src/lib/dynamic.es6.md > ./src/build/ng_harmony.es6.js && js-beautify src/build/ng_harmony.es6.js -m 1 -o src/build/ng_harmony.es6.js && babel -o src/build/ng_harmony.es5.js src/build/ng_harmony.es6.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "literate-programming README.md",
+    "beautify": "sed -i 's/^\\s*//' ./dist/raw/ng_harmony.js && js-beautify -m 1 -s 4 -l 0 -p ./dist/raw/ng_harmony.js > ./dist/esnext/ng_harmony.js",
+    "transpile_amd": "babel --modules amd -e 1 -s -o ./dist/es5/amd_module.js ./dist/esnext/ng_harmony.js",
+    "transpile_common": "babel --modules common -e 1 -s -o ./dist/es5/common_module.js ./dist/esnext/ng_harmony.js",
+    "transpile_system": "babel --modules system -e 1 -s -o ./dist/es5/system_module.js ./dist/esnext/ng_harmony.js",
+    "transpile_umd": "babel --modules umd -e 1 -s -o ./dist/es5/umd_module.js ./dist/esnext/ng_harmony.js",
+    "all": "npm run build && npm run beautify && npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joehannes/ng-harmony.git"
+    "url": "https://github.com/ng-harmony/ng-harmony.git"
   },
   "keywords": [
     "angular",
@@ -69,19 +39,7 @@
   "author": "DI <johannes.neugschwentner@gmail.com> (FH)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joehannes/ng-harmony/issues"
+    "url": "https://github.com/ng-harmony/ng-harmony/issues"
   },
-  "homepage": "https://github.com/joehannes/ng-harmony",
-  "jspm": {
-    "directories": {
-      "baseURL": "src/sails",
-      "lib": "src",
-      "packages": "jspm_packages"
-    },
-    "configFile": "config.js",
-    "dependencies": {
-      "bean": "npm:bean@^1.0.15",
-      "zest": "npm:zest@^0.1.3"
-    }
-  }
+  "homepage": "https://github.com/ng-harmony/ng-harmony"
 }
