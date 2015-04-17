@@ -54,6 +54,9 @@ _Harmony_ is the ng-base-class for all other endeavours.
                 }
                 this.$scope[key] = (...args) => { return fn.apply(this, args); }
             }
+            if (typeof this.initialize === "function") {
+                this.initialize();
+            }
         }
 ```
 Getter and Setter for the static $inject variable
@@ -139,3 +142,8 @@ The _Service_ Class is a tiny base for Services that don't extend the more sophi
             }
         }
     }
+```
+
+## CHANGELOG
+
+*0.2.1*: Add conditional initialize call to default base-constructor for better mixin-support
