@@ -4,7 +4,6 @@
 [![Join the chat at https://gitter.im/joehannes/ng_harmony](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joehannes/ng_harmony?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Development
->>>>>>> 630bb295adc30f31c1b2e197db7e20e3785fbb5c
 
 These is the bazz-klasses for writing nice ES-Next Angular 2.0 --- right now!
 
@@ -15,7 +14,7 @@ class libs ... and publish them as (private??? hahaha ... did you know you can d
 
 Behold, the dist folder holds the treasure ...
 
-![Harmony = 6 + 7;](logo.png "Harmony - Fire in my eyes")
+![Harmony = 6 + 7;](src/logo.png "Harmony - Fire in my eyes")
 
 ## Concept
 
