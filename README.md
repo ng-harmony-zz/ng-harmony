@@ -41,7 +41,7 @@ _Harmony_ is the ng-base-class for all other endeavours.
 ```javascript
     export class Harmony {
         constructor (...args) {
-            this.constructor.$inject = ["$scope"]
+            this.constructor.$inject = ["$scope"].concat(args);
             for (let [i, injectee] of this.constructor.$inject.entries()) {
                 this[injectee] = args[i];
             }
