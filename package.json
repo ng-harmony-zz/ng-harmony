@@ -1,23 +1,21 @@
 {
   "name": "ng-harmony",
-  "version": "0.2.2",
-  "description": "AngularJS ES6 style class lib for writing dynamic code",
-  "main": "dist/esnext/ng_harmony.js",
+  "version": "0.3.0",
+  "description": "Base Classes for all ng-harmony-modules. Ng-Harmony is a collection of modules that allow for unique Angular-Codestyle, eg. Classes in Angular 1",
+  "main": "lib/es_harmony/ng_harmony.js",
   "dependencies": {},
   "devDependencies": {
-    "babel": "^5.1.10",
-    "js-beautify": "^1.5.5",
+    "babel": "^6.0.15",
     "literate-programming": "^0.8.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "literate-programming README.md",
-    "beautify": "sed -i 's/^\\s*//' ./dist/raw/ng_harmony.js && js-beautify -m 1 -s 4 -l 0 -p ./dist/raw/ng_harmony.js > ./dist/esnext/ng_harmony.js",
-    "transpile_amd": "babel --modules amd -e 1 -s -o ./dist/es5/amd_module.js ./dist/esnext/ng_harmony.js",
-    "transpile_common": "babel --modules common -e 1 -s -o ./dist/es5/common_module.js ./dist/esnext/ng_harmony.js",
-    "transpile_system": "babel --modules system -e 1 -s -o ./dist/es5/system_module.js ./dist/esnext/ng_harmony.js",
-    "transpile_umd": "babel --modules umd -e 1 -s -o ./dist/es5/umd_module.js ./dist/esnext/ng_harmony.js",
-    "all": "npm run build && npm run beautify && npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
+    "build": "literate-programming src/ng_harmony.md && npm run modules",
+    "transpile_amd": "babel --modules amd -e 1 -s -o ./lib/modules/amd_module.js ./lib/es_harmony/ng_harmony.js",
+    "transpile_common": "babel --modules common -e 1 -s -o ./lib/modules/common_module.js ./lib/es_harmony/ng_harmony.js",
+    "transpile_system": "babel --modules system -e 1 -s -o ./lib/modules/system_module.js ./lib/es_harmony/ng_harmony.js",
+    "transpile_umd": "babel --modules umd -e 1 -s -o ./lib/modules/umd_module.js ./lib/es_harmony/ng_harmony.js",
+    "modules": "npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
   },
   "repository": {
     "type": "git",
@@ -36,7 +34,7 @@
     "library",
     "collection"
   ],
-  "author": "DI <johannes.neugschwentner@gmail.com> (FH)",
+  "author": "DI (FH) Johannes Neugschwentner <johannes.neugschwentner@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ng-harmony/ng-harmony/issues"
