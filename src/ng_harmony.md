@@ -50,9 +50,6 @@ export class Harmony {
                 }
             }
         }
-        if (typeof this.initialize === "function") {
-            this.initialize();
-        }
     }
 ```
 Getter and Setter for the static $inject variable

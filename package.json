@@ -1,6 +1,6 @@
 {
   "name": "ng-harmony",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Base Classes for all ng-harmony-modules. Ng-Harmony is a collection of modules that allow for unique Angular-Codestyle, eg. Classes in Angular 1",
   "main": "lib/es_harmony/ng_harmony.js",
   "dependencies": {},

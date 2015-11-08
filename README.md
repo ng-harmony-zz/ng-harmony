@@ -15,12 +15,11 @@ We can mixin some of our own class-methods via mixin
 class ListController extends Controller.mixin(SomeUtilityClass, OtherUtilityClass) {
 ```
 
-PSEUDO-contructor
-Since things like hooking up your methods to the scope happen in the super-constructor ... you probably want to init here
-This method gets called automagically by the super-constructor if it exists
+Be sure to call the super constructor before you do your important stuff. The super-constructor does initialization like creating the dependency injected accessors/member vars and bind $-prefixed methods to `this.$scope`.
 
 ```javascript
-    initialize () {
+    constructor (...args) {
+        super(...args);
         this.dataInterval = this.$interval(this.input, 1000);
     }
     input () {
@@ -34,7 +33,7 @@ This method gets called automagically by the super-constructor if it exists
 
 If you want your method to be exposed in $scope, you need to prefix the method-name with `$`
 
-```javascript    
+```javascript
     $href (n) {
         this.$location.url(this.$scope.data[n].url);
     }
@@ -48,9 +47,7 @@ You can pass a single dependency as a string, or multiple as an Array of strings
 ListController.$inject = ["$location", "$interval", "MyListService"];
 ```
 
-We need to register our class with angular
-The passing in of a type with extending Controller is unnecessary/optional, since controller is unambiguous.
-It's different with Services, since there is `angular.service`, `angular.factory` ...
+We need to register our class with angular. The passing in of a type with extending Controller is unnecessary/optional, since controller is unambiguous. It's different with Services, since there is `angular.service`, `angular.factory` ...
 
 ```javascript
 ListController.$register = {
@@ -65,7 +62,8 @@ Now let's create our View/Template
 
 ```jade
 ul
-    li(ng-repeat="item in data") a(ng-click="href($index)") {{item.name}}
+    li(ng-repeat="item in data")
+        a(ng-click="href($index)") {{item.name}}
 ```
 
 Now let's create a small service to serve the list-api-data to whichever controller needs it
@@ -123,7 +121,7 @@ jspm i github:ng-harmony/ng-harmony
 
 ## API Reference
 
-`Harmony` (Root-Class)
+`Harmony` (Root-Class)=
     `static $inject`: Dependency injection
     `static $register`: Register the class with a module
     `static iterate`: Iterate with for .. of over { objs }
@@ -135,7 +133,7 @@ jspm i github:ng-harmony/ng-harmony
 
 ## Contributors
 
-Drop me an email at <johannes.neugschwentner at gmail dot com>
+Drop me an email at johannes.neugschwentner at gmail dot com
 
 ## License
 
