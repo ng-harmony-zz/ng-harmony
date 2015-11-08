@@ -123,20 +123,20 @@ jspm i github:ng-harmony/ng-harmony
 
 ### `Harmony` (Root-Class)
 
-    `static $inject`: Dependency injection
+`static $inject`: Dependency injection
 
-    `static $register`: Register the class with a module
+`static $register`: Register the class with a module
 
-    `static iterate`: Iterate with for .. of over { objs }
+`static iterate`: Iterate with for .. of over { objs }
 
-    `static mixin`: mixin Utility classes
+`static mixin`: mixin Utility classes
 
-    `toString`: access the Class-Name inside an instance
+`toString`: access the Class-Name inside an instance
 
 
 ### `Controller`
 
-    `digest`: manually trigger an angular digest-cycle
+`digest`: manually trigger an angular digest-cycle
 
 ## Contributors
 
