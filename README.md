@@ -1,3 +1,5 @@
+![Harmony = 6 + 7;](fireinmyeyes.svg "Harmony - Fire in my eyes")
+
 ## Synopsis
 
 Base Classes for all ng-harmony-modules. Ng-Harmony is a collection of modules that allow for unique Angular-Codestyle, eg. Classes in Angular 1
