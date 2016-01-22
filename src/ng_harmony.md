@@ -5,7 +5,7 @@
 
 These is the bazz-klasses for writing nice ES-Next Angular ~2 ... you'll import and utilize Angular 1 and all the Angular 1 ecosystem or whatever libraries you might have built, but you can write your ongoing/new apps in this Angular 2 (-like) style and migrate easily should you choose to.
 
-![Harmony = 6 + 7;](fireinmyeyes.svg "Harmony - Fire in my eyes")
+![Harmony = 6 + 7;](logo.png "Harmony - Fire in my eyes")
 
 ## Concept
 

@@ -1,4 +1,4 @@
-![Harmony = 6 + 7;](fireinmyeyes.svg "Harmony - Fire in my eyes")
+![Harmony = 6 + 7;](src/logo.png "Harmony - Fire in my eyes")
 
 ## Synopsis
 
