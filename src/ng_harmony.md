@@ -3,16 +3,9 @@
 
 ## Development
 
-These is the bazz-klasses for writing nice ES-Next Angular 2.0 --- right now!
+These is the bazz-klasses for writing nice ES-Next Angular ~2 ... you'll import and utilize Angular 1 and all the Angular 1 ecosystem or whatever libraries you might have built, but you can write your ongoing/new apps in this Angular 2 (-like) style and migrate easily should you choose to.
 
-But not only that ...
-
-This org was created with the thought in mind, that one might want to create reusable abstractions,
-class libs ... and publish them as (private??? hahaha ... did you know you can do that now on npm?) npm-modules.
-
-Behold, the dist folder holds the treasure ...
-
-![Harmony = 6 + 7;](src/logo.png "Harmony - Fire in my eyes")
+![Harmony = 6 + 7;](src/fireinmyeyes.svg "Harmony - Fire in my eyes")
 
 ## Concept
 
@@ -151,3 +144,5 @@ Service.$inject = "$http";
 ## CHANGELOG
 
 *0.2.1*: Add conditional initialize call to default base-constructor for better mixin-support
+
+*0.2.2*: About to pick up development again, new logo
