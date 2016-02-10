@@ -87,11 +87,7 @@ class MyListService extends Service {
         this.status = response.status;
     }
     get status () {
-        if (this._status == "200") {
-            return true;
-        } else {
-            return false;
-        }
+        return (this._status == "200");
     }
     set status (status) {
         this._status = status;
