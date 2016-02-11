@@ -12,7 +12,7 @@ export class Harmony {
         }
     }
     static get $inject() {
-        return this._$inject || ["$scope"];
+        return this._$inject || [];
     }
     static set $inject(injectees) {
         let _injectees = [];
@@ -79,6 +79,7 @@ export class Controller extends Harmony {
         }
     }
 }
+Controller.$inject = "$scope";
 
 export class Service extends Harmony {
     static set $register(descriptor) {
