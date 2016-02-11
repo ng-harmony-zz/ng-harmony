@@ -79,7 +79,6 @@ export class Controller extends Harmony {
         }
     }
 }
-Controller.$inject = "$element";
 
 export class Service extends Harmony {
     static set $register(descriptor) {

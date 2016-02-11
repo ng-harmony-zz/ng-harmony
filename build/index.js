@@ -77,7 +77,6 @@ export class Controller extends Harmony {
         catch (ngEx) { "noop"; }
     }
 }
-Controller.$inject = "$element";
 
 export class Service extends Harmony {
     static set $register(descriptor) {
