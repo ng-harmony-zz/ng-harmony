@@ -21,7 +21,7 @@ System.config({
     "babel": "npm:babel-core@5.8.35",
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "core-js": "npm:core-js@1.2.6",
-    "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.3.14",
+    "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.3.15",
     "github:angular/bower-angular-resource@1.5.0": {
       "angular": "github:angular/bower-angular@1.5.0"
     },

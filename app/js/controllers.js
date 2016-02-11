@@ -9,8 +9,6 @@ export class TodoCtrl extends Controller {
         constructor (...args) {
             super(...args);
 
-            console.log("Hello!!!");
-
             this.$scope.todos = this.TodoStorage.todos;
             this.todos = this.TodoStorage.todos;
             this.$scope.newTodo = "";
@@ -31,7 +29,7 @@ export class TodoCtrl extends Controller {
             });
         }
 
-		addTodo () {
+		$addTodo () {
             console.log("happy day sire");
 			let newTodo = {
 				title: this.$scope.newTodo.trim(),
@@ -52,14 +50,14 @@ export class TodoCtrl extends Controller {
 				});
 		}
 
-		editTodo (todo) {
+		$editTodo (todo) {
 			this.$scope.editedTodo = todo;
 
 			// Clone the original todo to restore it on demand.
 			this.$scope.originalTodo = angular.extend({}, todo);
 		}
 
-        saveEdits (todo, event) {
+        $saveEdits (todo, event) {
 
 			// Blur events are automatically triggered after the form submit event.
 			// This does some unfortunate logic handling to prevent saving twice.
@@ -92,22 +90,22 @@ export class TodoCtrl extends Controller {
 				});
 		}
 
-		revertEdits (todo) {
+		$revertEdits (todo) {
 			this.todos[this.todos.indexOf(todo)] = this.$scope.originalTodo;
 			this.$scope.editedTodo = null;
 			this.$scope.originalTodo = null;
 			this.$scope.reverted = true;
 		}
 
-		removeTodo (todo) {
+		$removeTodo (todo) {
 			this.TodoStorage.delete(todo);
 		}
 
-		saveTodo (todo) {
+		$saveTodo (todo) {
 			this.TodoStorage.put(todo);
 		}
 
-		toggleCompleted (todo, completed) {
+		$toggleCompleted (todo, completed) {
 			if (angular.isDefined(completed)) {
 				todo.completed = completed;
 			}
@@ -118,11 +116,11 @@ export class TodoCtrl extends Controller {
 				});
 		}
 
-		clearCompletedTodos () {
+		$clearCompletedTodos () {
 			this.TodoStorage.clearCompleted();
 		}
 
-		markAll (completed) {
+		$markAll (completed) {
 			this.todos.forEach((todo) => {
 				if (todo.completed !== completed) {
 					this.$scope.toggleCompleted(todo, completed);
