@@ -12,6 +12,13 @@ export class Harmony {
             }
         }
     }
+    iterate (o) {
+        return (function* (_o) {
+            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
+                yield [key, _o[key]];
+            }
+        })(o);
+    }
     static get $inject () {
         return this._$inject || [];
     }
@@ -33,18 +40,10 @@ export class Harmony {
         }
         this._$inject = this.$inject.concat(injectees);
     }
-
     static set $register (descriptor) {
         for (let [module, klass] of this.iterate(descriptor)) {
             angular.module(module)[klass.type](klass.name, this);
         }
-    }
-    static iterate (o) {
-        return (function* (_o) {
-            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
-                yield [key, _o[key]];
-            }
-        })(o);
     }
     static mixin (...mixins) {
         for (let [i, mixin] of mixins.entries()) {
@@ -60,12 +59,10 @@ export class Harmony {
             }
         }
     }
-
     toString () {
         return this.name || super.toString().match(/function\s*(.*?)\(/)[1];
     }
 }
-
 export class Controller extends Harmony {
     static set $register(descriptor) {
         for (let [module, klass] of this.iterate(descriptor)) {
@@ -78,7 +75,6 @@ export class Controller extends Harmony {
     }
 }
 Controller.$inject = "$scope";
-
 export class Service extends Harmony {
     static set $register(descriptor) {
         for (let [module, klass] of this.iterate(descriptor)) {
