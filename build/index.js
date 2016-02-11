@@ -19,6 +19,13 @@ export class Harmony {
             }
         })(o);
     }
+    static iterate (o) {
+        return (function* (_o) {
+            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
+                yield [key, _o[key]];
+            }
+        })(o);
+    }
     static get $inject () {
         return this._$inject || [];
     }
