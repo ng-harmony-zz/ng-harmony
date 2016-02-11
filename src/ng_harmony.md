@@ -46,7 +46,7 @@ export class Harmony {
 Getter and Setter for the static $inject variable
 ```javascript
     static get $inject () {
-        return this._$inject || ["$scope"];
+        return this._$inject || [];
     }
     static set $inject (injectees) {
         let _injectees = [];
@@ -126,6 +126,7 @@ export class Controller extends Harmony {
         catch (ngEx) { "noop"; }
     }
 }
+Controller.$inject = "$scope";
 ```
 
 The _Service_ Class is a tiny base for Services that don't extend the more sophisticated DataServices
