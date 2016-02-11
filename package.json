@@ -1,0 +1,20 @@
+{
+  "jspm": {
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.5.0",
+      "angular-resource": "github:angular/bower-angular-resource@^1.5.0",
+      "angular-route": "github:angular/bower-angular-route@^1.5.0",
+      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@^0.3.4"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  },
+  "devDependencies": {
+    "jspm": "^0.16.27",
+    "todomvc-app-css": "^2.0.4",
+    "todomvc-common": "^1.0.2"
+  }
+}

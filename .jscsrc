@@ -1,0 +1,16 @@
+{
+    "preset": "airbnb",
+    "fileExtensions": [".js", ".md"],
+
+    "validateIndentation": false,
+    "validateQuoteMarks": "\"",
+    "requirePaddingNewLinesAfterBlocks": false,
+    "requireTrailingComma": false,
+    "requireLineFeedAtFileEnd": false,
+    "disallowQuotedKeysInObjects": false,
+
+    "excludeFiles": [
+        "build/modules/**",
+        "package.json"
+    ]
+}
