@@ -12556,7 +12556,7 @@ System.registerDynamic("github:angular/bower-angular-resource@1.5.0.js", ["githu
   return module.exports;
 });
 
-System.register("src/js/module.js", ["github:angular/bower-angular@1.5.0.js", "github:angular/bower-angular-route@1.5.0.js", "github:angular/bower-angular-resource@1.5.0.js"], function (_export) {
+System.register("app/js/module.js", ["github:angular/bower-angular@1.5.0.js", "github:angular/bower-angular-route@1.5.0.js", "github:angular/bower-angular-resource@1.5.0.js"], function (_export) {
   "use strict";
 
   var angular, ngRoute, ngResource, _module;
@@ -12576,7 +12576,7 @@ System.register("src/js/module.js", ["github:angular/bower-angular@1.5.0.js", "g
     }
   };
 });
-System.register("src/js/routes.js", [], function (_export) {
+System.register("app/js/routes.js", [], function (_export) {
     "use strict";
 
     var routeConfig;
@@ -12585,7 +12585,7 @@ System.register("src/js/routes.js", [], function (_export) {
         execute: function () {
             routeConfig = {
                 controller: "TodoCtrl",
-                templateUrl: "src/templates/todomvc.html"
+                templateUrl: "app/templates/todomvc.html"
             };
             /*resolve: {
                 store: (TodoStorage) => { return TodoStorage; }
@@ -12595,7 +12595,7 @@ System.register("src/js/routes.js", [], function (_export) {
         }
     };
 });
-System.register("src/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.4.js"], function (_export) {
+System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.5.js"], function (_export) {
 	var _get, _inherits, _createClass, _classCallCheck, Controller, TodoCtrl;
 
 	return {
@@ -12607,8 +12607,8 @@ System.register("src/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 			_createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
 		}, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
 			_classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-		}, function (_githubNgHarmonyNgHarmony034Js) {
-			Controller = _githubNgHarmonyNgHarmony034Js.Controller;
+		}, function (_githubNgHarmonyNgHarmony035Js) {
+			Controller = _githubNgHarmonyNgHarmony035Js.Controller;
 		}],
 		execute: function () {
 			/**
@@ -15619,7 +15619,7 @@ System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/define-property.
   return module.exports;
 });
 
-System.register("github:ng-harmony/ng-harmony@0.3.4/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.5/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
     var _get, _createClass, _classCallCheck, _inherits, _slicedToArray, _getIterator, _regeneratorRuntime, _Object$getOwnPropertyNames, _Object$defineProperty, Harmony, Controller, Service;
 
     return {
@@ -16091,25 +16091,25 @@ System.register("github:ng-harmony/ng-harmony@0.3.4/build/index.js", ["npm:babel
         }
     };
 });
-System.register("github:ng-harmony/ng-harmony@0.3.4.js", ["github:ng-harmony/ng-harmony@0.3.4/build/index.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.5.js", ["github:ng-harmony/ng-harmony@0.3.5/build/index.js"], function (_export) {
   "use strict";
 
   return {
-    setters: [function (_githubNgHarmonyNgHarmony034BuildIndexJs) {
+    setters: [function (_githubNgHarmonyNgHarmony035BuildIndexJs) {
       var _exportObj = {};
 
-      for (var _key in _githubNgHarmonyNgHarmony034BuildIndexJs) {
-        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony034BuildIndexJs[_key];
+      for (var _key in _githubNgHarmonyNgHarmony035BuildIndexJs) {
+        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony035BuildIndexJs[_key];
       }
 
-      _exportObj["default"] = _githubNgHarmonyNgHarmony034BuildIndexJs["default"];
+      _exportObj["default"] = _githubNgHarmonyNgHarmony035BuildIndexJs["default"];
 
       _export(_exportObj);
     }],
     execute: function () {}
   };
 });
-System.register("src/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.4.js"], function (_export) {
+System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.5.js"], function (_export) {
     var _get, _inherits, _createClass, _classCallCheck, Service, TodoStorage, RemoteStorage, LocalStorage;
 
     return {
@@ -16121,8 +16121,8 @@ System.register("src/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js"
             _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
         }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
             _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-        }, function (_githubNgHarmonyNgHarmony034Js) {
-            Service = _githubNgHarmonyNgHarmony034Js.Service;
+        }, function (_githubNgHarmonyNgHarmony035Js) {
+            Service = _githubNgHarmonyNgHarmony035Js.Service;
         }],
         execute: function () {
             "use strict";
@@ -16315,7 +16315,7 @@ System.register("src/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js"
         }
     };
 });
-System.register('src/js/directives.js', [], function (_export) {
+System.register('app/js/directives.js', [], function (_export) {
 	/**
   * Directive that executes an expression when the element it is applied to gets
   * an `escape` keydown event.
@@ -16357,21 +16357,21 @@ System.register('src/js/directives.js', [], function (_export) {
 		}
 	};
 });
-System.register("src/app.js", ["src/js/module.js", "src/js/routes.js", "src/js/controllers.js", "src/js/services.js", "src/js/directives.js"], function (_export) {
+System.register("app/main.js", ["app/js/module.js", "app/js/routes.js", "app/js/controllers.js", "app/js/services.js", "app/js/directives.js"], function (_export) {
     "use strict";
 
     var _module, routeConfig, TodoCtrl, TodoStorage;
 
     return {
-        setters: [function (_srcJsModuleJs) {
-            _module = _srcJsModuleJs["default"];
-        }, function (_srcJsRoutesJs) {
-            routeConfig = _srcJsRoutesJs["default"];
-        }, function (_srcJsControllersJs) {
-            TodoCtrl = _srcJsControllersJs.TodoCtrl;
-        }, function (_srcJsServicesJs) {
-            TodoStorage = _srcJsServicesJs.TodoStorage;
-        }, function (_srcJsDirectivesJs) {}],
+        setters: [function (_appJsModuleJs) {
+            _module = _appJsModuleJs["default"];
+        }, function (_appJsRoutesJs) {
+            routeConfig = _appJsRoutesJs["default"];
+        }, function (_appJsControllersJs) {
+            TodoCtrl = _appJsControllersJs.TodoCtrl;
+        }, function (_appJsServicesJs) {
+            TodoStorage = _appJsServicesJs.TodoStorage;
+        }, function (_appJsDirectivesJs) {}],
         execute: function () {
 
             _module.config(function ($routeProvider) {

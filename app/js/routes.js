@@ -1,6 +1,6 @@
 var routeConfig = {
     controller: "TodoCtrl",
-    templateUrl: "src/templates/todomvc.html",
+    templateUrl: "app/templates/todomvc.html",
     /*resolve: {
         store: (TodoStorage) => { return TodoStorage; }
     }*/
