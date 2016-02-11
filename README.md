@@ -72,7 +72,8 @@ Now let's create a small service to serve the list-api-data to whichever control
 
 ```javascript
 class MyListService extends Service {
-    initialize () {
+    constructor(...args) {
+        super(...args);
         this.apiUrl = "/api/listItems";
         this.fetch();
     }

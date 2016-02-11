@@ -126,7 +126,6 @@ export class Controller extends Harmony {
         catch (ngEx) { "noop"; }
     }
 }
-Controller.$inject = "$element";
 ```
 
 The _Service_ Class is a tiny base for Services that don't extend the more sophisticated DataServices
