@@ -43,6 +43,16 @@ export class Harmony {
         }
     }
 ```
+An iterator factory allowing for easy _for .. of_ iteration es6-style
+```javascript
+    iterate (o) {
+        return (function* (_o) {
+            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
+                yield [key, _o[key]];
+            }
+        })(o);
+    }
+```
 Getter and Setter for the static $inject variable
 ```javascript
     static get $inject () {
@@ -67,23 +77,12 @@ Getter and Setter for the static $inject variable
         this._$inject = this.$inject.concat(injectees);
     }
 ```
-
 Setter for the ng-registration of a service or controller
 ```javascript
     static set $register (descriptor) {
         for (let [module, klass] of this.iterate(descriptor)) {
             angular.module(module)[klass.type](klass.name, this);
         }
-    }
-```
-An iterator factory allowing for easy _for .. of_ iteration es6-style
-```javascript
-    static iterate (o) {
-        return (function* (_o) {
-            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
-                yield [key, _o[key]];
-            }
-        })(o);
     }
 ```
 Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> immediate prototype, last ->> deeply nested
@@ -104,16 +103,13 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
     }
 ```
 A nice toString foo that should in theory pretty nicely return the Classe's name as declared
-
 ```javascript
     toString () {
         return this.name || super.toString().match(/function\s*(.*?)\(/)[1];
     }
 }
 ```
-
 The Controller Base-Class is a starting point for all ng-controllers.
-
 ```javascript
 export class Controller extends Harmony {
     static set $register(descriptor) {
@@ -128,9 +124,7 @@ export class Controller extends Harmony {
 }
 Controller.$inject = "$scope";
 ```
-
 The _Service_ Class is a tiny base for Services that don't extend the more sophisticated DataServices
-
 ```javascript
 export class Service extends Harmony {
     static set $register(descriptor) {
@@ -147,3 +141,5 @@ Service.$inject = "$http";
 *0.2.1*: Add conditional initialize call to default base-constructor for better mixin-support
 
 *0.3.2*: About to pick up development again, new logo
+
+*<0.4*: Debuggin for [demo todo-mvc page on github.io](http://ng-harmony.github.io/ng-harmony)
