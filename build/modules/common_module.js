@@ -3,13 +3,6 @@ export class Harmony {
         for (let [i, injectee] of this.constructor.$inject.entries()) {
             this[injectee] = args[i];
         }
-        for (let [key, fn] of this.iterate(this.constructor.prototype)) {
-            if (typeof fn === "function" && key[0] === "$") {
-                this.$scope[key.slice(0, 1)] = this.$scope[key] = (...args) => {
-                    return fn.apply(this, args);
-                };
-            }
-        }
     }
     iterate(o) {
         return function* (_o) {
@@ -70,6 +63,16 @@ export class Harmony {
     }
 }
 export class Controller extends Harmony {
+    constructor(...args) {
+        super(...args);
+        for (let [key, fn] of this.iterate(this.constructor.prototype)) {
+            if (typeof fn === "function" && key[0] === "$") {
+                this.$scope[key.slice(0, 1)] = this.$scope[key] = (...args) => {
+                    return fn.apply(this, args);
+                };
+            }
+        }
+    }
     static set $register(descriptor) {
         for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module).controller(klass.name, this);
