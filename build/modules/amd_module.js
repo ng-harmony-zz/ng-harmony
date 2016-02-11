@@ -47,13 +47,13 @@ export class Harmony {
         this._$inject = this.$inject.concat(injectees);
     }
     static set $register(descriptor) {
-        for (let [module, klass] of this.iterate(descriptor)) {
+        for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module)[klass.type](klass.name, this);
         }
     }
     static mixin(...mixins) {
         for (let [i, mixin] of mixins.entries()) {
-            for (let [k, v] of this.iterate(mixin)) {
+            for (let [k, v] of Harmony.iterate(mixin)) {
                 let p = this.prototype;
                 while (p[k] !== undefined && p[k] !== null) {
                     p = p.prototype;
@@ -71,7 +71,7 @@ export class Harmony {
 }
 export class Controller extends Harmony {
     static set $register(descriptor) {
-        for (let [module, klass] of this.iterate(descriptor)) {
+        for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module).controller(klass.name, this);
         };
     }
@@ -86,7 +86,7 @@ export class Controller extends Harmony {
 Controller.$inject = "$scope";
 export class Service extends Harmony {
     static set $register(descriptor) {
-        for (let [module, klass] of this.iterate(descriptor)) {
+        for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module)[klass.type || "service"](klass.name, this);
         }
     }
