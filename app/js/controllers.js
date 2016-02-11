@@ -11,8 +11,8 @@ export class TodoCtrl extends Controller {
 
             console.log("Hello!!!");
 
-            this.$scope.todos = this.store.todos;
-            this.todos = this.store.todos;
+            this.$scope.todos = this.TodoStorage.todos;
+            this.todos = this.TodoStorage.todos;
             this.$scope.newTodo = "";
             this.$scope.editedTodo = null;
 
@@ -42,7 +42,7 @@ export class TodoCtrl extends Controller {
 			}
 
 			this.$scope.saving = true;
-			this.store.insert(newTodo)
+			this.TodoStorage.insert(newTodo)
 				.then(() => {
 					this.$scope.newTodo = "";
 				})
@@ -82,7 +82,7 @@ export class TodoCtrl extends Controller {
 				return;
 			}
 
-			this.store[todo.title ? "put" : "delete"](todo)
+			this.TodoStorage[todo.title ? "put" : "delete"](todo)
 				.then(() => {}, () => {
 					todo.title = this.$scope.originalTodo.title;
 				})
@@ -99,18 +99,18 @@ export class TodoCtrl extends Controller {
 		}
 
 		removeTodo (todo) {
-			this.store.delete(todo);
+			this.TodoStorage.delete(todo);
 		}
 
 		saveTodo (todo) {
-			this.store.put(todo);
+			this.TodoStorage.put(todo);
 		}
 
 		toggleCompleted (todo, completed) {
 			if (angular.isDefined(completed)) {
 				todo.completed = completed;
 			}
-			this.store
+			this.TodoStorage
                 .put(todo, this.todos.indexOf(todo))
 				.then(function success() {}, function error() {
 					todo.completed = !todo.completed;
@@ -129,7 +129,7 @@ export class TodoCtrl extends Controller {
 			});
 		}
 	}
-    TodoCtrl.$inject = ["$routeParams", "$filter", "store"];
+    TodoCtrl.$inject = ["$routeParams", "$filter", "TodoStorage"];
     TodoCtrl.$register = {
         "todomvc": {
             name: "TodoCtrl"
