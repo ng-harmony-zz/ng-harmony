@@ -53,6 +53,16 @@ An iterator factory allowing for easy _for .. of_ iteration es6-style
         })(o);
     }
 ```
+Same thing, but static .. useful for other static utilities (eg register)
+```javascript
+    static iterate (o) {
+        return (function* (_o) {
+            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
+                yield [key, _o[key]];
+            }
+        })(o);
+    }
+```
 Getter and Setter for the static $inject variable
 ```javascript
     static get $inject () {
