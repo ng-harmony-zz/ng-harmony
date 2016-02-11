@@ -90,7 +90,7 @@ Getter and Setter for the static $inject variable
 Setter for the ng-registration of a service or controller
 ```javascript
     static set $register (descriptor) {
-        for (let [module, klass] of this.iterate(descriptor)) {
+        for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module)[klass.type](klass.name, this);
         }
     }
@@ -99,7 +99,7 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
 ```javascript
     static mixin (...mixins) {
         for (let [i, mixin] of mixins.entries()) {
-            for (let [k, v] of this.iterate(mixin)) {
+            for (let [k, v] of Harmony.iterate(mixin)) {
                 let p = this.prototype;
                 while (p[k] !== undefined && p[k] !== null) {
                     p = p.prototype;
@@ -123,7 +123,7 @@ The Controller Base-Class is a starting point for all ng-controllers.
 ```javascript
 export class Controller extends Harmony {
     static set $register(descriptor) {
-        for (let [module, klass] of this.iterate(descriptor)) {
+        for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module).controller(klass.name, this);
         };
     }
@@ -138,7 +138,7 @@ The _Service_ Class is a tiny base for Services that don't extend the more sophi
 ```javascript
 export class Service extends Harmony {
     static set $register(descriptor) {
-        for (let [module, klass] of this.iterate(descriptor)) {
+        for (let [module, klass] of Harmony.iterate(descriptor)) {
             angular.module(module)[klass.type || "service"](klass.name, this);
         }
     }
