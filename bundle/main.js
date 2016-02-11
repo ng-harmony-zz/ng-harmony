@@ -12595,7 +12595,7 @@ System.register("app/js/routes.js", [], function (_export) {
         }
     };
 });
-System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.9.js"], function (_export) {
+System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.14.js"], function (_export) {
 	var _get, _inherits, _createClass, _classCallCheck, Controller, TodoCtrl;
 
 	return {
@@ -12607,8 +12607,8 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 			_createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
 		}, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
 			_classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-		}, function (_githubNgHarmonyNgHarmony039Js) {
-			Controller = _githubNgHarmonyNgHarmony039Js.Controller;
+		}, function (_githubNgHarmonyNgHarmony0314Js) {
+			Controller = _githubNgHarmonyNgHarmony0314Js.Controller;
 		}],
 		execute: function () {
 			/**
@@ -12639,14 +12639,14 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 					this.$scope.newTodo = "";
 					this.$scope.editedTodo = null;
 
-					$scope.$watch("todos", function () {
-						_this.$scope.remainingCount = _this.$filter("filter")(todos, { completed: false }).length;
-						_this.$scope.completedCount = todos.length - _this.$scope.remainingCount;
-						_this.$scope.allChecked = !$scope.remainingCount;
+					this.$scope.$watch("todos", function () {
+						_this.$scope.remainingCount = _this.$filter("filter")(_this.todos, { completed: false }).length;
+						_this.$scope.completedCount = _this.todos.length - _this.$scope.remainingCount;
+						_this.$scope.allChecked = !_this.$scope.remainingCount;
 					}, true);
 
 					// Monitor the current route for changes and adjust the filter accordingly.
-					$scope.$on("$routeChangeSuccess", function () {
+					this.$scope.$on("$routeChangeSuccess", function () {
 						var status = _this.$scope.status = _this.$routeParams.status || "";
 						_this.$scope.statusFilter = status === "active" ? { completed: false } : status === "completed" ? { completed: true } : {};
 					});
@@ -12657,11 +12657,12 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 					value: function addTodo() {
 						var _this2 = this;
 
+						console.log("happy day sire");
 						var newTodo = {
-							title: $scope.newTodo.trim(),
+							title: this.$scope.newTodo.trim(),
 							completed: false
 						};
-
+						console.log(newTodo);
 						if (!newTodo.title) {
 							return;
 						}
@@ -12745,7 +12746,7 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 				}, {
 					key: "clearCompletedTodos",
 					value: function clearCompletedTodos() {
-						store.clearCompleted();
+						this.TodoStorage.clearCompleted();
 					}
 				}, {
 					key: "markAll",
@@ -15619,7 +15620,7 @@ System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/define-property.
   return module.exports;
 });
 
-System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.14/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
     var _get, _createClass, _classCallCheck, _inherits, _slicedToArray, _getIterator, _regeneratorRuntime, _Object$getOwnPropertyNames, _Object$defineProperty, Harmony, Controller, Service;
 
     return {
@@ -15725,11 +15726,6 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                 }
 
                 _createClass(Harmony, [{
-                    key: "toString",
-                    value: function toString() {
-                        return this.name || _get(Object.getPrototypeOf(Harmony.prototype), "toString", this).call(this).match(/function\s*(.*?)\(/)[1];
-                    }
-                }], [{
                     key: "iterate",
                     value: function iterate(o) {
                         return _regeneratorRuntime.mark(function callee$2$0(_o) {
@@ -15803,32 +15799,110 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                         })(o);
                     }
                 }, {
+                    key: "toString",
+                    value: function toString() {
+                        return this.name || _get(Object.getPrototypeOf(Harmony.prototype), "toString", this).call(this).match(/function\s*(.*?)\(/)[1];
+                    }
+                }], [{
+                    key: "iterate",
+                    value: function iterate(o) {
+                        return _regeneratorRuntime.mark(function callee$2$0(_o) {
+                            var _iteratorNormalCompletion4, _didIteratorError4, _iteratorError4, _iterator4, _step4, _step4$value, i, key;
+
+                            return _regeneratorRuntime.wrap(function callee$2$0$(context$3$0) {
+                                while (1) switch (context$3$0.prev = context$3$0.next) {
+                                    case 0:
+                                        _iteratorNormalCompletion4 = true;
+                                        _didIteratorError4 = false;
+                                        _iteratorError4 = undefined;
+                                        context$3$0.prev = 3;
+                                        _iterator4 = _getIterator(_Object$getOwnPropertyNames(_o).entries());
+
+                                    case 5:
+                                        if (_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done) {
+                                            context$3$0.next = 14;
+                                            break;
+                                        }
+
+                                        _step4$value = _slicedToArray(_step4.value, 2);
+                                        i = _step4$value[0];
+                                        key = _step4$value[1];
+                                        context$3$0.next = 11;
+                                        return [key, _o[key]];
+
+                                    case 11:
+                                        _iteratorNormalCompletion4 = true;
+                                        context$3$0.next = 5;
+                                        break;
+
+                                    case 14:
+                                        context$3$0.next = 20;
+                                        break;
+
+                                    case 16:
+                                        context$3$0.prev = 16;
+                                        context$3$0.t0 = context$3$0["catch"](3);
+                                        _didIteratorError4 = true;
+                                        _iteratorError4 = context$3$0.t0;
+
+                                    case 20:
+                                        context$3$0.prev = 20;
+                                        context$3$0.prev = 21;
+
+                                        if (!_iteratorNormalCompletion4 && _iterator4["return"]) {
+                                            _iterator4["return"]();
+                                        }
+
+                                    case 23:
+                                        context$3$0.prev = 23;
+
+                                        if (!_didIteratorError4) {
+                                            context$3$0.next = 26;
+                                            break;
+                                        }
+
+                                        throw _iteratorError4;
+
+                                    case 26:
+                                        return context$3$0.finish(23);
+
+                                    case 27:
+                                        return context$3$0.finish(20);
+
+                                    case 28:
+                                    case "end":
+                                        return context$3$0.stop();
+                                }
+                            }, callee$2$0, this, [[3, 16, 20, 28], [21,, 23, 27]]);
+                        })(o);
+                    }
+                }, {
                     key: "mixin",
                     value: function mixin() {
-                        var _iteratorNormalCompletion4 = true;
-                        var _didIteratorError4 = false;
-                        var _iteratorError4 = undefined;
+                        var _iteratorNormalCompletion5 = true;
+                        var _didIteratorError5 = false;
+                        var _iteratorError5 = undefined;
 
                         try {
                             for (var _len3 = arguments.length, mixins = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
                                 mixins[_key3] = arguments[_key3];
                             }
 
-                            for (var _iterator4 = _getIterator(mixins.entries()), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                                var _step4$value = _slicedToArray(_step4.value, 2);
+                            for (var _iterator5 = _getIterator(mixins.entries()), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                                var _step5$value = _slicedToArray(_step5.value, 2);
 
-                                var i = _step4$value[0];
-                                var mixin = _step4$value[1];
-                                var _iteratorNormalCompletion5 = true;
-                                var _didIteratorError5 = false;
-                                var _iteratorError5 = undefined;
+                                var i = _step5$value[0];
+                                var mixin = _step5$value[1];
+                                var _iteratorNormalCompletion6 = true;
+                                var _didIteratorError6 = false;
+                                var _iteratorError6 = undefined;
 
                                 try {
-                                    for (var _iterator5 = _getIterator(this.iterate(mixin)), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                                        var _step5$value = _slicedToArray(_step5.value, 2);
+                                    for (var _iterator6 = _getIterator(Harmony.iterate(mixin)), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                                        var _step6$value = _slicedToArray(_step6.value, 2);
 
-                                        var k = _step5$value[0];
-                                        var v = _step5$value[1];
+                                        var k = _step6$value[0];
+                                        var v = _step6$value[1];
 
                                         var p = this.prototype;
                                         while (p[k] !== undefined && p[k] !== null) {
@@ -15840,31 +15914,31 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                                         });
                                     }
                                 } catch (err) {
-                                    _didIteratorError5 = true;
-                                    _iteratorError5 = err;
+                                    _didIteratorError6 = true;
+                                    _iteratorError6 = err;
                                 } finally {
                                     try {
-                                        if (!_iteratorNormalCompletion5 && _iterator5["return"]) {
-                                            _iterator5["return"]();
+                                        if (!_iteratorNormalCompletion6 && _iterator6["return"]) {
+                                            _iterator6["return"]();
                                         }
                                     } finally {
-                                        if (_didIteratorError5) {
-                                            throw _iteratorError5;
+                                        if (_didIteratorError6) {
+                                            throw _iteratorError6;
                                         }
                                     }
                                 }
                             }
                         } catch (err) {
-                            _didIteratorError4 = true;
-                            _iteratorError4 = err;
+                            _didIteratorError5 = true;
+                            _iteratorError5 = err;
                         } finally {
                             try {
-                                if (!_iteratorNormalCompletion4 && _iterator4["return"]) {
-                                    _iterator4["return"]();
+                                if (!_iteratorNormalCompletion5 && _iterator5["return"]) {
+                                    _iterator5["return"]();
                                 }
                             } finally {
-                                if (_didIteratorError4) {
-                                    throw _iteratorError4;
+                                if (_didIteratorError5) {
+                                    throw _iteratorError5;
                                 }
                             }
                         }
@@ -15879,44 +15953,44 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                         if (!Array.isArray(injectees)) {
                             injectees = [injectees];
                         }
-                        var _iteratorNormalCompletion6 = true;
-                        var _didIteratorError6 = false;
-                        var _iteratorError6 = undefined;
+                        var _iteratorNormalCompletion7 = true;
+                        var _didIteratorError7 = false;
+                        var _iteratorError7 = undefined;
 
                         try {
-                            for (var _iterator6 = _getIterator(injectees.entries()), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                                var _step6$value = _slicedToArray(_step6.value, 2);
+                            for (var _iterator7 = _getIterator(injectees.entries()), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                                var _step7$value = _slicedToArray(_step7.value, 2);
 
-                                var i = _step6$value[0];
-                                var injecteeStr = _step6$value[1];
+                                var i = _step7$value[0];
+                                var injecteeStr = _step7$value[1];
 
                                 var truthy = true;
-                                var _iteratorNormalCompletion7 = true;
-                                var _didIteratorError7 = false;
-                                var _iteratorError7 = undefined;
+                                var _iteratorNormalCompletion8 = true;
+                                var _didIteratorError8 = false;
+                                var _iteratorError8 = undefined;
 
                                 try {
-                                    for (var _iterator7 = _getIterator(this.$inject.entries()), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                                        var _step7$value = _slicedToArray(_step7.value, 2);
+                                    for (var _iterator8 = _getIterator(this.$inject.entries()), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+                                        var _step8$value = _slicedToArray(_step8.value, 2);
 
-                                        var j = _step7$value[0];
-                                        var _injecteeStr = _step7$value[1];
+                                        var j = _step8$value[0];
+                                        var _injecteeStr = _step8$value[1];
 
                                         if (injecteeStr === _injecteeStr) {
                                             truthy = false;
                                         }
                                     }
                                 } catch (err) {
-                                    _didIteratorError7 = true;
-                                    _iteratorError7 = err;
+                                    _didIteratorError8 = true;
+                                    _iteratorError8 = err;
                                 } finally {
                                     try {
-                                        if (!_iteratorNormalCompletion7 && _iterator7["return"]) {
-                                            _iterator7["return"]();
+                                        if (!_iteratorNormalCompletion8 && _iterator8["return"]) {
+                                            _iterator8["return"]();
                                         }
                                     } finally {
-                                        if (_didIteratorError7) {
-                                            throw _iteratorError7;
+                                        if (_didIteratorError8) {
+                                            throw _iteratorError8;
                                         }
                                     }
                                 }
@@ -15926,16 +16000,16 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                                 }
                             }
                         } catch (err) {
-                            _didIteratorError6 = true;
-                            _iteratorError6 = err;
+                            _didIteratorError7 = true;
+                            _iteratorError7 = err;
                         } finally {
                             try {
-                                if (!_iteratorNormalCompletion6 && _iterator6["return"]) {
-                                    _iterator6["return"]();
+                                if (!_iteratorNormalCompletion7 && _iterator7["return"]) {
+                                    _iterator7["return"]();
                                 }
                             } finally {
-                                if (_didIteratorError6) {
-                                    throw _iteratorError6;
+                                if (_didIteratorError7) {
+                                    throw _iteratorError7;
                                 }
                             }
                         }
@@ -15945,30 +16019,30 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                 }, {
                     key: "$register",
                     set: function set(descriptor) {
-                        var _iteratorNormalCompletion8 = true;
-                        var _didIteratorError8 = false;
-                        var _iteratorError8 = undefined;
+                        var _iteratorNormalCompletion9 = true;
+                        var _didIteratorError9 = false;
+                        var _iteratorError9 = undefined;
 
                         try {
-                            for (var _iterator8 = _getIterator(this.iterate(descriptor)), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-                                var _step8$value = _slicedToArray(_step8.value, 2);
+                            for (var _iterator9 = _getIterator(Harmony.iterate(descriptor)), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+                                var _step9$value = _slicedToArray(_step9.value, 2);
 
-                                var _module2 = _step8$value[0];
-                                var klass = _step8$value[1];
+                                var _module2 = _step9$value[0];
+                                var klass = _step9$value[1];
 
                                 angular.module(_module2)[klass.type](klass.name, this);
                             }
                         } catch (err) {
-                            _didIteratorError8 = true;
-                            _iteratorError8 = err;
+                            _didIteratorError9 = true;
+                            _iteratorError9 = err;
                         } finally {
                             try {
-                                if (!_iteratorNormalCompletion8 && _iterator8["return"]) {
-                                    _iterator8["return"]();
+                                if (!_iteratorNormalCompletion9 && _iterator9["return"]) {
+                                    _iterator9["return"]();
                                 }
                             } finally {
-                                if (_didIteratorError8) {
-                                    throw _iteratorError8;
+                                if (_didIteratorError9) {
+                                    throw _iteratorError9;
                                 }
                             }
                         }
@@ -16001,30 +16075,30 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                 }], [{
                     key: "$register",
                     set: function set(descriptor) {
-                        var _iteratorNormalCompletion9 = true;
-                        var _didIteratorError9 = false;
-                        var _iteratorError9 = undefined;
+                        var _iteratorNormalCompletion10 = true;
+                        var _didIteratorError10 = false;
+                        var _iteratorError10 = undefined;
 
                         try {
-                            for (var _iterator9 = _getIterator(this.iterate(descriptor)), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                                var _step9$value = _slicedToArray(_step9.value, 2);
+                            for (var _iterator10 = _getIterator(Harmony.iterate(descriptor)), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+                                var _step10$value = _slicedToArray(_step10.value, 2);
 
-                                var _module3 = _step9$value[0];
-                                var klass = _step9$value[1];
+                                var _module3 = _step10$value[0];
+                                var klass = _step10$value[1];
 
                                 angular.module(_module3).controller(klass.name, this);
                             }
                         } catch (err) {
-                            _didIteratorError9 = true;
-                            _iteratorError9 = err;
+                            _didIteratorError10 = true;
+                            _iteratorError10 = err;
                         } finally {
                             try {
-                                if (!_iteratorNormalCompletion9 && _iterator9["return"]) {
-                                    _iterator9["return"]();
+                                if (!_iteratorNormalCompletion10 && _iterator10["return"]) {
+                                    _iterator10["return"]();
                                 }
                             } finally {
-                                if (_didIteratorError9) {
-                                    throw _iteratorError9;
+                                if (_didIteratorError10) {
+                                    throw _iteratorError10;
                                 }
                             }
                         }
@@ -16052,30 +16126,30 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
                 _createClass(Service, null, [{
                     key: "$register",
                     set: function set(descriptor) {
-                        var _iteratorNormalCompletion10 = true;
-                        var _didIteratorError10 = false;
-                        var _iteratorError10 = undefined;
+                        var _iteratorNormalCompletion11 = true;
+                        var _didIteratorError11 = false;
+                        var _iteratorError11 = undefined;
 
                         try {
-                            for (var _iterator10 = _getIterator(this.iterate(descriptor)), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-                                var _step10$value = _slicedToArray(_step10.value, 2);
+                            for (var _iterator11 = _getIterator(Harmony.iterate(descriptor)), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+                                var _step11$value = _slicedToArray(_step11.value, 2);
 
-                                var _module4 = _step10$value[0];
-                                var klass = _step10$value[1];
+                                var _module4 = _step11$value[0];
+                                var klass = _step11$value[1];
 
                                 angular.module(_module4)[klass.type || "service"](klass.name, this);
                             }
                         } catch (err) {
-                            _didIteratorError10 = true;
-                            _iteratorError10 = err;
+                            _didIteratorError11 = true;
+                            _iteratorError11 = err;
                         } finally {
                             try {
-                                if (!_iteratorNormalCompletion10 && _iterator10["return"]) {
-                                    _iterator10["return"]();
+                                if (!_iteratorNormalCompletion11 && _iterator11["return"]) {
+                                    _iterator11["return"]();
                                 }
                             } finally {
-                                if (_didIteratorError10) {
-                                    throw _iteratorError10;
+                                if (_didIteratorError11) {
+                                    throw _iteratorError11;
                                 }
                             }
                         }
@@ -16091,25 +16165,25 @@ System.register("github:ng-harmony/ng-harmony@0.3.9/build/index.js", ["npm:babel
         }
     };
 });
-System.register("github:ng-harmony/ng-harmony@0.3.9.js", ["github:ng-harmony/ng-harmony@0.3.9/build/index.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.14.js", ["github:ng-harmony/ng-harmony@0.3.14/build/index.js"], function (_export) {
   "use strict";
 
   return {
-    setters: [function (_githubNgHarmonyNgHarmony039BuildIndexJs) {
+    setters: [function (_githubNgHarmonyNgHarmony0314BuildIndexJs) {
       var _exportObj = {};
 
-      for (var _key in _githubNgHarmonyNgHarmony039BuildIndexJs) {
-        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony039BuildIndexJs[_key];
+      for (var _key in _githubNgHarmonyNgHarmony0314BuildIndexJs) {
+        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony0314BuildIndexJs[_key];
       }
 
-      _exportObj["default"] = _githubNgHarmonyNgHarmony039BuildIndexJs["default"];
+      _exportObj["default"] = _githubNgHarmonyNgHarmony0314BuildIndexJs["default"];
 
       _export(_exportObj);
     }],
     execute: function () {}
   };
 });
-System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.9.js"], function (_export) {
+System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.14.js"], function (_export) {
     var _get, _inherits, _createClass, _classCallCheck, Service, TodoStorage, RemoteStorage, LocalStorage;
 
     return {
@@ -16121,8 +16195,8 @@ System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js"
             _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
         }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
             _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-        }, function (_githubNgHarmonyNgHarmony039Js) {
-            Service = _githubNgHarmonyNgHarmony039Js.Service;
+        }, function (_githubNgHarmonyNgHarmony0314Js) {
+            Service = _githubNgHarmonyNgHarmony0314Js.Service;
         }],
         execute: function () {
             "use strict";
@@ -16148,7 +16222,7 @@ System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js"
 
                     _get(Object.getPrototypeOf(TodoStorage.prototype), "constructor", this).apply(this, args);
                     this.todos = [];
-                    $http.get("/api").then(function () {
+                    this.$http.get("/api").then(function () {
                         _this.api = _this.$resource("/api/todos/:id", null, { "update": { "method": "PUT" } });
                         TodoStorage.mixin(RemoteStorage);
                     }, function () {

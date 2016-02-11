@@ -16,14 +16,14 @@ export class TodoCtrl extends Controller {
             this.$scope.newTodo = "";
             this.$scope.editedTodo = null;
 
-            $scope.$watch("todos", () => {
-                this.$scope.remainingCount = this.$filter("filter")(todos, { completed: false }).length;
-                this.$scope.completedCount = todos.length - this.$scope.remainingCount;
-                this.$scope.allChecked = !$scope.remainingCount;
+            this.$scope.$watch("todos", () => {
+                this.$scope.remainingCount = this.$filter("filter")(this.todos, { completed: false }).length;
+                this.$scope.completedCount = this.todos.length - this.$scope.remainingCount;
+                this.$scope.allChecked = !this.$scope.remainingCount;
             }, true);
 
             // Monitor the current route for changes and adjust the filter accordingly.
-            $scope.$on("$routeChangeSuccess", () => {
+            this.$scope.$on("$routeChangeSuccess", () => {
                 let status = this.$scope.status = this.$routeParams.status || "";
                 this.$scope.statusFilter = (status === "active") ?
                 { completed: false } : (status === "completed") ?
@@ -32,11 +32,12 @@ export class TodoCtrl extends Controller {
         }
 
 		addTodo () {
+            console.log("happy day sire");
 			let newTodo = {
-				title: $scope.newTodo.trim(),
+				title: this.$scope.newTodo.trim(),
 				completed: false
 			};
-
+            console.log(newTodo);
 			if (!newTodo.title) {
 				return;
 			}
@@ -118,7 +119,7 @@ export class TodoCtrl extends Controller {
 		}
 
 		clearCompletedTodos () {
-			store.clearCompleted();
+			this.TodoStorage.clearCompleted();
 		}
 
 		markAll (completed) {

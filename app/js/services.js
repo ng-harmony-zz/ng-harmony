@@ -7,7 +7,7 @@ export class TodoStorage extends Service {
     constructor (...args) {
         super(...args);
         this.todos = [];
-        $http.get("/api")
+        this.$http.get("/api")
 			.then(() => {
                 this.api = this.$resource("/api/todos/:id", null, { "update": { "method": "PUT" } });
                 TodoStorage.mixin(RemoteStorage);
