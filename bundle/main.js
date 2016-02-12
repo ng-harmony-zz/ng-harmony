@@ -1,5 +1,441 @@
-System.registerDynamic("github:angular/bower-angular-route@1.5.0/angular-route.js", ["github:angular/bower-angular@1.5.0.js"], false, function(__require, __exports, __module) {
-  var _retrieveGlobal = System.get("@@global-helpers").prepareGlobal(__module.id, null, null);
+/* */ 
+"format global";
+(function (global) {
+  var babelHelpers = global.babelHelpers = {};
+
+  babelHelpers.inherits = function (subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  };
+
+  babelHelpers.defaults = function (obj, defaults) {
+    var keys = Object.getOwnPropertyNames(defaults);
+
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      var value = Object.getOwnPropertyDescriptor(defaults, key);
+
+      if (value && value.configurable && obj[key] === undefined) {
+        Object.defineProperty(obj, key, value);
+      }
+    }
+
+    return obj;
+  };
+
+  babelHelpers.createClass = (function () {
+    function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor) descriptor.writable = true;
+        Object.defineProperty(target, descriptor.key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+      if (staticProps) defineProperties(Constructor, staticProps);
+      return Constructor;
+    };
+  })();
+
+  babelHelpers.createDecoratedClass = (function () {
+    function defineProperties(target, descriptors, initializers) {
+      for (var i = 0; i < descriptors.length; i++) {
+        var descriptor = descriptors[i];
+        var decorators = descriptor.decorators;
+        var key = descriptor.key;
+        delete descriptor.key;
+        delete descriptor.decorators;
+        descriptor.enumerable = descriptor.enumerable || false;
+        descriptor.configurable = true;
+        if ("value" in descriptor || descriptor.initializer) descriptor.writable = true;
+
+        if (decorators) {
+          for (var f = 0; f < decorators.length; f++) {
+            var decorator = decorators[f];
+
+            if (typeof decorator === "function") {
+              descriptor = decorator(target, key, descriptor) || descriptor;
+            } else {
+              throw new TypeError("The decorator for method " + descriptor.key + " is of the invalid type " + typeof decorator);
+            }
+          }
+
+          if (descriptor.initializer !== undefined) {
+            initializers[key] = descriptor;
+            continue;
+          }
+        }
+
+        Object.defineProperty(target, key, descriptor);
+      }
+    }
+
+    return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) {
+      if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers);
+      if (staticProps) defineProperties(Constructor, staticProps, staticInitializers);
+      return Constructor;
+    };
+  })();
+
+  babelHelpers.createDecoratedObject = function (descriptors) {
+    var target = {};
+
+    for (var i = 0; i < descriptors.length; i++) {
+      var descriptor = descriptors[i];
+      var decorators = descriptor.decorators;
+      var key = descriptor.key;
+      delete descriptor.key;
+      delete descriptor.decorators;
+      descriptor.enumerable = true;
+      descriptor.configurable = true;
+      if ("value" in descriptor || descriptor.initializer) descriptor.writable = true;
+
+      if (decorators) {
+        for (var f = 0; f < decorators.length; f++) {
+          var decorator = decorators[f];
+
+          if (typeof decorator === "function") {
+            descriptor = decorator(target, key, descriptor) || descriptor;
+          } else {
+            throw new TypeError("The decorator for method " + descriptor.key + " is of the invalid type " + typeof decorator);
+          }
+        }
+      }
+
+      if (descriptor.initializer) {
+        descriptor.value = descriptor.initializer.call(target);
+      }
+
+      Object.defineProperty(target, key, descriptor);
+    }
+
+    return target;
+  };
+
+  babelHelpers.defineDecoratedPropertyDescriptor = function (target, key, descriptors) {
+    var _descriptor = descriptors[key];
+    if (!_descriptor) return;
+    var descriptor = {};
+
+    for (var _key in _descriptor) descriptor[_key] = _descriptor[_key];
+
+    descriptor.value = descriptor.initializer ? descriptor.initializer.call(target) : undefined;
+    Object.defineProperty(target, key, descriptor);
+  };
+
+  babelHelpers.taggedTemplateLiteral = function (strings, raw) {
+    return Object.freeze(Object.defineProperties(strings, {
+      raw: {
+        value: Object.freeze(raw)
+      }
+    }));
+  };
+
+  babelHelpers.taggedTemplateLiteralLoose = function (strings, raw) {
+    strings.raw = raw;
+    return strings;
+  };
+
+  babelHelpers.toArray = function (arr) {
+    return Array.isArray(arr) ? arr : Array.from(arr);
+  };
+
+  babelHelpers.toConsumableArray = function (arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  };
+
+  babelHelpers.slicedToArray = (function () {
+    function sliceIterator(arr, i) {
+      var _arr = [];
+      var _n = true;
+      var _d = false;
+      var _e = undefined;
+
+      try {
+        for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+          _arr.push(_s.value);
+
+          if (i && _arr.length === i) break;
+        }
+      } catch (err) {
+        _d = true;
+        _e = err;
+      } finally {
+        try {
+          if (!_n && _i["return"]) _i["return"]();
+        } finally {
+          if (_d) throw _e;
+        }
+      }
+
+      return _arr;
+    }
+
+    return function (arr, i) {
+      if (Array.isArray(arr)) {
+        return arr;
+      } else if (Symbol.iterator in Object(arr)) {
+        return sliceIterator(arr, i);
+      } else {
+        throw new TypeError("Invalid attempt to destructure non-iterable instance");
+      }
+    };
+  })();
+
+  babelHelpers.slicedToArrayLoose = function (arr, i) {
+    if (Array.isArray(arr)) {
+      return arr;
+    } else if (Symbol.iterator in Object(arr)) {
+      var _arr = [];
+
+      for (var _iterator = arr[Symbol.iterator](), _step; !(_step = _iterator.next()).done;) {
+        _arr.push(_step.value);
+
+        if (i && _arr.length === i) break;
+      }
+
+      return _arr;
+    } else {
+      throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    }
+  };
+
+  babelHelpers.objectWithoutProperties = function (obj, keys) {
+    var target = {};
+
+    for (var i in obj) {
+      if (keys.indexOf(i) >= 0) continue;
+      if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+      target[i] = obj[i];
+    }
+
+    return target;
+  };
+
+  babelHelpers.hasOwn = Object.prototype.hasOwnProperty;
+  babelHelpers.slice = Array.prototype.slice;
+  babelHelpers.bind = Function.prototype.bind;
+
+  babelHelpers.defineProperty = function (obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  };
+
+  babelHelpers.asyncToGenerator = function (fn) {
+    return function () {
+      var gen = fn.apply(this, arguments);
+      return new Promise(function (resolve, reject) {
+        var callNext = step.bind(null, "next");
+        var callThrow = step.bind(null, "throw");
+
+        function step(key, arg) {
+          try {
+            var info = gen[key](arg);
+            var value = info.value;
+          } catch (error) {
+            reject(error);
+            return;
+          }
+
+          if (info.done) {
+            resolve(value);
+          } else {
+            Promise.resolve(value).then(callNext, callThrow);
+          }
+        }
+
+        callNext();
+      });
+    };
+  };
+
+  babelHelpers.interopExportWildcard = function (obj, defaults) {
+    var newObj = defaults({}, obj);
+    delete newObj["default"];
+    return newObj;
+  };
+
+  babelHelpers.interopRequireWildcard = function (obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    } else {
+      var newObj = {};
+
+      if (obj != null) {
+        for (var key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+        }
+      }
+
+      newObj["default"] = obj;
+      return newObj;
+    }
+  };
+
+  babelHelpers.interopRequireDefault = function (obj) {
+    return obj && obj.__esModule ? obj : {
+      "default": obj
+    };
+  };
+
+  babelHelpers._typeof = function (obj) {
+    return obj && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
+
+  babelHelpers._extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  babelHelpers.get = function get(object, property, receiver) {
+    if (object === null) object = Function.prototype;
+    var desc = Object.getOwnPropertyDescriptor(object, property);
+
+    if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);
+
+      if (parent === null) {
+        return undefined;
+      } else {
+        return get(parent, property, receiver);
+      }
+    } else if ("value" in desc) {
+      return desc.value;
+    } else {
+      var getter = desc.get;
+
+      if (getter === undefined) {
+        return undefined;
+      }
+
+      return getter.call(receiver);
+    }
+  };
+
+  babelHelpers.set = function set(object, property, value, receiver) {
+    var desc = Object.getOwnPropertyDescriptor(object, property);
+
+    if (desc === undefined) {
+      var parent = Object.getPrototypeOf(object);
+
+      if (parent !== null) {
+        set(parent, property, value, receiver);
+      }
+    } else if ("value" in desc && desc.writable) {
+      desc.value = value;
+    } else {
+      var setter = desc.set;
+
+      if (setter !== undefined) {
+        setter.call(receiver, value);
+      }
+    }
+
+    return value;
+  };
+
+  babelHelpers.newArrowCheck = function (innerThis, boundThis) {
+    if (innerThis !== boundThis) {
+      throw new TypeError("Cannot instantiate an arrow function");
+    }
+  };
+
+  babelHelpers.classCallCheck = function (instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  };
+
+  babelHelpers.objectDestructuringEmpty = function (obj) {
+    if (obj == null) throw new TypeError("Cannot destructure undefined");
+  };
+
+  babelHelpers.temporalUndefined = {};
+
+  babelHelpers.temporalAssertDefined = function (val, name, undef) {
+    if (val === undef) {
+      throw new ReferenceError(name + " is not defined - temporal dead zone");
+    }
+
+    return true;
+  };
+
+  babelHelpers.selfGlobal = typeof global === "undefined" ? self : global;
+  babelHelpers.typeofReactElement = typeof Symbol === "function" && Symbol["for"] && Symbol["for"]("react.element") || 60103;
+
+  babelHelpers.defaultProps = function (defaultProps, props) {
+    if (defaultProps) {
+      for (var propName in defaultProps) {
+        if (typeof props[propName] === "undefined") {
+          props[propName] = defaultProps[propName];
+        }
+      }
+    }
+
+    return props;
+  };
+
+  babelHelpers._instanceof = function (left, right) {
+    if (right != null && right[Symbol.hasInstance]) {
+      return right[Symbol.hasInstance](left);
+    } else {
+      return left instanceof right;
+    }
+  };
+
+  babelHelpers.interopRequire = function (obj) {
+    return obj && obj.__esModule ? obj["default"] : obj;
+  };
+})(typeof global === "undefined" ? self : global);
+
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in p||(p[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==v.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=p[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(v.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=p[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return x[e]||(x[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=p[s],v=x[s];v?l=v.exports:c&&!c.declarative?l=c.esModule:c?(d(c),v=c.module,l=v.exports):l=f(s),v&&v.importers?(v.importers.push(t),t.dependencies.push(v)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=p[e];if(t)t.declarative?c(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=f(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=p[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){if(r===e)return r;var t={};if("object"==typeof r||"function"==typeof r)if(g){var n;for(var o in r)(n=Object.getOwnPropertyDescriptor(r,o))&&h(t,o,n)}else{var a=r&&r.hasOwnProperty;for(var o in r)(!a||r.hasOwnProperty(o))&&(t[o]=r[o])}return t["default"]=r,h(t,"__useDefault",{value:!0}),t}function c(r,t){var n=p[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==v.call(t,u)&&(p[u]?c(u,t):f(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function f(e){if(D[e])return D[e];if("@node/"==e.substr(0,6))return y(e.substr(6));var r=p[e];if(!r)throw"Module "+e+" not present.";return a(e),c(e,[]),p[e]=void 0,r.declarative&&h(r.module.exports,"__esModule",{value:!0}),D[e]=r.declarative?r.module.exports:r.esModule}var p={},v=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},g=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(m){g=!1}var h;!function(){try{Object.defineProperty({},"a",{})&&(h=Object.defineProperty)}catch(e){h=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var x={},y="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,D={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:y,register:r,registerDynamic:t,get:f,set:function(e,r){D[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?D[e]=r:D[e]=s(r)})(n[d],arguments[d]);o(u);var i=f(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)f(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
+
+(["1"], [], function($__System) {
+
+!function(e){function n(e,n){for(var t=e.split(".");t.length;)n=n[t.shift()];return n}function t(n){if(Object.keys)Object.keys(e).forEach(n);else for(var t in e)f.call(e,t)&&n(t)}function r(n){t(function(t){if(-1==a.call(l,t)){try{var r=e[t]}catch(o){l.push(t)}n(t,r)}})}var o,i=$__System,f=Object.prototype.hasOwnProperty,a=Array.prototype.indexOf||function(e){for(var n=0,t=this.length;t>n;n++)if(this[n]===e)return n;return-1},l=["_g","sessionStorage","localStorage","clipboardData","frames","frameElement","external","mozAnimationStartTime","webkitStorageInfo","webkitIndexedDB"];i.set("@@global-helpers",i.newModule({prepareGlobal:function(t,i,f){var a=e.define;e.define=void 0,e.exports=void 0,e.module&&e.module.exports&&(e.module=void 0);var l;if(f){l={};for(var u in f)l[u]=e[u],e[u]=f[u]}return i||(o={},r(function(e,n){o[e]=n})),function(){var t;if(i)t=n(i,e);else{var f,u,s={};r(function(e,n){o[e]!==n&&"undefined"!=typeof n&&(s[e]=n,"undefined"!=typeof f?u||f===n||(u=!0):f=n)}),t=u?s:f}if(l)for(var c in l)e[c]=l[c];return e.define=a,t}}}))}("undefined"!=typeof self?self:global);
+!function(){var t=$__System;if("undefined"!=typeof window&&"undefined"!=typeof document&&window.location)var s=location.protocol+"//"+location.hostname+(location.port?":"+location.port:"");t.set("@@cjs-helpers",t.newModule({getPathVars:function(t){var n,o=t.lastIndexOf("!");n=-1!=o?t.substr(0,o):t;var e=n.split("/");return e.pop(),e=e.join("/"),"file:///"==n.substr(0,8)?(n=n.substr(7),e=e.substr(7),isWindows&&(n=n.substr(1),e=e.substr(1))):s&&n.substr(0,s.length)===s&&(n=n.substr(s.length),e=e.substr(s.length)),{filename:n,dirname:e}}}))}();
+$__System.registerDynamic("2", ["3"], false, function(__require, __exports, __module) {
+  var _retrieveGlobal = $__System.get("@@global-helpers").prepareGlobal(__module.id, null, null);
   (function() {
     "format global";
     "deps angular";
@@ -307,18 +743,18 @@ System.registerDynamic("github:angular/bower-angular-route@1.5.0/angular-route.j
   return _retrieveGlobal();
 });
 
-System.registerDynamic("github:angular/bower-angular-route@1.5.0.js", ["github:angular/bower-angular-route@1.5.0/angular-route.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("4", ["2"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('github:angular/bower-angular-route@1.5.0/angular-route.js');
+  module.exports = $__require('2');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:angular/bower-angular@1.5.0/angular.js", [], false, function(__require, __exports, __module) {
-  var _retrieveGlobal = System.get("@@global-helpers").prepareGlobal(__module.id, "angular", null);
+$__System.registerDynamic("5", [], false, function(__require, __exports, __module) {
+  var _retrieveGlobal = $__System.get("@@global-helpers").prepareGlobal(__module.id, "angular", null);
   (function() {
     "format global";
     "exports angular";
@@ -12239,18 +12675,18 @@ System.registerDynamic("github:angular/bower-angular@1.5.0/angular.js", [], fals
   return _retrieveGlobal();
 });
 
-System.registerDynamic("github:angular/bower-angular@1.5.0.js", ["github:angular/bower-angular@1.5.0/angular.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3", ["5"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('github:angular/bower-angular@1.5.0/angular.js');
+  module.exports = $__require('5');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:angular/bower-angular-resource@1.5.0/angular-resource.js", ["github:angular/bower-angular@1.5.0.js"], false, function(__require, __exports, __module) {
-  var _retrieveGlobal = System.get("@@global-helpers").prepareGlobal(__module.id, null, null);
+$__System.registerDynamic("6", ["3"], false, function(__require, __exports, __module) {
+  var _retrieveGlobal = $__System.get("@@global-helpers").prepareGlobal(__module.id, null, null);
   (function() {
     "format global";
     "deps angular";
@@ -12546,28 +12982,28 @@ System.registerDynamic("github:angular/bower-angular-resource@1.5.0/angular-reso
   return _retrieveGlobal();
 });
 
-System.registerDynamic("github:angular/bower-angular-resource@1.5.0.js", ["github:angular/bower-angular-resource@1.5.0/angular-resource.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("7", ["6"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('github:angular/bower-angular-resource@1.5.0/angular-resource.js');
+  module.exports = $__require('6');
   global.define = __define;
   return module.exports;
 });
 
-System.register("app/js/module.js", ["github:angular/bower-angular@1.5.0.js", "github:angular/bower-angular-route@1.5.0.js", "github:angular/bower-angular-resource@1.5.0.js"], function (_export) {
+$__System.register("8", ["3", "4", "7"], function (_export) {
   "use strict";
 
   var angular, ngRoute, ngResource, _module;
 
   return {
-    setters: [function (_githubAngularBowerAngular150Js) {
-      angular = _githubAngularBowerAngular150Js["default"];
-    }, function (_githubAngularBowerAngularRoute150Js) {
-      ngRoute = _githubAngularBowerAngularRoute150Js["default"];
-    }, function (_githubAngularBowerAngularResource150Js) {
-      ngResource = _githubAngularBowerAngularResource150Js["default"];
+    setters: [function (_) {
+      angular = _["default"];
+    }, function (_2) {
+      ngRoute = _2["default"];
+    }, function (_3) {
+      ngResource = _3["default"];
     }],
     execute: function () {
       _module = angular.module("todomvc", ["ngRoute", "ngResource"]);
@@ -12576,7 +13012,7 @@ System.register("app/js/module.js", ["github:angular/bower-angular@1.5.0.js", "g
     }
   };
 });
-System.register("app/js/routes.js", [], function (_export) {
+$__System.register("9", [], function (_export) {
     "use strict";
 
     var routeConfig;
@@ -12601,7 +13037,7 @@ System.register("app/js/routes.js", [], function (_export) {
         }
     };
 });
-System.register('app/js/directives.js', [], function (_export) {
+$__System.register('a', [], function (_export) {
 	/**
   * Directive that executes an expression when the element it is applied to gets
   * an `escape` keydown event.
@@ -12643,20 +13079,20 @@ System.register('app/js/directives.js', [], function (_export) {
 		}
 	};
 });
-System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.19.js"], function (_export) {
-    var _get, _inherits, _createClass, _classCallCheck, Service, TodoStorage, RemoteStorage, LocalStorage;
+$__System.register("b", ["10", "d", "e", "f", "c"], function (_export) {
+    var _classCallCheck, _get, _inherits, _createClass, Service, TodoStorage, RemoteStorage, LocalStorage;
 
     return {
-        setters: [function (_npmBabelRuntime5835HelpersGetJs) {
-            _get = _npmBabelRuntime5835HelpersGetJs["default"];
-        }, function (_npmBabelRuntime5835HelpersInheritsJs) {
-            _inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
-        }, function (_npmBabelRuntime5835HelpersCreateClassJs) {
-            _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
-        }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
-            _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-        }, function (_githubNgHarmonyNgHarmony0319Js) {
-            Service = _githubNgHarmonyNgHarmony0319Js.Service;
+        setters: [function (_) {
+            _classCallCheck = _["default"];
+        }, function (_d) {
+            _get = _d["default"];
+        }, function (_e) {
+            _inherits = _e["default"];
+        }, function (_f) {
+            _createClass = _f["default"];
+        }, function (_c) {
+            Service = _c.Service;
         }],
         execute: function () {
             "use strict";
@@ -12856,13 +13292,13 @@ System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js"
         }
     };
 });
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/modules/$.to-iobject.js", "npm:core-js@1.2.6/library/modules/$.object-sap.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("11", ["12", "13"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject.js');
-  $__require('npm:core-js@1.2.6/library/modules/$.object-sap.js')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
+  var toIObject = $__require('12');
+  $__require('13')('getOwnPropertyDescriptor', function($getOwnPropertyDescriptor) {
     return function getOwnPropertyDescriptor(it, key) {
       return $getOwnPropertyDescriptor(toIObject(it), key);
     };
@@ -12871,13 +13307,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-pro
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("14", ["15", "11"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js');
+  var $ = $__require('15');
+  $__require('11');
   module.exports = function getOwnPropertyDescriptor(it, key) {
     return $.getDesc(it, key);
   };
@@ -12885,26 +13321,26 @@ System.registerDynamic("npm:core-js@1.2.6/library/fn/object/get-own-property-des
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("16", ["14"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/get-own-property-descriptor.js'),
+    "default": $__require('14'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/helpers/get.js", ["npm:babel-runtime@5.8.35/core-js/object/get-own-property-descriptor.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("d", ["16"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Object$getOwnPropertyDescriptor = $__require('npm:babel-runtime@5.8.35/core-js/object/get-own-property-descriptor.js')["default"];
+  var _Object$getOwnPropertyDescriptor = $__require('16')["default"];
   exports["default"] = function get(_x, _x2, _x3) {
     var _again = true;
     _function: while (_again) {
@@ -12943,13 +13379,13 @@ System.registerDynamic("npm:babel-runtime@5.8.35/helpers/get.js", ["npm:babel-ru
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/helpers/create-class.js", ["npm:babel-runtime@5.8.35/core-js/object/define-property.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("f", ["17"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Object$defineProperty = $__require('npm:babel-runtime@5.8.35/core-js/object/define-property.js')["default"];
+  var _Object$defineProperty = $__require('17')["default"];
   exports["default"] = (function() {
     function defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
@@ -12974,7 +13410,7 @@ System.registerDynamic("npm:babel-runtime@5.8.35/helpers/create-class.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/helpers/class-call-check.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("10", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -12990,14 +13426,14 @@ System.registerDynamic("npm:babel-runtime@5.8.35/helpers/class-call-check.js", [
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/helpers/inherits.js", ["npm:babel-runtime@5.8.35/core-js/object/create.js", "npm:babel-runtime@5.8.35/core-js/object/set-prototype-of.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("e", ["18", "19"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Object$create = $__require('npm:babel-runtime@5.8.35/core-js/object/create.js')["default"];
-  var _Object$setPrototypeOf = $__require('npm:babel-runtime@5.8.35/core-js/object/set-prototype-of.js')["default"];
+  var _Object$create = $__require('18')["default"];
+  var _Object$setPrototypeOf = $__require('19')["default"];
   exports["default"] = function(subClass, superClass) {
     if (typeof superClass !== "function" && superClass !== null) {
       throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
@@ -13016,15 +13452,15 @@ System.registerDynamic("npm:babel-runtime@5.8.35/helpers/inherits.js", ["npm:bab
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/core.is-iterable.js", ["npm:core-js@1.2.6/library/modules/$.classof.js", "npm:core-js@1.2.6/library/modules/$.wks.js", "npm:core-js@1.2.6/library/modules/$.iterators.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1a", ["1b", "1c", "1d", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var classof = $__require('npm:core-js@1.2.6/library/modules/$.classof.js'),
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('iterator'),
-      Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').isIterable = function(it) {
+  var classof = $__require('1b'),
+      ITERATOR = $__require('1c')('iterator'),
+      Iterators = $__require('1d');
+  module.exports = $__require('1e').isIterable = function(it) {
     var O = Object(it);
     return O[ITERATOR] !== undefined || '@@iterator' in O || Iterators.hasOwnProperty(classof(O));
   };
@@ -13032,39 +13468,39 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/core.is-iterable.js", 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/is-iterable.js", ["npm:core-js@1.2.6/library/modules/web.dom.iterable.js", "npm:core-js@1.2.6/library/modules/es6.string.iterator.js", "npm:core-js@1.2.6/library/modules/core.is-iterable.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["20", "21", "1a"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/web.dom.iterable.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.string.iterator.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/core.is-iterable.js');
+  $__require('20');
+  $__require('21');
+  module.exports = $__require('1a');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/is-iterable.js", ["npm:core-js@1.2.6/library/fn/is-iterable.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["1f"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/is-iterable.js'),
+    "default": $__require('1f'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", ["npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/core-js/is-iterable.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("23", ["24", "22"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _getIterator = $__require('npm:babel-runtime@5.8.35/core-js/get-iterator.js')["default"];
-  var _isIterable = $__require('npm:babel-runtime@5.8.35/core-js/is-iterable.js')["default"];
+  var _getIterator = $__require('24')["default"];
+  var _isIterable = $__require('22')["default"];
   exports["default"] = (function() {
     function sliceIterator(arr, i) {
       var _arr = [];
@@ -13107,14 +13543,14 @@ System.registerDynamic("npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", ["
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/core.get-iterator.js", ["npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/core.get-iterator-method.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("25", ["26", "27", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js'),
-      get = $__require('npm:core-js@1.2.6/library/modules/core.get-iterator-method.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').getIterator = function(it) {
+  var anObject = $__require('26'),
+      get = $__require('27');
+  module.exports = $__require('1e').getIterator = function(it) {
     var iterFn = get(it);
     if (typeof iterFn != 'function')
       throw TypeError(it + ' is not iterable!');
@@ -13124,38 +13560,38 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/core.get-iterator.js",
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/get-iterator.js", ["npm:core-js@1.2.6/library/modules/web.dom.iterable.js", "npm:core-js@1.2.6/library/modules/es6.string.iterator.js", "npm:core-js@1.2.6/library/modules/core.get-iterator.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["20", "21", "25"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/web.dom.iterable.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.string.iterator.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/core.get-iterator.js');
+  $__require('20');
+  $__require('21');
+  module.exports = $__require('25');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/get-iterator.js", ["npm:core-js@1.2.6/library/fn/get-iterator.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("24", ["28"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/get-iterator.js'),
+    "default": $__require('28'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.keyof.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.to-iobject.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("29", ["15", "12"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js'),
-      toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject.js');
+  var $ = $__require('15'),
+      toIObject = $__require('12');
   module.exports = function(object, el) {
     var O = toIObject(object),
         keys = $.getKeys(O),
@@ -13170,12 +13606,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.keyof.js", ["npm:cor
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.enum-keys.js", ["npm:core-js@1.2.6/library/modules/$.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("2a", ["15"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
+  var $ = $__require('15');
   module.exports = function(it) {
     var keys = $.getKeys(it),
         getSymbols = $.getSymbols;
@@ -13194,12 +13630,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.enum-keys.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-array.js", ["npm:core-js@1.2.6/library/modules/$.cof.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("2b", ["2c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = $__require('npm:core-js@1.2.6/library/modules/$.cof.js');
+  var cof = $__require('2c');
   module.exports = Array.isArray || function(arg) {
     return cof(arg) == 'Array';
   };
@@ -13207,30 +13643,30 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-array.js", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.symbol.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.global.js", "npm:core-js@1.2.6/library/modules/$.has.js", "npm:core-js@1.2.6/library/modules/$.descriptors.js", "npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.redefine.js", "npm:core-js@1.2.6/library/modules/$.fails.js", "npm:core-js@1.2.6/library/modules/$.shared.js", "npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js", "npm:core-js@1.2.6/library/modules/$.uid.js", "npm:core-js@1.2.6/library/modules/$.wks.js", "npm:core-js@1.2.6/library/modules/$.keyof.js", "npm:core-js@1.2.6/library/modules/$.get-names.js", "npm:core-js@1.2.6/library/modules/$.enum-keys.js", "npm:core-js@1.2.6/library/modules/$.is-array.js", "npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/$.to-iobject.js", "npm:core-js@1.2.6/library/modules/$.property-desc.js", "npm:core-js@1.2.6/library/modules/$.library.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("2d", ["15", "2e", "2f", "30", "31", "32", "33", "34", "35", "36", "1c", "29", "37", "2a", "2b", "26", "12", "38", "39"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js'),
-      global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
-      has = $__require('npm:core-js@1.2.6/library/modules/$.has.js'),
-      DESCRIPTORS = $__require('npm:core-js@1.2.6/library/modules/$.descriptors.js'),
-      $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js'),
-      redefine = $__require('npm:core-js@1.2.6/library/modules/$.redefine.js'),
-      $fails = $__require('npm:core-js@1.2.6/library/modules/$.fails.js'),
-      shared = $__require('npm:core-js@1.2.6/library/modules/$.shared.js'),
-      setToStringTag = $__require('npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js'),
-      uid = $__require('npm:core-js@1.2.6/library/modules/$.uid.js'),
-      wks = $__require('npm:core-js@1.2.6/library/modules/$.wks.js'),
-      keyOf = $__require('npm:core-js@1.2.6/library/modules/$.keyof.js'),
-      $names = $__require('npm:core-js@1.2.6/library/modules/$.get-names.js'),
-      enumKeys = $__require('npm:core-js@1.2.6/library/modules/$.enum-keys.js'),
-      isArray = $__require('npm:core-js@1.2.6/library/modules/$.is-array.js'),
-      anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js'),
-      toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject.js'),
-      createDesc = $__require('npm:core-js@1.2.6/library/modules/$.property-desc.js'),
+  var $ = $__require('15'),
+      global = $__require('2e'),
+      has = $__require('2f'),
+      DESCRIPTORS = $__require('30'),
+      $export = $__require('31'),
+      redefine = $__require('32'),
+      $fails = $__require('33'),
+      shared = $__require('34'),
+      setToStringTag = $__require('35'),
+      uid = $__require('36'),
+      wks = $__require('1c'),
+      keyOf = $__require('29'),
+      $names = $__require('37'),
+      enumKeys = $__require('2a'),
+      isArray = $__require('2b'),
+      anObject = $__require('26'),
+      toIObject = $__require('12'),
+      createDesc = $__require('38'),
       getDesc = $.getDesc,
       setDesc = $.setDesc,
       _create = $.create,
@@ -13377,7 +13813,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.symbol.js", ["npm:
     $.setDescs = $defineProperties;
     $.getNames = $names.get = $getOwnPropertyNames;
     $.getSymbols = $getOwnPropertySymbols;
-    if (DESCRIPTORS && !$__require('npm:core-js@1.2.6/library/modules/$.library.js')) {
+    if (DESCRIPTORS && !$__require('39')) {
       redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
     }
   }
@@ -13418,47 +13854,47 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.symbol.js", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/symbol/index.js", ["npm:core-js@1.2.6/library/modules/es6.symbol.js", "npm:core-js@1.2.6/library/modules/es6.object.to-string.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3a", ["2d", "3b", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/es6.symbol.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.to-string.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').Symbol;
+  $__require('2d');
+  $__require('3b');
+  module.exports = $__require('1e').Symbol;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/symbol.js", ["npm:core-js@1.2.6/library/fn/symbol/index.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3c", ["3a"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:core-js@1.2.6/library/fn/symbol/index.js');
+  module.exports = $__require('3a');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/symbol.js", ["npm:core-js@1.2.6/library/fn/symbol.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3d", ["3c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/symbol.js'),
+    "default": $__require('3c'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/create.js", ["npm:core-js@1.2.6/library/modules/$.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3e", ["15"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
+  var $ = $__require('15');
   module.exports = function create(P, D) {
     return $.create(P, D);
   };
@@ -13466,55 +13902,55 @@ System.registerDynamic("npm:core-js@1.2.6/library/fn/object/create.js", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/create.js", ["npm:core-js@1.2.6/library/fn/object/create.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("18", ["3e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/create.js'),
+    "default": $__require('3e'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of.js", ["npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.set-proto.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("3f", ["31", "40"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js');
-  $export($export.S, 'Object', {setPrototypeOf: $__require('npm:core-js@1.2.6/library/modules/$.set-proto.js').set});
+  var $export = $__require('31');
+  $export($export.S, 'Object', {setPrototypeOf: $__require('40').set});
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/set-prototype-of.js", ["npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("41", ["3f", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.set-prototype-of.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').Object.setPrototypeOf;
+  $__require('3f');
+  module.exports = $__require('1e').Object.setPrototypeOf;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/set-prototype-of.js", ["npm:core-js@1.2.6/library/fn/object/set-prototype-of.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("19", ["41"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/set-prototype-of.js'),
+    "default": $__require('41'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.to-string.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("3b", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13524,13 +13960,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.to-string.j
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.string-at.js", ["npm:core-js@1.2.6/library/modules/$.to-integer.js", "npm:core-js@1.2.6/library/modules/$.defined.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("42", ["43", "44"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = $__require('npm:core-js@1.2.6/library/modules/$.to-integer.js'),
-      defined = $__require('npm:core-js@1.2.6/library/modules/$.defined.js');
+  var toInteger = $__require('43'),
+      defined = $__require('44');
   module.exports = function(TO_STRING) {
     return function(that, pos) {
       var s = String(defined(that)),
@@ -13548,14 +13984,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.string-at.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.string.iterator.js", ["npm:core-js@1.2.6/library/modules/$.string-at.js", "npm:core-js@1.2.6/library/modules/$.iter-define.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("21", ["42", "45"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $at = $__require('npm:core-js@1.2.6/library/modules/$.string-at.js')(true);
-  $__require('npm:core-js@1.2.6/library/modules/$.iter-define.js')(String, 'String', function(iterated) {
+  var $at = $__require('42')(true);
+  $__require('45')(String, 'String', function(iterated) {
     this._t = String(iterated);
     this._i = 0;
   }, function() {
@@ -13578,7 +14014,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.string.iterator.js
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.add-to-unscopables.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("46", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13588,7 +14024,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.add-to-unscopables.j
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-step.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("47", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13603,17 +14039,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-step.js", [], t
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-create.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.property-desc.js", "npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js", "npm:core-js@1.2.6/library/modules/$.hide.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("48", ["15", "38", "35", "49", "1c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js'),
-      descriptor = $__require('npm:core-js@1.2.6/library/modules/$.property-desc.js'),
-      setToStringTag = $__require('npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js'),
+  var $ = $__require('15'),
+      descriptor = $__require('38'),
+      setToStringTag = $__require('35'),
       IteratorPrototype = {};
-  $__require('npm:core-js@1.2.6/library/modules/$.hide.js')(IteratorPrototype, $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('iterator'), function() {
+  $__require('49')(IteratorPrototype, $__require('1c')('iterator'), function() {
     return this;
   });
   module.exports = function(Constructor, NAME, next) {
@@ -13624,22 +14060,22 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-create.js", ["n
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-define.js", ["npm:core-js@1.2.6/library/modules/$.library.js", "npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.redefine.js", "npm:core-js@1.2.6/library/modules/$.hide.js", "npm:core-js@1.2.6/library/modules/$.has.js", "npm:core-js@1.2.6/library/modules/$.iterators.js", "npm:core-js@1.2.6/library/modules/$.iter-create.js", "npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js", "npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("45", ["39", "31", "32", "49", "2f", "1d", "48", "35", "15", "1c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var LIBRARY = $__require('npm:core-js@1.2.6/library/modules/$.library.js'),
-      $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js'),
-      redefine = $__require('npm:core-js@1.2.6/library/modules/$.redefine.js'),
-      hide = $__require('npm:core-js@1.2.6/library/modules/$.hide.js'),
-      has = $__require('npm:core-js@1.2.6/library/modules/$.has.js'),
-      Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators.js'),
-      $iterCreate = $__require('npm:core-js@1.2.6/library/modules/$.iter-create.js'),
-      setToStringTag = $__require('npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js'),
-      getProto = $__require('npm:core-js@1.2.6/library/modules/$.js').getProto,
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('iterator'),
+  var LIBRARY = $__require('39'),
+      $export = $__require('31'),
+      redefine = $__require('32'),
+      hide = $__require('49'),
+      has = $__require('2f'),
+      Iterators = $__require('1d'),
+      $iterCreate = $__require('48'),
+      setToStringTag = $__require('35'),
+      getProto = $__require('15').getProto,
+      ITERATOR = $__require('1c')('iterator'),
       BUGGY = !([].keys && 'next' in [].keys()),
       FF_ITERATOR = '@@iterator',
       KEYS = 'keys',
@@ -13711,17 +14147,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-define.js", ["n
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.array.iterator.js", ["npm:core-js@1.2.6/library/modules/$.add-to-unscopables.js", "npm:core-js@1.2.6/library/modules/$.iter-step.js", "npm:core-js@1.2.6/library/modules/$.iterators.js", "npm:core-js@1.2.6/library/modules/$.to-iobject.js", "npm:core-js@1.2.6/library/modules/$.iter-define.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("4a", ["46", "47", "1d", "12", "45"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var addToUnscopables = $__require('npm:core-js@1.2.6/library/modules/$.add-to-unscopables.js'),
-      step = $__require('npm:core-js@1.2.6/library/modules/$.iter-step.js'),
-      Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators.js'),
-      toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.iter-define.js')(Array, 'Array', function(iterated, kind) {
+  var addToUnscopables = $__require('46'),
+      step = $__require('47'),
+      Iterators = $__require('1d'),
+      toIObject = $__require('12');
+  module.exports = $__require('45')(Array, 'Array', function(iterated, kind) {
     this._t = toIObject(iterated);
     this._i = 0;
     this._k = kind;
@@ -13747,19 +14183,19 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.array.iterator.js"
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/web.dom.iterable.js", ["npm:core-js@1.2.6/library/modules/es6.array.iterator.js", "npm:core-js@1.2.6/library/modules/$.iterators.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("20", ["4a", "1d"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/es6.array.iterator.js');
-  var Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators.js');
+  $__require('4a');
+  var Iterators = $__require('1d');
   Iterators.NodeList = Iterators.HTMLCollection = Iterators.Array;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.library.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("39", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13769,7 +14205,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.library.js", [], tru
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.strict-new.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("4b", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13783,12 +14219,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.strict-new.js", [], 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-call.js", ["npm:core-js@1.2.6/library/modules/$.an-object.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("4c", ["26"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js');
+  var anObject = $__require('26');
   module.exports = function(iterator, fn, value, entries) {
     try {
       return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -13803,13 +14239,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-call.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-array-iter.js", ["npm:core-js@1.2.6/library/modules/$.iterators.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("4d", ["1d", "1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators.js'),
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('iterator'),
+  var Iterators = $__require('1d'),
+      ITERATOR = $__require('1c')('iterator'),
       ArrayProto = Array.prototype;
   module.exports = function(it) {
     return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
@@ -13818,7 +14254,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-array-iter.js", [
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-integer.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("43", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13832,12 +14268,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-integer.js", [], 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-length.js", ["npm:core-js@1.2.6/library/modules/$.to-integer.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("4e", ["43"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = $__require('npm:core-js@1.2.6/library/modules/$.to-integer.js'),
+  var toInteger = $__require('43'),
       min = Math.min;
   module.exports = function(it) {
     return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
@@ -13846,13 +14282,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-length.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.classof.js", ["npm:core-js@1.2.6/library/modules/$.cof.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", ["2c", "1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = $__require('npm:core-js@1.2.6/library/modules/$.cof.js'),
-      TAG = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('toStringTag'),
+  var cof = $__require('2c'),
+      TAG = $__require('1c')('toStringTag'),
       ARG = cof(function() {
         return arguments;
       }()) == 'Arguments';
@@ -13866,7 +14302,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.classof.js", ["npm:c
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iterators.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13876,15 +14312,15 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iterators.js", [], t
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/core.get-iterator-method.js", ["npm:core-js@1.2.6/library/modules/$.classof.js", "npm:core-js@1.2.6/library/modules/$.wks.js", "npm:core-js@1.2.6/library/modules/$.iterators.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("27", ["1b", "1c", "1d", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var classof = $__require('npm:core-js@1.2.6/library/modules/$.classof.js'),
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('iterator'),
-      Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').getIteratorMethod = function(it) {
+  var classof = $__require('1b'),
+      ITERATOR = $__require('1c')('iterator'),
+      Iterators = $__require('1d');
+  module.exports = $__require('1e').getIteratorMethod = function(it) {
     if (it != undefined)
       return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
   };
@@ -13892,17 +14328,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/core.get-iterator-meth
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.for-of.js", ["npm:core-js@1.2.6/library/modules/$.ctx.js", "npm:core-js@1.2.6/library/modules/$.iter-call.js", "npm:core-js@1.2.6/library/modules/$.is-array-iter.js", "npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/$.to-length.js", "npm:core-js@1.2.6/library/modules/core.get-iterator-method.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("4f", ["50", "4c", "4d", "26", "4e", "27"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js'),
-      call = $__require('npm:core-js@1.2.6/library/modules/$.iter-call.js'),
-      isArrayIter = $__require('npm:core-js@1.2.6/library/modules/$.is-array-iter.js'),
-      anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js'),
-      toLength = $__require('npm:core-js@1.2.6/library/modules/$.to-length.js'),
-      getIterFn = $__require('npm:core-js@1.2.6/library/modules/core.get-iterator-method.js');
+  var ctx = $__require('50'),
+      call = $__require('4c'),
+      isArrayIter = $__require('4d'),
+      anObject = $__require('26'),
+      toLength = $__require('4e'),
+      getIterFn = $__require('27');
   module.exports = function(iterable, entries, fn, that) {
     var iterFn = getIterFn(iterable),
         f = ctx(fn, that, entries ? 2 : 1),
@@ -13925,14 +14361,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.for-of.js", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.is-object.js", "npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/$.ctx.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("40", ["15", "51", "26", "50"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var getDesc = $__require('npm:core-js@1.2.6/library/modules/$.js').getDesc,
-      isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object.js'),
-      anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js');
+  var getDesc = $__require('15').getDesc,
+      isObject = $__require('51'),
+      anObject = $__require('26');
   var check = function(O, proto) {
     anObject(O);
     if (!isObject(proto) && proto !== null)
@@ -13941,7 +14377,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto.js", ["npm
   module.exports = {
     set: Object.setPrototypeOf || ('__proto__' in {} ? function(test, buggy, set) {
       try {
-        set = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
+        set = $__require('50')(Function.call, getDesc(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) {
@@ -13962,7 +14398,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-proto.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.same-value.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("52", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -13974,12 +14410,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.same-value.js", [], 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object.js", ["npm:core-js@1.2.6/library/modules/$.is-object.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("26", ["51"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object.js');
+  var isObject = $__require('51');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -13989,14 +14425,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.species-constructor.js", ["npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/$.a-function.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("53", ["26", "54", "1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js'),
-      aFunction = $__require('npm:core-js@1.2.6/library/modules/$.a-function.js'),
-      SPECIES = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('species');
+  var anObject = $__require('26'),
+      aFunction = $__require('54'),
+      SPECIES = $__require('1c')('species');
   module.exports = function(O, D) {
     var C = anObject(O).constructor,
         S;
@@ -14006,7 +14442,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.species-constructor.
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.invoke.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("55", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -14031,17 +14467,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.invoke.js", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.html.js", ["npm:core-js@1.2.6/library/modules/$.global.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("56", ["2e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.global.js').document && document.documentElement;
+  module.exports = $__require('2e').document && document.documentElement;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("51", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -14053,13 +14489,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object.js", [], t
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.dom-create.js", ["npm:core-js@1.2.6/library/modules/$.is-object.js", "npm:core-js@1.2.6/library/modules/$.global.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("57", ["51", "2e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object.js'),
-      document = $__require('npm:core-js@1.2.6/library/modules/$.global.js').document,
+  var isObject = $__require('51'),
+      document = $__require('2e').document,
       is = isObject(document) && isObject(document.createElement);
   module.exports = function(it) {
     return is ? document.createElement(it) : {};
@@ -14068,17 +14504,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.dom-create.js", ["np
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.task.js", ["npm:core-js@1.2.6/library/modules/$.ctx.js", "npm:core-js@1.2.6/library/modules/$.invoke.js", "npm:core-js@1.2.6/library/modules/$.html.js", "npm:core-js@1.2.6/library/modules/$.dom-create.js", "npm:core-js@1.2.6/library/modules/$.global.js", "npm:core-js@1.2.6/library/modules/$.cof.js", "github:jspm/nodelibs-process@0.1.2.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("58", ["50", "55", "56", "57", "2e", "2c", "59"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
-    var ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js'),
-        invoke = $__require('npm:core-js@1.2.6/library/modules/$.invoke.js'),
-        html = $__require('npm:core-js@1.2.6/library/modules/$.html.js'),
-        cel = $__require('npm:core-js@1.2.6/library/modules/$.dom-create.js'),
-        global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
+    var ctx = $__require('50'),
+        invoke = $__require('55'),
+        html = $__require('56'),
+        cel = $__require('57'),
+        global = $__require('2e'),
         process = global.process,
         setTask = global.setImmediate,
         clearTask = global.clearImmediate,
@@ -14115,7 +14551,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.task.js", ["npm:core
       clearTask = function clearImmediate(id) {
         delete queue[id];
       };
-      if ($__require('npm:core-js@1.2.6/library/modules/$.cof.js')(process) == 'process') {
+      if ($__require('2c')(process) == 'process') {
         defer = function(id) {
           process.nextTick(ctx(run, id, 1));
         };
@@ -14146,23 +14582,23 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.task.js", ["npm:core
       set: setTask,
       clear: clearTask
     };
-  })($__require('github:jspm/nodelibs-process@0.1.2.js'));
+  })($__require('59'));
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.microtask.js", ["npm:core-js@1.2.6/library/modules/$.global.js", "npm:core-js@1.2.6/library/modules/$.task.js", "npm:core-js@1.2.6/library/modules/$.cof.js", "github:jspm/nodelibs-process@0.1.2.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5a", ["2e", "58", "2c", "59"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
-    var global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
-        macrotask = $__require('npm:core-js@1.2.6/library/modules/$.task.js').set,
+    var global = $__require('2e'),
+        macrotask = $__require('58').set,
         Observer = global.MutationObserver || global.WebKitMutationObserver,
         process = global.process,
         Promise = global.Promise,
-        isNode = $__require('npm:core-js@1.2.6/library/modules/$.cof.js')(process) == 'process',
+        isNode = $__require('2c')(process) == 'process',
         head,
         last,
         notify;
@@ -14222,12 +14658,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.microtask.js", ["npm
       }
       last = task;
     };
-  })($__require('github:jspm/nodelibs-process@0.1.2.js'));
+  })($__require('59'));
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.property-desc.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("38", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -14244,14 +14680,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.property-desc.js", [
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.hide.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.property-desc.js", "npm:core-js@1.2.6/library/modules/$.descriptors.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("49", ["15", "38", "30"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js'),
-      createDesc = $__require('npm:core-js@1.2.6/library/modules/$.property-desc.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.descriptors.js') ? function(object, key, value) {
+  var $ = $__require('15'),
+      createDesc = $__require('38');
+  module.exports = $__require('30') ? function(object, key, value) {
     return $.setDesc(object, key, createDesc(1, value));
   } : function(object, key, value) {
     object[key] = value;
@@ -14261,22 +14697,22 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.hide.js", ["npm:core
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.redefine.js", ["npm:core-js@1.2.6/library/modules/$.hide.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("32", ["49"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.hide.js');
+  module.exports = $__require('49');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.redefine-all.js", ["npm:core-js@1.2.6/library/modules/$.redefine.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5b", ["32"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var redefine = $__require('npm:core-js@1.2.6/library/modules/$.redefine.js');
+  var redefine = $__require('32');
   module.exports = function(target, src) {
     for (var key in src)
       redefine(target, key, src[key]);
@@ -14286,7 +14722,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.redefine-all.js", ["
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.has.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2f", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -14299,14 +14735,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.has.js", [], true, f
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.has.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("35", ["15", "2f", "1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var def = $__require('npm:core-js@1.2.6/library/modules/$.js').setDesc,
-      has = $__require('npm:core-js@1.2.6/library/modules/$.has.js'),
-      TAG = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('toStringTag');
+  var def = $__require('15').setDesc,
+      has = $__require('2f'),
+      TAG = $__require('1c')('toStringTag');
   module.exports = function(it, tag, stat) {
     if (it && !has(it = stat ? it : it.prototype, TAG))
       def(it, TAG, {
@@ -14318,12 +14754,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.descriptors.js", ["npm:core-js@1.2.6/library/modules/$.fails.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("30", ["33"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = !$__require('npm:core-js@1.2.6/library/modules/$.fails.js')(function() {
+  module.exports = !$__require('33')(function() {
     return Object.defineProperty({}, 'a', {get: function() {
         return 7;
       }}).a != 7;
@@ -14332,16 +14768,16 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.descriptors.js", ["n
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-species.js", ["npm:core-js@1.2.6/library/modules/$.core.js", "npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.descriptors.js", "npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5c", ["1e", "15", "30", "1c"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var core = $__require('npm:core-js@1.2.6/library/modules/$.core.js'),
-      $ = $__require('npm:core-js@1.2.6/library/modules/$.js'),
-      DESCRIPTORS = $__require('npm:core-js@1.2.6/library/modules/$.descriptors.js'),
-      SPECIES = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('species');
+  var core = $__require('1e'),
+      $ = $__require('15'),
+      DESCRIPTORS = $__require('30'),
+      SPECIES = $__require('1c')('species');
   module.exports = function(KEY) {
     var C = core[KEY];
     if (DESCRIPTORS && C && !C[SPECIES])
@@ -14356,12 +14792,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-species.js", ["n
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.shared.js", ["npm:core-js@1.2.6/library/modules/$.global.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("34", ["2e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
+  var global = $__require('2e'),
       SHARED = '__core-js_shared__',
       store = global[SHARED] || (global[SHARED] = {});
   module.exports = function(key) {
@@ -14371,7 +14807,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.shared.js", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.uid.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("36", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -14385,14 +14821,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.uid.js", [], true, f
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.wks.js", ["npm:core-js@1.2.6/library/modules/$.shared.js", "npm:core-js@1.2.6/library/modules/$.uid.js", "npm:core-js@1.2.6/library/modules/$.global.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["34", "36", "2e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var store = $__require('npm:core-js@1.2.6/library/modules/$.shared.js')('wks'),
-      uid = $__require('npm:core-js@1.2.6/library/modules/$.uid.js'),
-      Symbol = $__require('npm:core-js@1.2.6/library/modules/$.global.js').Symbol;
+  var store = $__require('34')('wks'),
+      uid = $__require('36'),
+      Symbol = $__require('2e').Symbol;
   module.exports = function(name) {
     return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
   };
@@ -14400,12 +14836,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.wks.js", ["npm:core-
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-detect.js", ["npm:core-js@1.2.6/library/modules/$.wks.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5d", ["1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('iterator'),
+  var ITERATOR = $__require('1c')('iterator'),
       SAFE_CLOSING = false;
   try {
     var riter = [7][ITERATOR]();
@@ -14437,29 +14873,29 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-detect.js", ["n
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.promise.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/$.library.js", "npm:core-js@1.2.6/library/modules/$.global.js", "npm:core-js@1.2.6/library/modules/$.ctx.js", "npm:core-js@1.2.6/library/modules/$.classof.js", "npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.is-object.js", "npm:core-js@1.2.6/library/modules/$.an-object.js", "npm:core-js@1.2.6/library/modules/$.a-function.js", "npm:core-js@1.2.6/library/modules/$.strict-new.js", "npm:core-js@1.2.6/library/modules/$.for-of.js", "npm:core-js@1.2.6/library/modules/$.set-proto.js", "npm:core-js@1.2.6/library/modules/$.same-value.js", "npm:core-js@1.2.6/library/modules/$.wks.js", "npm:core-js@1.2.6/library/modules/$.species-constructor.js", "npm:core-js@1.2.6/library/modules/$.microtask.js", "npm:core-js@1.2.6/library/modules/$.descriptors.js", "npm:core-js@1.2.6/library/modules/$.redefine-all.js", "npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js", "npm:core-js@1.2.6/library/modules/$.set-species.js", "npm:core-js@1.2.6/library/modules/$.core.js", "npm:core-js@1.2.6/library/modules/$.iter-detect.js", "github:jspm/nodelibs-process@0.1.2.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5e", ["15", "39", "2e", "50", "1b", "31", "51", "26", "54", "4b", "4f", "40", "52", "1c", "53", "5a", "30", "5b", "35", "5c", "1e", "5d", "59"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
     'use strict';
-    var $ = $__require('npm:core-js@1.2.6/library/modules/$.js'),
-        LIBRARY = $__require('npm:core-js@1.2.6/library/modules/$.library.js'),
-        global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
-        ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js'),
-        classof = $__require('npm:core-js@1.2.6/library/modules/$.classof.js'),
-        $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js'),
-        isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object.js'),
-        anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object.js'),
-        aFunction = $__require('npm:core-js@1.2.6/library/modules/$.a-function.js'),
-        strictNew = $__require('npm:core-js@1.2.6/library/modules/$.strict-new.js'),
-        forOf = $__require('npm:core-js@1.2.6/library/modules/$.for-of.js'),
-        setProto = $__require('npm:core-js@1.2.6/library/modules/$.set-proto.js').set,
-        same = $__require('npm:core-js@1.2.6/library/modules/$.same-value.js'),
-        SPECIES = $__require('npm:core-js@1.2.6/library/modules/$.wks.js')('species'),
-        speciesConstructor = $__require('npm:core-js@1.2.6/library/modules/$.species-constructor.js'),
-        asap = $__require('npm:core-js@1.2.6/library/modules/$.microtask.js'),
+    var $ = $__require('15'),
+        LIBRARY = $__require('39'),
+        global = $__require('2e'),
+        ctx = $__require('50'),
+        classof = $__require('1b'),
+        $export = $__require('31'),
+        isObject = $__require('51'),
+        anObject = $__require('26'),
+        aFunction = $__require('54'),
+        strictNew = $__require('4b'),
+        forOf = $__require('4f'),
+        setProto = $__require('40').set,
+        same = $__require('52'),
+        SPECIES = $__require('1c')('species'),
+        speciesConstructor = $__require('53'),
+        asap = $__require('5a'),
         PROMISE = 'Promise',
         process = global.process,
         isNode = classof(process) == 'process',
@@ -14485,7 +14921,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.promise.js", ["npm
         if (!(P2.resolve(5).then(function() {}) instanceof P2)) {
           works = false;
         }
-        if (works && $__require('npm:core-js@1.2.6/library/modules/$.descriptors.js')) {
+        if (works && $__require('30')) {
           var thenableThenGotten = false;
           P.resolve($.setDesc({}, 'then', {get: function() {
               thenableThenGotten = true;
@@ -14663,7 +15099,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.promise.js", ["npm
           $reject.call(record, err);
         }
       };
-      $__require('npm:core-js@1.2.6/library/modules/$.redefine-all.js')(P.prototype, {
+      $__require('5b')(P.prototype, {
         then: function then(onFulfilled, onRejected) {
           var reaction = new PromiseCapability(speciesConstructor(this, P)),
               promise = reaction.promise,
@@ -14683,9 +15119,9 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.promise.js", ["npm
       });
     }
     $export($export.G + $export.W + $export.F * !USE_NATIVE, {Promise: P});
-    $__require('npm:core-js@1.2.6/library/modules/$.set-to-string-tag.js')(P, PROMISE);
-    $__require('npm:core-js@1.2.6/library/modules/$.set-species.js')(PROMISE);
-    Wrapper = $__require('npm:core-js@1.2.6/library/modules/$.core.js')[PROMISE];
+    $__require('35')(P, PROMISE);
+    $__require('5c')(PROMISE);
+    Wrapper = $__require('1e')[PROMISE];
     $export($export.S + $export.F * !USE_NATIVE, PROMISE, {reject: function reject(r) {
         var capability = new PromiseCapability(this),
             $$reject = capability.reject;
@@ -14700,7 +15136,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.promise.js", ["npm
         $$resolve(x);
         return capability.promise;
       }});
-    $export($export.S + $export.F * !(USE_NATIVE && $__require('npm:core-js@1.2.6/library/modules/$.iter-detect.js')(function(iter) {
+    $export($export.S + $export.F * !(USE_NATIVE && $__require('5d')(function(iter) {
       P.all(iter)['catch'](function() {});
     })), PROMISE, {
       all: function all(iterable) {
@@ -14745,39 +15181,39 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.promise.js", ["npm
         return capability.promise;
       }
     });
-  })($__require('github:jspm/nodelibs-process@0.1.2.js'));
+  })($__require('59'));
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/promise.js", ["npm:core-js@1.2.6/library/modules/es6.object.to-string.js", "npm:core-js@1.2.6/library/modules/es6.string.iterator.js", "npm:core-js@1.2.6/library/modules/web.dom.iterable.js", "npm:core-js@1.2.6/library/modules/es6.promise.js", "npm:core-js@1.2.6/library/modules/$.core.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("5f", ["3b", "21", "20", "5e", "1e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.to-string.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.string.iterator.js');
-  $__require('npm:core-js@1.2.6/library/modules/web.dom.iterable.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.promise.js');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core.js').Promise;
+  $__require('3b');
+  $__require('21');
+  $__require('20');
+  $__require('5e');
+  module.exports = $__require('1e').Promise;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/promise.js", ["npm:core-js@1.2.6/library/fn/promise.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("60", ["5f"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/promise.js'),
+    "default": $__require('5f'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:process@0.11.2/browser.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("61", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -14869,47 +15305,47 @@ System.registerDynamic("npm:process@0.11.2/browser.js", [], true, function($__re
   return module.exports;
 });
 
-System.registerDynamic("npm:process@0.11.2.js", ["npm:process@0.11.2/browser.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("62", ["61"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:process@0.11.2/browser.js');
+  module.exports = $__require('61');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:jspm/nodelibs-process@0.1.2/index.js", ["npm:process@0.11.2.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("63", ["62"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = System._nodeRequire ? process : $__require('npm:process@0.11.2.js');
+  module.exports = $__System._nodeRequire ? process : $__require('62');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:jspm/nodelibs-process@0.1.2.js", ["github:jspm/nodelibs-process@0.1.2/index.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("59", ["63"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('github:jspm/nodelibs-process@0.1.2/index.js');
+  module.exports = $__require('63');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/regenerator/runtime.js", ["npm:babel-runtime@5.8.35/core-js/symbol.js", "npm:babel-runtime@5.8.35/core-js/object/create.js", "npm:babel-runtime@5.8.35/core-js/object/set-prototype-of.js", "npm:babel-runtime@5.8.35/core-js/promise.js", "github:jspm/nodelibs-process@0.1.2.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("64", ["3d", "18", "19", "60", "59"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   (function(process) {
     "use strict";
-    var _Symbol = $__require('npm:babel-runtime@5.8.35/core-js/symbol.js')["default"];
-    var _Object$create = $__require('npm:babel-runtime@5.8.35/core-js/object/create.js')["default"];
-    var _Object$setPrototypeOf = $__require('npm:babel-runtime@5.8.35/core-js/object/set-prototype-of.js')["default"];
-    var _Promise = $__require('npm:babel-runtime@5.8.35/core-js/promise.js')["default"];
+    var _Symbol = $__require('3d')["default"];
+    var _Object$create = $__require('18')["default"];
+    var _Object$setPrototypeOf = $__require('19')["default"];
+    var _Promise = $__require('60')["default"];
     !(function(global) {
       "use strict";
       var hasOwn = Object.prototype.hasOwnProperty;
@@ -15337,12 +15773,12 @@ System.registerDynamic("npm:babel-runtime@5.8.35/regenerator/runtime.js", ["npm:
         }
       };
     })(typeof global === "object" ? global : typeof window === "object" ? window : typeof self === "object" ? self : undefined);
-  })($__require('github:jspm/nodelibs-process@0.1.2.js'));
+  })($__require('59'));
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/regenerator/index.js", ["npm:babel-runtime@5.8.35/regenerator/runtime.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("65", ["64"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15351,7 +15787,7 @@ System.registerDynamic("npm:babel-runtime@5.8.35/regenerator/index.js", ["npm:ba
   var hadRuntime = g.regeneratorRuntime && Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
   var oldRuntime = hadRuntime && g.regeneratorRuntime;
   g.regeneratorRuntime = undefined;
-  module.exports = $__require('npm:babel-runtime@5.8.35/regenerator/runtime.js');
+  module.exports = $__require('64');
   if (hadRuntime) {
     g.regeneratorRuntime = oldRuntime;
   } else {
@@ -15369,17 +15805,17 @@ System.registerDynamic("npm:babel-runtime@5.8.35/regenerator/index.js", ["npm:ba
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/regenerator.js", ["npm:babel-runtime@5.8.35/regenerator/index.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("66", ["65"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:babel-runtime@5.8.35/regenerator/index.js');
+  module.exports = $__require('65');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2e", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15391,7 +15827,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global.js", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("54", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15405,12 +15841,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function.js", [], 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx.js", ["npm:core-js@1.2.6/library/modules/$.a-function.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("50", ["54"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var aFunction = $__require('npm:core-js@1.2.6/library/modules/$.a-function.js');
+  var aFunction = $__require('54');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -15437,14 +15873,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx.js", ["npm:core-
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export.js", ["npm:core-js@1.2.6/library/modules/$.global.js", "npm:core-js@1.2.6/library/modules/$.core.js", "npm:core-js@1.2.6/library/modules/$.ctx.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("31", ["2e", "1e", "50"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = $__require('npm:core-js@1.2.6/library/modules/$.global.js'),
-      core = $__require('npm:core-js@1.2.6/library/modules/$.core.js'),
-      ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx.js'),
+  var global = $__require('2e'),
+      core = $__require('1e'),
+      ctx = $__require('50'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -15487,7 +15923,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export.js", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15499,7 +15935,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core.js", [], true, 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("33", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15515,14 +15951,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails.js", [], true,
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.object-sap.js", ["npm:core-js@1.2.6/library/modules/$.export.js", "npm:core-js@1.2.6/library/modules/$.core.js", "npm:core-js@1.2.6/library/modules/$.fails.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("13", ["31", "1e", "33"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $export = $__require('npm:core-js@1.2.6/library/modules/$.export.js'),
-      core = $__require('npm:core-js@1.2.6/library/modules/$.core.js'),
-      fails = $__require('npm:core-js@1.2.6/library/modules/$.fails.js');
+  var $export = $__require('31'),
+      core = $__require('1e'),
+      fails = $__require('33');
   module.exports = function(KEY, exec) {
     var fn = (core.Object || {})[KEY] || Object[KEY],
         exp = {};
@@ -15535,7 +15971,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.object-sap.js", ["np
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2c", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15548,12 +15984,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof.js", [], true, f
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iobject.js", ["npm:core-js@1.2.6/library/modules/$.cof.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("67", ["2c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = $__require('npm:core-js@1.2.6/library/modules/$.cof.js');
+  var cof = $__require('2c');
   module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it) {
     return cof(it) == 'String' ? it.split('') : Object(it);
   };
@@ -15561,7 +15997,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iobject.js", ["npm:c
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("44", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15575,13 +16011,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined.js", [], tru
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-iobject.js", ["npm:core-js@1.2.6/library/modules/$.iobject.js", "npm:core-js@1.2.6/library/modules/$.defined.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["67", "44"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var IObject = $__require('npm:core-js@1.2.6/library/modules/$.iobject.js'),
-      defined = $__require('npm:core-js@1.2.6/library/modules/$.defined.js');
+  var IObject = $__require('67'),
+      defined = $__require('44');
   module.exports = function(it) {
     return IObject(defined(it));
   };
@@ -15589,13 +16025,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-iobject.js", ["np
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.get-names.js", ["npm:core-js@1.2.6/library/modules/$.to-iobject.js", "npm:core-js@1.2.6/library/modules/$.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("37", ["12", "15"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toIObject = $__require('npm:core-js@1.2.6/library/modules/$.to-iobject.js'),
-      getNames = $__require('npm:core-js@1.2.6/library/modules/$.js').getNames,
+  var toIObject = $__require('12'),
+      getNames = $__require('15').getNames,
       toString = {}.toString;
   var windowNames = typeof window == 'object' && Object.getOwnPropertyNames ? Object.getOwnPropertyNames(window) : [];
   var getWindowNames = function(it) {
@@ -15614,25 +16050,25 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.get-names.js", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-property-names.js", ["npm:core-js@1.2.6/library/modules/$.object-sap.js", "npm:core-js@1.2.6/library/modules/$.get-names.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("68", ["13", "37"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/$.object-sap.js')('getOwnPropertyNames', function() {
-    return $__require('npm:core-js@1.2.6/library/modules/$.get-names.js').get;
+  $__require('13')('getOwnPropertyNames', function() {
+    return $__require('37').get;
   });
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/get-own-property-names.js", ["npm:core-js@1.2.6/library/modules/$.js", "npm:core-js@1.2.6/library/modules/es6.object.get-own-property-names.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("69", ["15", "68"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
-  $__require('npm:core-js@1.2.6/library/modules/es6.object.get-own-property-names.js');
+  var $ = $__require('15');
+  $__require('68');
   module.exports = function getOwnPropertyNames(it) {
     return $.getNames(it);
   };
@@ -15640,20 +16076,20 @@ System.registerDynamic("npm:core-js@1.2.6/library/fn/object/get-own-property-nam
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", ["npm:core-js@1.2.6/library/fn/object/get-own-property-names.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("6a", ["69"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/get-own-property-names.js'),
+    "default": $__require('69'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.js", [], true, function($__require, exports, module) {
+$__System.registerDynamic("15", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -15675,12 +16111,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.js", [], true, funct
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/object/define-property.js", ["npm:core-js@1.2.6/library/modules/$.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("6b", ["15"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$.js');
+  var $ = $__require('15');
   module.exports = function defineProperty(it, key, desc) {
     return $.setDesc(it, key, desc);
   };
@@ -15688,41 +16124,41 @@ System.registerDynamic("npm:core-js@1.2.6/library/fn/object/define-property.js",
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/define-property.js", ["npm:core-js@1.2.6/library/fn/object/define-property.js"], true, function($__require, exports, module) {
+$__System.registerDynamic("17", ["6b"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/object/define-property.js'),
+    "default": $__require('6b'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.register("github:ng-harmony/ng-harmony@0.3.19/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
-    var _get, _createClass, _classCallCheck, _inherits, _slicedToArray, _getIterator, _regeneratorRuntime, _Object$getOwnPropertyNames, _Object$defineProperty, Harmony, Controller, Service;
+$__System.register("6c", ["10", "17", "23", "24", "66", "d", "f", "e", "6a"], function (_export) {
+    var _classCallCheck, _Object$defineProperty, _slicedToArray, _getIterator, _regeneratorRuntime, _get, _createClass, _inherits, _Object$getOwnPropertyNames, Harmony, Controller, Service;
 
     return {
-        setters: [function (_npmBabelRuntime5835HelpersGetJs) {
-            _get = _npmBabelRuntime5835HelpersGetJs["default"];
-        }, function (_npmBabelRuntime5835HelpersCreateClassJs) {
-            _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
-        }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
-            _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-        }, function (_npmBabelRuntime5835HelpersInheritsJs) {
-            _inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
-        }, function (_npmBabelRuntime5835HelpersSlicedToArrayJs) {
-            _slicedToArray = _npmBabelRuntime5835HelpersSlicedToArrayJs["default"];
-        }, function (_npmBabelRuntime5835CoreJsGetIteratorJs) {
-            _getIterator = _npmBabelRuntime5835CoreJsGetIteratorJs["default"];
-        }, function (_npmBabelRuntime5835RegeneratorJs) {
-            _regeneratorRuntime = _npmBabelRuntime5835RegeneratorJs["default"];
-        }, function (_npmBabelRuntime5835CoreJsObjectGetOwnPropertyNamesJs) {
-            _Object$getOwnPropertyNames = _npmBabelRuntime5835CoreJsObjectGetOwnPropertyNamesJs["default"];
-        }, function (_npmBabelRuntime5835CoreJsObjectDefinePropertyJs) {
-            _Object$defineProperty = _npmBabelRuntime5835CoreJsObjectDefinePropertyJs["default"];
+        setters: [function (_) {
+            _classCallCheck = _["default"];
+        }, function (_5) {
+            _Object$defineProperty = _5["default"];
+        }, function (_2) {
+            _slicedToArray = _2["default"];
+        }, function (_3) {
+            _getIterator = _3["default"];
+        }, function (_4) {
+            _regeneratorRuntime = _4["default"];
+        }, function (_d) {
+            _get = _d["default"];
+        }, function (_f) {
+            _createClass = _f["default"];
+        }, function (_e) {
+            _inherits = _e["default"];
+        }, function (_a) {
+            _Object$getOwnPropertyNames = _a["default"];
         }],
         execute: function () {
             "use strict";
@@ -16249,38 +16685,38 @@ System.register("github:ng-harmony/ng-harmony@0.3.19/build/index.js", ["npm:babe
         }
     };
 });
-System.register("github:ng-harmony/ng-harmony@0.3.19.js", ["github:ng-harmony/ng-harmony@0.3.19/build/index.js"], function (_export) {
+$__System.register("c", ["6c"], function (_export) {
   "use strict";
 
   return {
-    setters: [function (_githubNgHarmonyNgHarmony0319BuildIndexJs) {
+    setters: [function (_c) {
       var _exportObj = {};
 
-      for (var _key in _githubNgHarmonyNgHarmony0319BuildIndexJs) {
-        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony0319BuildIndexJs[_key];
+      for (var _key in _c) {
+        if (_key !== "default") _exportObj[_key] = _c[_key];
       }
 
-      _exportObj["default"] = _githubNgHarmonyNgHarmony0319BuildIndexJs["default"];
+      _exportObj["default"] = _c["default"];
 
       _export(_exportObj);
     }],
     execute: function () {}
   };
 });
-System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.19.js"], function (_export) {
-	var _get, _inherits, _createClass, _classCallCheck, Controller, TodoCtrl;
+$__System.register("6d", ["10", "d", "e", "f", "c"], function (_export) {
+	var _classCallCheck, _get, _inherits, _createClass, Controller, TodoCtrl;
 
 	return {
-		setters: [function (_npmBabelRuntime5835HelpersGetJs) {
-			_get = _npmBabelRuntime5835HelpersGetJs["default"];
-		}, function (_npmBabelRuntime5835HelpersInheritsJs) {
-			_inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
-		}, function (_npmBabelRuntime5835HelpersCreateClassJs) {
-			_createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
-		}, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
-			_classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-		}, function (_githubNgHarmonyNgHarmony0319Js) {
-			Controller = _githubNgHarmonyNgHarmony0319Js.Controller;
+		setters: [function (_) {
+			_classCallCheck = _["default"];
+		}, function (_d) {
+			_get = _d["default"];
+		}, function (_e) {
+			_inherits = _e["default"];
+		}, function (_f) {
+			_createClass = _f["default"];
+		}, function (_c) {
+			Controller = _c.Controller;
 		}],
 		execute: function () {
 			/**
@@ -16445,20 +16881,20 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 		}
 	};
 });
-System.register("app/main.js", ["app/js/module.js", "app/js/routes.js", "app/js/directives.js", "app/js/services.js", "app/js/controllers.js"], function (_export) {
+$__System.register("1", ["8", "9", "a", "b", "6d"], function (_export) {
     "use strict";
 
     var _module, routeConfig, TodoStorage, TodoCtrl;
 
     return {
-        setters: [function (_appJsModuleJs) {
-            _module = _appJsModuleJs["default"];
-        }, function (_appJsRoutesJs) {
-            routeConfig = _appJsRoutesJs["default"];
-        }, function (_appJsDirectivesJs) {}, function (_appJsServicesJs) {
-            TodoStorage = _appJsServicesJs.TodoStorage;
-        }, function (_appJsControllersJs) {
-            TodoCtrl = _appJsControllersJs.TodoCtrl;
+        setters: [function (_) {
+            _module = _["default"];
+        }, function (_2) {
+            routeConfig = _2["default"];
+        }, function (_a) {}, function (_b) {
+            TodoStorage = _b.TodoStorage;
+        }, function (_d) {
+            TodoCtrl = _d.TodoCtrl;
         }],
         execute: function () {
 
@@ -16475,5 +16911,9 @@ System.register("app/main.js", ["app/js/module.js", "app/js/routes.js", "app/js/
             });
         }
     };
+});
+})
+(function(factory) {
+  factory();
 });
 //# sourceMappingURL=main.js.map

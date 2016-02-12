@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>AngularJS • TodoMVC</title>
-        <link rel="stylesheet" href="bower-components/todomvc-common/base.css">
-        <link rel="stylesheet" href="bower-components/todomvc-app-css/index.css">
+        <link rel="stylesheet" href="app/css/todomvc-common/base.css">
+        <link rel="stylesheet" href="app/css/todomvc-app-css/index.css">
         <style>[ng-cloak] { display: none; }</style>
         <base href="/">
     </head>
@@ -21,19 +21,20 @@
 
         <ng-view class="content-area"/>
 
-        <!-- build:dev -->
+        <!-- build:dev
         <script src="jspm_packages/system.js"></script>
         <script src="config.js"></script>
         <script src="bundle/main.js"></script>
-        <!-- endbuild -->
-
-        <!-- build:prod -->
-        <!-- <script src="dist/app/app.js?bust={{date}}"></script> -->
-        <!-- endbuild -->
-
         <script>
             System.import('app/main');
         </script>
+        endbuild -->
+
+        <!-- build:prod -->
+        <script src="bundle/main.js"></script>
+        <!-- endbuild -->
+
+
 
     </body>
 </html>
