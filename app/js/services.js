@@ -5,7 +5,7 @@ export class TodoStorage extends Service {
         return "todos-angularjs";
     }
     constructor (...args) {
-        super(args);
+        super(...args);
         this.todos = [];
         this.$http.get("/api")
 			.then(() => {

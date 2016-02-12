@@ -12595,7 +12595,7 @@ System.register("app/js/routes.js", [], function (_export) {
         }
     };
 });
-System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.15.js"], function (_export) {
+System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.18.js"], function (_export) {
 	var _get, _inherits, _createClass, _classCallCheck, Controller, TodoCtrl;
 
 	return {
@@ -12607,8 +12607,8 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 			_createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
 		}, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
 			_classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-		}, function (_githubNgHarmonyNgHarmony0315Js) {
-			Controller = _githubNgHarmonyNgHarmony0315Js.Controller;
+		}, function (_githubNgHarmonyNgHarmony0318Js) {
+			Controller = _githubNgHarmonyNgHarmony0318Js.Controller;
 		}],
 		execute: function () {
 			/**
@@ -12630,7 +12630,7 @@ System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.
 						args[_key] = arguments[_key];
 					}
 
-					_get(Object.getPrototypeOf(TodoCtrl.prototype), "constructor", this).apply(this, args);
+					_get(Object.getPrototypeOf(TodoCtrl.prototype), "constructor", this).call(this, args);
 
 					this.$scope.todos = this.TodoStorage.todos;
 					this.todos = this.TodoStorage.todos;
@@ -15618,7 +15618,7 @@ System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/define-property.
   return module.exports;
 });
 
-System.register("github:ng-harmony/ng-harmony@0.3.15/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.18/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
     var _get, _createClass, _classCallCheck, _inherits, _slicedToArray, _getIterator, _regeneratorRuntime, _Object$getOwnPropertyNames, _Object$defineProperty, Harmony, Controller, Service;
 
     return {
@@ -15970,7 +15970,7 @@ System.register("github:ng-harmony/ng-harmony@0.3.15/build/index.js", ["npm:babe
                             }
                         }
 
-                        this._$inject = this.$inject.concat(injectees);
+                        this._$inject = this.$inject.concat(_injectees);
                     }
                 }, {
                     key: "$register",
@@ -16022,7 +16022,7 @@ System.register("github:ng-harmony/ng-harmony@0.3.15/build/index.js", ["npm:babe
 
                     _classCallCheck(this, Controller);
 
-                    _get(Object.getPrototypeOf(Controller.prototype), "constructor", this).apply(this, args);
+                    _get(Object.getPrototypeOf(Controller.prototype), "constructor", this).call(this, args);
                     var _iteratorNormalCompletion9 = true;
                     var _didIteratorError9 = false;
                     var _iteratorError9 = undefined;
@@ -16035,7 +16035,7 @@ System.register("github:ng-harmony/ng-harmony@0.3.15/build/index.js", ["npm:babe
                             var fn = _step9$value[1];
 
                             if (typeof fn === "function" && key[0] === "$") {
-                                _this.$scope[key.slice(0, 1)] = _this.$scope[key] = function () {
+                                _this.$scope[key.slice(1)] = _this.$scope[key] = function () {
                                     for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
                                         args[_key4] = arguments[_key4];
                                     }
@@ -16166,25 +16166,25 @@ System.register("github:ng-harmony/ng-harmony@0.3.15/build/index.js", ["npm:babe
         }
     };
 });
-System.register("github:ng-harmony/ng-harmony@0.3.15.js", ["github:ng-harmony/ng-harmony@0.3.15/build/index.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.18.js", ["github:ng-harmony/ng-harmony@0.3.18/build/index.js"], function (_export) {
   "use strict";
 
   return {
-    setters: [function (_githubNgHarmonyNgHarmony0315BuildIndexJs) {
+    setters: [function (_githubNgHarmonyNgHarmony0318BuildIndexJs) {
       var _exportObj = {};
 
-      for (var _key in _githubNgHarmonyNgHarmony0315BuildIndexJs) {
-        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony0315BuildIndexJs[_key];
+      for (var _key in _githubNgHarmonyNgHarmony0318BuildIndexJs) {
+        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony0318BuildIndexJs[_key];
       }
 
-      _exportObj["default"] = _githubNgHarmonyNgHarmony0315BuildIndexJs["default"];
+      _exportObj["default"] = _githubNgHarmonyNgHarmony0318BuildIndexJs["default"];
 
       _export(_exportObj);
     }],
     execute: function () {}
   };
 });
-System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.15.js"], function (_export) {
+System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.18.js"], function (_export) {
     var _get, _inherits, _createClass, _classCallCheck, Service, TodoStorage, RemoteStorage, LocalStorage;
 
     return {
@@ -16196,8 +16196,8 @@ System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js"
             _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
         }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
             _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-        }, function (_githubNgHarmonyNgHarmony0315Js) {
-            Service = _githubNgHarmonyNgHarmony0315Js.Service;
+        }, function (_githubNgHarmonyNgHarmony0318Js) {
+            Service = _githubNgHarmonyNgHarmony0318Js.Service;
         }],
         execute: function () {
             "use strict";
