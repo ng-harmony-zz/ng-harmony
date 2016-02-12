@@ -64,7 +64,7 @@ export class Harmony {
 }
 export class Controller extends Harmony {
     constructor (...args) {
-        super(args);
+        super(...args);
         for (let [key, fn] of this.iterate(this.constructor.prototype)) {
             if (typeof fn === "function" &&
                 key[0] === "$") {
