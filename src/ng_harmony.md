@@ -119,7 +119,7 @@ export class Controller extends Harmony {
         for (let [key, fn] of this.iterate(this.constructor.prototype)) {
             if (typeof fn === "function" &&
                 key[0] === "$") {
-                this.$scope[key.slice(0, 1)] = this.$scope[key] = (...args) => {
+                this.$scope[key.slice(1)] = this.$scope[key] = (...args) => {
                     return fn.apply(this, args);
                 };
             }
