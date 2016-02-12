@@ -1,9 +1,9 @@
 import module from "./js/module";
 import routeConfig from "./js/routes";
 
-import { TodoCtrl } from "./js/controllers";
-import { TodoStorage } from "./js/services";
 import "./js/directives";
+import { TodoStorage } from "./js/services";
+import { TodoCtrl } from "./js/controllers";
 
 module.config(function ($routeProvider) {
     $routeProvider

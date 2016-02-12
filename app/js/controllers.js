@@ -7,7 +7,7 @@ import { Controller } from "ng-harmony/ng-harmony";
 
 export class TodoCtrl extends Controller {
         constructor (...args) {
-            super(args);
+            super(...args);
 
             this.$scope.todos = this.TodoStorage.todos;
             this.todos = this.TodoStorage.todos;

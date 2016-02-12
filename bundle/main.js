@@ -12585,193 +12585,276 @@ System.register("app/js/routes.js", [], function (_export) {
         execute: function () {
             routeConfig = {
                 controller: "TodoCtrl",
-                templateUrl: "app/templates/todomvc.html"
+                templateUrl: "app/templates/todomvc.html",
+                resolve: {
+                    TodoStorage: function TodoStorage($http, LocalStorage, RemoteStorage) {
+                        return $http.get("/api").then(function () {
+                            return RemoteStorage;
+                        }, function () {
+                            return LocalStorage;
+                        });
+                    }
+                }
             };
-            /*resolve: {
-                store: (TodoStorage) => { return TodoStorage; }
-            }*/
 
             _export("default", routeConfig);
         }
     };
 });
-System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.18.js"], function (_export) {
-	var _get, _inherits, _createClass, _classCallCheck, Controller, TodoCtrl;
+System.register('app/js/directives.js', [], function (_export) {
+	/**
+  * Directive that executes an expression when the element it is applied to gets
+  * an `escape` keydown event.
+  */
+	'use strict';
 
 	return {
-		setters: [function (_npmBabelRuntime5835HelpersGetJs) {
-			_get = _npmBabelRuntime5835HelpersGetJs["default"];
-		}, function (_npmBabelRuntime5835HelpersInheritsJs) {
-			_inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
-		}, function (_npmBabelRuntime5835HelpersCreateClassJs) {
-			_createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
-		}, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
-			_classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-		}, function (_githubNgHarmonyNgHarmony0318Js) {
-			Controller = _githubNgHarmonyNgHarmony0318Js.Controller;
-		}],
+		setters: [],
 		execute: function () {
-			/**
-    * The main controller for the app. The controller:
-    * - retrieves and persists the model via the todoStorage service
-    * - exposes the model to the template and provides event handlers
-    */
-			"use strict";
+			_export('default', angular.module('todomvc').directive('todoEscape', function () {
+				'use strict';
 
-			TodoCtrl = (function (_Controller) {
-				_inherits(TodoCtrl, _Controller);
+				var ESCAPE_KEY = 27;
 
-				function TodoCtrl() {
-					var _this = this;
-
-					_classCallCheck(this, TodoCtrl);
-
-					for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-						args[_key] = arguments[_key];
-					}
-
-					_get(Object.getPrototypeOf(TodoCtrl.prototype), "constructor", this).call(this, args);
-
-					this.$scope.todos = this.TodoStorage.todos;
-					this.todos = this.TodoStorage.todos;
-					this.$scope.newTodo = "";
-					this.$scope.editedTodo = null;
-
-					this.$scope.$watch("todos", function () {
-						_this.$scope.remainingCount = _this.$filter("filter")(_this.todos, { completed: false }).length;
-						_this.$scope.completedCount = _this.todos.length - _this.$scope.remainingCount;
-						_this.$scope.allChecked = !_this.$scope.remainingCount;
-					}, true);
-
-					// Monitor the current route for changes and adjust the filter accordingly.
-					this.$scope.$on("$routeChangeSuccess", function () {
-						var status = _this.$scope.status = _this.$routeParams.status || "";
-						_this.$scope.statusFilter = status === "active" ? { completed: false } : status === "completed" ? { completed: true } : {};
+				return function (scope, elem, attrs) {
+					elem.bind('keydown', function (event) {
+						if (event.keyCode === ESCAPE_KEY) {
+							scope.$apply(attrs.todoEscape);
+						}
 					});
-				}
 
-				_createClass(TodoCtrl, [{
-					key: "$addTodo",
-					value: function $addTodo() {
-						var _this2 = this;
+					scope.$on('$destroy', function () {
+						elem.unbind('keydown');
+					});
+				};
+			}).directive('todoFocus', function todoFocus($timeout) {
+				'use strict';
 
-						console.log("happy day sire");
-						var newTodo = {
-							title: this.$scope.newTodo.trim(),
-							completed: false
-						};
-						console.log(newTodo);
-						if (!newTodo.title) {
-							return;
+				return function (scope, elem, attrs) {
+					scope.$watch(attrs.todoFocus, function (newVal) {
+						if (newVal) {
+							$timeout(function () {
+								elem[0].focus();
+							}, 0, false);
 						}
-
-						this.$scope.saving = true;
-						this.TodoStorage.insert(newTodo).then(function () {
-							_this2.$scope.newTodo = "";
-						})["finally"](function () {
-							_this2.$scope.saving = false;
-						});
-					}
-				}, {
-					key: "$editTodo",
-					value: function $editTodo(todo) {
-						this.$scope.editedTodo = todo;
-
-						// Clone the original todo to restore it on demand.
-						this.$scope.originalTodo = angular.extend({}, todo);
-					}
-				}, {
-					key: "$saveEdits",
-					value: function $saveEdits(todo, event) {
-						var _this3 = this;
-
-						// Blur events are automatically triggered after the form submit event.
-						// This does some unfortunate logic handling to prevent saving twice.
-						if (event === "blur" && this.$scope.saveEvent === "submit") {
-							this.$scope.saveEvent = null;
-							return;
-						}
-
-						this.$scope.saveEvent = event;
-
-						if (this.$scope.reverted) {
-							// Todo edits were reverted-- don't save.
-							this.$scope.reverted = null;
-							return;
-						}
-
-						todo.title = todo.title.trim();
-
-						if (todo.title === this.$scope.originalTodo.title) {
-							this.$scope.editedTodo = null;
-							return;
-						}
-
-						this.TodoStorage[todo.title ? "put" : "delete"](todo).then(function () {}, function () {
-							todo.title = _this3.$scope.originalTodo.title;
-						})["finally"](function () {
-							_this3.$scope.editedTodo = null;
-						});
-					}
-				}, {
-					key: "$revertEdits",
-					value: function $revertEdits(todo) {
-						this.todos[this.todos.indexOf(todo)] = this.$scope.originalTodo;
-						this.$scope.editedTodo = null;
-						this.$scope.originalTodo = null;
-						this.$scope.reverted = true;
-					}
-				}, {
-					key: "$removeTodo",
-					value: function $removeTodo(todo) {
-						this.TodoStorage["delete"](todo);
-					}
-				}, {
-					key: "$saveTodo",
-					value: function $saveTodo(todo) {
-						this.TodoStorage.put(todo);
-					}
-				}, {
-					key: "$toggleCompleted",
-					value: function $toggleCompleted(todo, completed) {
-						if (angular.isDefined(completed)) {
-							todo.completed = completed;
-						}
-						this.TodoStorage.put(todo, this.todos.indexOf(todo)).then(function success() {}, function error() {
-							todo.completed = !todo.completed;
-						});
-					}
-				}, {
-					key: "$clearCompletedTodos",
-					value: function $clearCompletedTodos() {
-						this.TodoStorage.clearCompleted();
-					}
-				}, {
-					key: "$markAll",
-					value: function $markAll(completed) {
-						var _this4 = this;
-
-						this.todos.forEach(function (todo) {
-							if (todo.completed !== completed) {
-								_this4.$scope.toggleCompleted(todo, completed);
-							}
-						});
-					}
-				}]);
-
-				return TodoCtrl;
-			})(Controller);
-
-			_export("TodoCtrl", TodoCtrl);
-
-			TodoCtrl.$inject = ["$routeParams", "$filter", "TodoStorage"];
-			TodoCtrl.$register = {
-				"todomvc": {
-					name: "TodoCtrl"
-				}
-			};
+					});
+				};
+			}));
 		}
 	};
+});
+System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.19.js"], function (_export) {
+    var _get, _inherits, _createClass, _classCallCheck, Service, TodoStorage, RemoteStorage, LocalStorage;
+
+    return {
+        setters: [function (_npmBabelRuntime5835HelpersGetJs) {
+            _get = _npmBabelRuntime5835HelpersGetJs["default"];
+        }, function (_npmBabelRuntime5835HelpersInheritsJs) {
+            _inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
+        }, function (_npmBabelRuntime5835HelpersCreateClassJs) {
+            _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
+        }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
+            _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
+        }, function (_githubNgHarmonyNgHarmony0319Js) {
+            Service = _githubNgHarmonyNgHarmony0319Js.Service;
+        }],
+        execute: function () {
+            "use strict";
+
+            TodoStorage = (function (_Service) {
+                _inherits(TodoStorage, _Service);
+
+                _createClass(TodoStorage, null, [{
+                    key: "STORAGE_ID",
+                    get: function get() {
+                        return "todos-angularjs";
+                    }
+                }]);
+
+                function TodoStorage() {
+                    _classCallCheck(this, TodoStorage);
+
+                    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                        args[_key] = arguments[_key];
+                    }
+
+                    _get(Object.getPrototypeOf(TodoStorage.prototype), "constructor", this).apply(this, args);
+                    this.todos = [];
+                }
+
+                return TodoStorage;
+            })(Service);
+
+            RemoteStorage = (function (_TodoStorage) {
+                _inherits(RemoteStorage, _TodoStorage);
+
+                function RemoteStorage() {
+                    _classCallCheck(this, RemoteStorage);
+
+                    _get(Object.getPrototypeOf(RemoteStorage.prototype), "constructor", this).apply(this, arguments);
+                }
+
+                _createClass(RemoteStorage, [{
+                    key: "clearCompleted",
+                    value: function clearCompleted() {
+                        var originalTodos = this.todos.slice(0);
+
+                        var incompleteTodos = this.todos.filter(function (todo) {
+                            return !todo.completed;
+                        });
+
+                        angular.copy(incompleteTodos, this.todos);
+
+                        returnthis.api["delete"](function () {}, function error() {
+                            angular.copy(originalTodos, this.todos);
+                        });
+                    }
+                }, {
+                    key: "delete",
+                    value: function _delete(todo) {
+                        var originalTodos = this.todos.slice(0);
+
+                        store.todos.splice(this.todos.indexOf(todo), 1);
+                        returnthis.api["delete"]({ id: todo.id }, function () {}, function error() {
+                            angular.copy(originalTodos, this.todos);
+                        });
+                    }
+                }, {
+                    key: "fetch",
+                    value: function fetch() {
+                        returnthis.api.query(function (resp) {
+                            angular.copy(resp, this.todos);
+                        });
+                    }
+                }, {
+                    key: "insert",
+                    value: function insert(todo) {
+                        var originalTodos = this.todos.slice(0);
+
+                        returnthis.api.save(todo, function success(resp) {
+                            todo.id = resp.id;
+                            this.todos.push(todo);
+                        }, function error() {
+                            angular.copy(originalTodos, this.todos);
+                        }).$promise;
+                    }
+                }, {
+                    key: "put",
+                    value: function put(todo) {
+                        returnthis.api.update({ id: todo.id }, todo).$promise;
+                    }
+                }]);
+
+                return RemoteStorage;
+            })(TodoStorage);
+
+            _export("RemoteStorage", RemoteStorage);
+
+            RemoteStorage.$inject = "$resource";
+            RemoteStorage.$register = {
+                "todomvc": {
+                    "name": "RemoteStorage",
+                    "type": "service"
+                }
+            };
+
+            LocalStorage = (function (_TodoStorage2) {
+                _inherits(LocalStorage, _TodoStorage2);
+
+                function LocalStorage() {
+                    _classCallCheck(this, LocalStorage);
+
+                    _get(Object.getPrototypeOf(LocalStorage.prototype), "constructor", this).apply(this, arguments);
+                }
+
+                _createClass(LocalStorage, [{
+                    key: "_getFromLocalStorage",
+                    value: function _getFromLocalStorage() {
+                        return JSON.parse(localStorage.getItem(LocalStorage.STORAGE_ID) || "[]");
+                    }
+                }, {
+                    key: "_saveToLocalStorage",
+                    value: function _saveToLocalStorage(todos) {
+                        localStorage.setItem(LocalStorage.STORAGE_ID, JSON.stringify(todos));
+                    }
+                }, {
+                    key: "clearCompleted",
+                    value: function clearCompleted() {
+                        var deferred = this.$q.defer();
+
+                        var incompleteTodos = this.todos.filter(function (todo) {
+                            return !todo.completed;
+                        });
+
+                        angular.copy(incompleteTodos, this.todos);
+
+                        this._saveToLocalStorage(this.todos);
+                        deferred.resolve(this.todos);
+
+                        return deferred.promise;
+                    }
+                }, {
+                    key: "delete",
+                    value: function _delete(todo) {
+                        var deferred = this.$q.defer();
+
+                        this.todos.splice(this.todos.indexOf(todo), 1);
+
+                        this._saveToLocalStorage(this.todos);
+                        deferred.resolve(this.todos);
+
+                        return deferred.promise;
+                    }
+                }, {
+                    key: "fetch",
+                    value: function fetch() {
+                        var deferred = this.$q.defer();
+
+                        angular.copy(this._getFromLocalStorage(), this.todos);
+                        deferred.resolve(this.todos);
+
+                        return deferred.promise;
+                    }
+                }, {
+                    key: "insert",
+                    value: function insert(todo) {
+                        var deferred = this.$q.defer();
+
+                        this.todos.push(todo);
+
+                        this._saveToLocalStorage(this.todos);
+                        deferred.resolve(this.todos);
+
+                        return deferred.promise;
+                    }
+                }, {
+                    key: "put",
+                    value: function put(todo, index) {
+                        var deferred = this.$q.defer();
+
+                        this.todos[index] = todo;
+
+                        this._saveToLocalStorage(this.todos);
+                        deferred.resolve(this.todos);
+
+                        return deferred.promise;
+                    }
+                }]);
+
+                return LocalStorage;
+            })(TodoStorage);
+
+            _export("LocalStorage", LocalStorage);
+
+            LocalStorage.$inject = "$q";
+            LocalStorage.$register = {
+                "todomvc": {
+                    "name": "LocalStorage",
+                    "type": "service"
+                }
+            };
+        }
+    };
 });
 System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.object.get-own-property-descriptor.js", ["npm:core-js@1.2.6/library/modules/$.to-iobject.js", "npm:core-js@1.2.6/library/modules/$.object-sap.js"], true, function($__require, exports, module) {
   ;
@@ -15618,7 +15701,7 @@ System.registerDynamic("npm:babel-runtime@5.8.35/core-js/object/define-property.
   return module.exports;
 });
 
-System.register("github:ng-harmony/ng-harmony@0.3.18/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.19/build/index.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/sliced-to-array.js", "npm:babel-runtime@5.8.35/core-js/get-iterator.js", "npm:babel-runtime@5.8.35/regenerator.js", "npm:babel-runtime@5.8.35/core-js/object/get-own-property-names.js", "npm:babel-runtime@5.8.35/core-js/object/define-property.js"], function (_export) {
     var _get, _createClass, _classCallCheck, _inherits, _slicedToArray, _getIterator, _regeneratorRuntime, _Object$getOwnPropertyNames, _Object$defineProperty, Harmony, Controller, Service;
 
     return {
@@ -16022,7 +16105,7 @@ System.register("github:ng-harmony/ng-harmony@0.3.18/build/index.js", ["npm:babe
 
                     _classCallCheck(this, Controller);
 
-                    _get(Object.getPrototypeOf(Controller.prototype), "constructor", this).call(this, args);
+                    _get(Object.getPrototypeOf(Controller.prototype), "constructor", this).apply(this, args);
                     var _iteratorNormalCompletion9 = true;
                     var _didIteratorError9 = false;
                     var _iteratorError9 = undefined;
@@ -16166,287 +16249,217 @@ System.register("github:ng-harmony/ng-harmony@0.3.18/build/index.js", ["npm:babe
         }
     };
 });
-System.register("github:ng-harmony/ng-harmony@0.3.18.js", ["github:ng-harmony/ng-harmony@0.3.18/build/index.js"], function (_export) {
+System.register("github:ng-harmony/ng-harmony@0.3.19.js", ["github:ng-harmony/ng-harmony@0.3.19/build/index.js"], function (_export) {
   "use strict";
 
   return {
-    setters: [function (_githubNgHarmonyNgHarmony0318BuildIndexJs) {
+    setters: [function (_githubNgHarmonyNgHarmony0319BuildIndexJs) {
       var _exportObj = {};
 
-      for (var _key in _githubNgHarmonyNgHarmony0318BuildIndexJs) {
-        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony0318BuildIndexJs[_key];
+      for (var _key in _githubNgHarmonyNgHarmony0319BuildIndexJs) {
+        if (_key !== "default") _exportObj[_key] = _githubNgHarmonyNgHarmony0319BuildIndexJs[_key];
       }
 
-      _exportObj["default"] = _githubNgHarmonyNgHarmony0318BuildIndexJs["default"];
+      _exportObj["default"] = _githubNgHarmonyNgHarmony0319BuildIndexJs["default"];
 
       _export(_exportObj);
     }],
     execute: function () {}
   };
 });
-System.register("app/js/services.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.18.js"], function (_export) {
-    var _get, _inherits, _createClass, _classCallCheck, Service, TodoStorage, RemoteStorage, LocalStorage;
-
-    return {
-        setters: [function (_npmBabelRuntime5835HelpersGetJs) {
-            _get = _npmBabelRuntime5835HelpersGetJs["default"];
-        }, function (_npmBabelRuntime5835HelpersInheritsJs) {
-            _inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
-        }, function (_npmBabelRuntime5835HelpersCreateClassJs) {
-            _createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
-        }, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
-            _classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
-        }, function (_githubNgHarmonyNgHarmony0318Js) {
-            Service = _githubNgHarmonyNgHarmony0318Js.Service;
-        }],
-        execute: function () {
-            "use strict";
-
-            TodoStorage = (function (_Service) {
-                _inherits(TodoStorage, _Service);
-
-                _createClass(TodoStorage, null, [{
-                    key: "STORAGE_ID",
-                    get: function get() {
-                        return "todos-angularjs";
-                    }
-                }]);
-
-                function TodoStorage() {
-                    var _this = this;
-
-                    _classCallCheck(this, TodoStorage);
-
-                    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                        args[_key] = arguments[_key];
-                    }
-
-                    _get(Object.getPrototypeOf(TodoStorage.prototype), "constructor", this).apply(this, args);
-                    this.todos = [];
-                    this.$http.get("/api").then(function () {
-                        _this.api = _this.$resource("/api/todos/:id", null, { "update": { "method": "PUT" } });
-                        TodoStorage.mixin(RemoteStorage);
-                    }, function () {
-                        TodoStorage.mixin(LocalStorage);
-                    });
-                }
-
-                return TodoStorage;
-            })(Service);
-
-            _export("TodoStorage", TodoStorage);
-
-            TodoStorage.$register = {
-                "todomvc": {
-                    name: "TodoStorage",
-                    type: "service"
-                }
-            };
-
-            RemoteStorage = (function () {
-                function RemoteStorage() {
-                    _classCallCheck(this, RemoteStorage);
-                }
-
-                _createClass(RemoteStorage, [{
-                    key: "clearCompleted",
-                    value: function clearCompleted() {
-                        var originalTodos = this.todos.slice(0);
-
-                        var incompleteTodos = this.todos.filter(function (todo) {
-                            return !todo.completed;
-                        });
-
-                        angular.copy(incompleteTodos, this.todos);
-
-                        returnthis.api["delete"](function () {}, function error() {
-                            angular.copy(originalTodos, this.todos);
-                        });
-                    }
-                }, {
-                    key: "delete",
-                    value: function _delete(todo) {
-                        var originalTodos = this.todos.slice(0);
-
-                        store.todos.splice(this.todos.indexOf(todo), 1);
-                        returnthis.api["delete"]({ id: todo.id }, function () {}, function error() {
-                            angular.copy(originalTodos, this.todos);
-                        });
-                    }
-                }, {
-                    key: "fetch",
-                    value: function fetch() {
-                        returnthis.api.query(function (resp) {
-                            angular.copy(resp, this.todos);
-                        });
-                    }
-                }, {
-                    key: "insert",
-                    value: function insert(todo) {
-                        var originalTodos = this.todos.slice(0);
-
-                        returnthis.api.save(todo, function success(resp) {
-                            todo.id = resp.id;
-                            this.todos.push(todo);
-                        }, function error() {
-                            angular.copy(originalTodos, this.todos);
-                        }).$promise;
-                    }
-                }, {
-                    key: "put",
-                    value: function put(todo) {
-                        returnthis.api.update({ id: todo.id }, todo).$promise;
-                    }
-                }]);
-
-                return RemoteStorage;
-            })();
-
-            RemoteStorage.$inject = "$resource";
-
-            LocalStorage = (function () {
-                function LocalStorage() {
-                    _classCallCheck(this, LocalStorage);
-                }
-
-                _createClass(LocalStorage, [{
-                    key: "_getFromLocalStorage",
-                    value: function _getFromLocalStorage() {
-                        return JSON.parse(localStorage.getItem(LocalStorage.STORAGE_ID) || "[]");
-                    }
-                }, {
-                    key: "_saveToLocalStorage",
-                    value: function _saveToLocalStorage(todos) {
-                        localStorage.setItem(LocalStorage.STORAGE_ID, JSON.stringify(todos));
-                    }
-                }, {
-                    key: "clearCompleted",
-                    value: function clearCompleted() {
-                        var deferred = $q.defer();
-
-                        var incompleteTodos = this.todos.filter(function (todo) {
-                            return !todo.completed;
-                        });
-
-                        angular.copy(incompleteTodos, this.todos);
-
-                        this._saveToLocalStorage(this.todos);
-                        deferred.resolve(this.todos);
-
-                        return deferred.promise;
-                    }
-                }, {
-                    key: "delete",
-                    value: function _delete(todo) {
-                        var deferred = $q.defer();
-
-                        this.todos.splice(this.todos.indexOf(todo), 1);
-
-                        this._saveToLocalStorage(this.todos);
-                        deferred.resolve(this.todos);
-
-                        return deferred.promise;
-                    }
-                }, {
-                    key: "fetch",
-                    value: function fetch() {
-                        var deferred = $q.defer();
-
-                        angular.copy(this._getFromLocalStorage(), this.todos);
-                        deferred.resolve(this.todos);
-
-                        return deferred.promise;
-                    }
-                }, {
-                    key: "insert",
-                    value: function insert(todo) {
-                        var deferred = $q.defer();
-
-                        this.todos.push(todo);
-
-                        this._saveToLocalStorage(this.todos);
-                        deferred.resolve(this.todos);
-
-                        return deferred.promise;
-                    }
-                }, {
-                    key: "put",
-                    value: function put(todo, index) {
-                        var deferred = $q.defer();
-
-                        this.todos[index] = todo;
-
-                        this._saveToLocalStorage(this.todos);
-                        deferred.resolve(this.todos);
-
-                        return deferred.promise;
-                    }
-                }]);
-
-                return LocalStorage;
-            })();
-
-            LocalStorage.$inject = "$q";
-        }
-    };
-});
-System.register('app/js/directives.js', [], function (_export) {
-	/**
-  * Directive that executes an expression when the element it is applied to gets
-  * an `escape` keydown event.
-  */
-	'use strict';
+System.register("app/js/controllers.js", ["npm:babel-runtime@5.8.35/helpers/get.js", "npm:babel-runtime@5.8.35/helpers/inherits.js", "npm:babel-runtime@5.8.35/helpers/create-class.js", "npm:babel-runtime@5.8.35/helpers/class-call-check.js", "github:ng-harmony/ng-harmony@0.3.19.js"], function (_export) {
+	var _get, _inherits, _createClass, _classCallCheck, Controller, TodoCtrl;
 
 	return {
-		setters: [],
+		setters: [function (_npmBabelRuntime5835HelpersGetJs) {
+			_get = _npmBabelRuntime5835HelpersGetJs["default"];
+		}, function (_npmBabelRuntime5835HelpersInheritsJs) {
+			_inherits = _npmBabelRuntime5835HelpersInheritsJs["default"];
+		}, function (_npmBabelRuntime5835HelpersCreateClassJs) {
+			_createClass = _npmBabelRuntime5835HelpersCreateClassJs["default"];
+		}, function (_npmBabelRuntime5835HelpersClassCallCheckJs) {
+			_classCallCheck = _npmBabelRuntime5835HelpersClassCallCheckJs["default"];
+		}, function (_githubNgHarmonyNgHarmony0319Js) {
+			Controller = _githubNgHarmonyNgHarmony0319Js.Controller;
+		}],
 		execute: function () {
-			_export('default', angular.module('todomvc').directive('todoEscape', function () {
-				'use strict';
+			/**
+    * The main controller for the app. The controller:
+    * - retrieves and persists the model via the todoStorage service
+    * - exposes the model to the template and provides event handlers
+    */
+			"use strict";
 
-				var ESCAPE_KEY = 27;
+			TodoCtrl = (function (_Controller) {
+				_inherits(TodoCtrl, _Controller);
 
-				return function (scope, elem, attrs) {
-					elem.bind('keydown', function (event) {
-						if (event.keyCode === ESCAPE_KEY) {
-							scope.$apply(attrs.todoEscape);
+				function TodoCtrl() {
+					var _this = this;
+
+					_classCallCheck(this, TodoCtrl);
+
+					for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+						args[_key] = arguments[_key];
+					}
+
+					_get(Object.getPrototypeOf(TodoCtrl.prototype), "constructor", this).apply(this, args);
+
+					this.$scope.todos = this.TodoStorage.todos;
+					this.todos = this.TodoStorage.todos;
+					this.$scope.newTodo = "";
+					this.$scope.editedTodo = null;
+
+					this.$scope.$watch("todos", function () {
+						_this.$scope.remainingCount = _this.$filter("filter")(_this.todos, { completed: false }).length;
+						_this.$scope.completedCount = _this.todos.length - _this.$scope.remainingCount;
+						_this.$scope.allChecked = !_this.$scope.remainingCount;
+					}, true);
+
+					// Monitor the current route for changes and adjust the filter accordingly.
+					this.$scope.$on("$routeChangeSuccess", function () {
+						var status = _this.$scope.status = _this.$routeParams.status || "";
+						_this.$scope.statusFilter = status === "active" ? { completed: false } : status === "completed" ? { completed: true } : {};
+					});
+				}
+
+				_createClass(TodoCtrl, [{
+					key: "$addTodo",
+					value: function $addTodo() {
+						var _this2 = this;
+
+						console.log("happy day sire");
+						var newTodo = {
+							title: this.$scope.newTodo.trim(),
+							completed: false
+						};
+						console.log(newTodo);
+						if (!newTodo.title) {
+							return;
 						}
-					});
 
-					scope.$on('$destroy', function () {
-						elem.unbind('keydown');
-					});
-				};
-			}).directive('todoFocus', function todoFocus($timeout) {
-				'use strict';
+						this.$scope.saving = true;
+						this.TodoStorage.insert(newTodo).then(function () {
+							_this2.$scope.newTodo = "";
+						})["finally"](function () {
+							_this2.$scope.saving = false;
+						});
+					}
+				}, {
+					key: "$editTodo",
+					value: function $editTodo(todo) {
+						this.$scope.editedTodo = todo;
 
-				return function (scope, elem, attrs) {
-					scope.$watch(attrs.todoFocus, function (newVal) {
-						if (newVal) {
-							$timeout(function () {
-								elem[0].focus();
-							}, 0, false);
+						// Clone the original todo to restore it on demand.
+						this.$scope.originalTodo = angular.extend({}, todo);
+					}
+				}, {
+					key: "$saveEdits",
+					value: function $saveEdits(todo, event) {
+						var _this3 = this;
+
+						// Blur events are automatically triggered after the form submit event.
+						// This does some unfortunate logic handling to prevent saving twice.
+						if (event === "blur" && this.$scope.saveEvent === "submit") {
+							this.$scope.saveEvent = null;
+							return;
 						}
-					});
-				};
-			}));
+
+						this.$scope.saveEvent = event;
+
+						if (this.$scope.reverted) {
+							// Todo edits were reverted-- don't save.
+							this.$scope.reverted = null;
+							return;
+						}
+
+						todo.title = todo.title.trim();
+
+						if (todo.title === this.$scope.originalTodo.title) {
+							this.$scope.editedTodo = null;
+							return;
+						}
+
+						this.TodoStorage[todo.title ? "put" : "delete"](todo).then(function () {}, function () {
+							todo.title = _this3.$scope.originalTodo.title;
+						})["finally"](function () {
+							_this3.$scope.editedTodo = null;
+						});
+					}
+				}, {
+					key: "$revertEdits",
+					value: function $revertEdits(todo) {
+						this.todos[this.todos.indexOf(todo)] = this.$scope.originalTodo;
+						this.$scope.editedTodo = null;
+						this.$scope.originalTodo = null;
+						this.$scope.reverted = true;
+					}
+				}, {
+					key: "$removeTodo",
+					value: function $removeTodo(todo) {
+						this.TodoStorage["delete"](todo);
+					}
+				}, {
+					key: "$saveTodo",
+					value: function $saveTodo(todo) {
+						this.TodoStorage.put(todo);
+					}
+				}, {
+					key: "$toggleCompleted",
+					value: function $toggleCompleted(todo, completed) {
+						if (angular.isDefined(completed)) {
+							todo.completed = completed;
+						}
+						this.TodoStorage.put(todo, this.todos.indexOf(todo)).then(function success() {}, function error() {
+							todo.completed = !todo.completed;
+						});
+					}
+				}, {
+					key: "$clearCompletedTodos",
+					value: function $clearCompletedTodos() {
+						this.TodoStorage.clearCompleted();
+					}
+				}, {
+					key: "$markAll",
+					value: function $markAll(completed) {
+						var _this4 = this;
+
+						this.todos.forEach(function (todo) {
+							if (todo.completed !== completed) {
+								_this4.$scope.toggleCompleted(todo, completed);
+							}
+						});
+					}
+				}]);
+
+				return TodoCtrl;
+			})(Controller);
+
+			_export("TodoCtrl", TodoCtrl);
+
+			TodoCtrl.$inject = ["$routeParams", "$filter", "TodoStorage"];
+			TodoCtrl.$register = {
+				"todomvc": {
+					name: "TodoCtrl"
+				}
+			};
 		}
 	};
 });
-System.register("app/main.js", ["app/js/module.js", "app/js/routes.js", "app/js/controllers.js", "app/js/services.js", "app/js/directives.js"], function (_export) {
+System.register("app/main.js", ["app/js/module.js", "app/js/routes.js", "app/js/directives.js", "app/js/services.js", "app/js/controllers.js"], function (_export) {
     "use strict";
 
-    var _module, routeConfig, TodoCtrl, TodoStorage;
+    var _module, routeConfig, TodoStorage, TodoCtrl;
 
     return {
         setters: [function (_appJsModuleJs) {
             _module = _appJsModuleJs["default"];
         }, function (_appJsRoutesJs) {
             routeConfig = _appJsRoutesJs["default"];
+        }, function (_appJsDirectivesJs) {}, function (_appJsServicesJs) {
+            TodoStorage = _appJsServicesJs.TodoStorage;
         }, function (_appJsControllersJs) {
             TodoCtrl = _appJsControllersJs.TodoCtrl;
-        }, function (_appJsServicesJs) {
-            TodoStorage = _appJsServicesJs.TodoStorage;
-        }, function (_appJsDirectivesJs) {}],
+        }],
         execute: function () {
 
             _module.config(function ($routeProvider) {

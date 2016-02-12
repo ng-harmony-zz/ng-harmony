@@ -1,29 +1,16 @@
 import { Service } from "ng-harmony/ng-harmony";
 
-export class TodoStorage extends Service {
+class TodoStorage extends Service {
     static get STORAGE_ID () {
         return "todos-angularjs";
     }
     constructor (...args) {
         super(...args);
         this.todos = [];
-        this.$http.get("/api")
-			.then(() => {
-                this.api = this.$resource("/api/todos/:id", null, { "update": { "method": "PUT" } });
-                TodoStorage.mixin(RemoteStorage);
-			}, () => {
-				TodoStorage.mixin(LocalStorage);
-			});
     }
 }
-TodoStorage.$register = {
-    "todomvc": {
-        name: "TodoStorage",
-        type: "service"
-    }
-};
 
-class RemoteStorage {
+export class RemoteStorage extends TodoStorage {
 
     clearCompleted () {
         var originalTodos = this.todos.slice(0);
@@ -72,8 +59,14 @@ class RemoteStorage {
     }
 }
 RemoteStorage.$inject = "$resource";
+RemoteStorage.$register = {
+    "todomvc": {
+        "name": "RemoteStorage",
+        "type": "service"
+    }
+};
 
-class LocalStorage {
+export class LocalStorage extends TodoStorage {
 
     _getFromLocalStorage () {
 		return JSON.parse(localStorage.getItem(LocalStorage.STORAGE_ID) || "[]");
@@ -84,7 +77,7 @@ class LocalStorage {
 	}
 
     clearCompleted () {
-        var deferred = $q.defer();
+        var deferred = this.$q.defer();
 
 		var incompleteTodos = this.todos.filter(function (todo) {
 			return !todo.completed;
@@ -98,7 +91,7 @@ class LocalStorage {
 		return deferred.promise;
     }
     delete (todo) {
-        var deferred = $q.defer();
+        var deferred = this.$q.defer();
 
         this.todos.splice(this.todos.indexOf(todo), 1);
 
@@ -108,7 +101,7 @@ class LocalStorage {
         return deferred.promise;
     }
     fetch () {
-        var deferred = $q.defer();
+        var deferred = this.$q.defer();
 
         angular.copy(this._getFromLocalStorage(), this.todos);
         deferred.resolve(this.todos);
@@ -116,7 +109,7 @@ class LocalStorage {
         return deferred.promise;
     }
     insert (todo) {
-        var deferred = $q.defer();
+        var deferred = this.$q.defer();
 
         this.todos.push(todo);
 
@@ -126,7 +119,7 @@ class LocalStorage {
         return deferred.promise;
     }
     put (todo, index) {
-        var deferred = $q.defer();
+        var deferred = this.$q.defer();
 
         this.todos[index] = todo;
 
@@ -137,3 +130,9 @@ class LocalStorage {
     }
 }
 LocalStorage.$inject = "$q";
+LocalStorage.$register = {
+    "todomvc": {
+        "name": "LocalStorage",
+        "type": "service"
+    }
+};
