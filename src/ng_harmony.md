@@ -76,7 +76,7 @@ Getter and Setter for the static $inject variable
                 _injectees.push(injecteeStr);
             }
         }
-        this._$inject = this.$inject.concat(injectees);
+        this._$inject = this.$inject.concat(_injectees);
     }
 ```
 Setter for the ng-registration of a service or controller

@@ -37,7 +37,7 @@ export class Harmony {
                 _injectees.push(injecteeStr);
             }
         }
-        this._$inject = this.$inject.concat(injectees);
+        this._$inject = this.$inject.concat(_injectees);
     }
     static set $register (descriptor) {
         for (let [module, klass] of Harmony.iterate(descriptor)) {
