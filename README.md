@@ -1,5 +1,8 @@
 ![Harmony = 6 + 7;](src/logo.png "Harmony - Fire in my eyes")
 
+[![Gitter](https://badges.gitter.im/ng-harmony/ng-harmony.svg)](https://gitter.im/ng-harmony/ng-harmony?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
 ## Synopsis
 
 Base Classes for all ng-harmony-modules. Ng-Harmony is a collection of modules that allow for unique Angular-Codestyle, eg. Classes in Angular 1
@@ -125,6 +128,8 @@ jspm i github:ng-harmony/ng-harmony
 `static $inject`: Dependency injection
 
 `static $register`: Register the class with a module
+
+`iterate`: Iterate with for .. of over { objs }
 
 `static iterate`: Iterate with for .. of over { objs }
 
