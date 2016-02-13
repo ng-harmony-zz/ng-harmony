@@ -2,6 +2,8 @@
 
 [![Gitter](https://badges.gitter.im/ng-harmony/ng-harmony.svg)](https://gitter.im/ng-harmony/ng-harmony?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+### Status
+Tested and debugged. Will consider it a *beta-software* from now on. Using it in the wild on the [github.io-todomvc-demo](http://ng-harmony.github.io/ng-harmony) of this repo.
 
 ## Synopsis
 
