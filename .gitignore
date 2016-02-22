@@ -1,5 +1,8 @@
-node_modules/
-jspm_packages/
-bower_components/
-.tmp/
+node_modules
+.idea/
+*.log
+.DS_Store
+jspm_packages
+bower_components
+.tmp
 npm-debug.log

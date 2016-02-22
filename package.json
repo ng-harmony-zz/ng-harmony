@@ -1,20 +1,39 @@
 {
+  "name": "ng-harmony-ghpages",
+  "version": "0.2.0",
+  "description": "todomvc demo",
+  "main": "app/src/app.js",
+  "author": {
+    "name": "DI (FH) Johannes Neugschwentner",
+    "email": "johannes.neugschwentner@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joehannes/ng-harmony-ghpages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joehannes/ng-harmony-ghpages/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "serve app/ --port 8080",
+    "build": "jspm bundle-sfx app/src/app dist/app.min.js --minify --inject"
+  },
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/joehannes/ng-harmony-ghpages",
+  "devDependencies": {
+    "serve": "^1.4.0"
+  },
   "jspm": {
-    "dependencies": {
-      "angular": "github:angular/bower-angular@^1.5.0",
-      "angular-resource": "github:angular/bower-angular-resource@^1.5.0",
-      "angular-route": "github:angular/bower-angular-route@^1.5.0",
-      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@^0.3.4"
+    "directories": {
+      "baseURL": "."
     },
+    "configFile": "system.config.js",
+    "dependencies": {},
     "devDependencies": {
-      "babel": "npm:babel-core@^5.8.24",
-      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "babel": "npm:babel-core@^5.8.35",
+      "babel-runtime": "npm:babel-runtime@^5.8.35",
       "core-js": "npm:core-js@^1.1.4"
     }
-  },
-  "devDependencies": {
-    "jspm": "^0.16.27",
-    "todomvc-app-css": "^2.0.4",
-    "todomvc-common": "^1.0.2"
   }
 }
