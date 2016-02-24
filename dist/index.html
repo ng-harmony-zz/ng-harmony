@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" data-framework="angularjs">
+  <head>
+      <meta charset=" utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+      <meta name="viewport" content="width = device-width, minimal-ui, initial-scale = 1, user-scalable = no" />
+      <meta name="apple-mobile-web-app-title" content="ng-harmony-ghpages">
+      <title>todomvc - App</title>
+      <link rel="stylesheet" href="src/lib/todomvc-common/base.css">
+      <link rel="stylesheet" href="src/lib/todomvc-app-css/index.css">
+      <style>[ng-cloak] { display: none; }</style>
+      <base href="/">
+  </head>
+  <body ng-cloak ng-app="todomvc">
+
+    <noscript>
+      <div class="deprecation-warning">
+        <h1>Please enable Javascript</h1>
+        <p>Demo requires your browser to have Javascript enabled.
+        <a href="http://enable-javascript.com" target="_blank">Learn more</a></p>
+      </div>
+    </noscript>
+
+    <ui-view class="content-area" ></ui-view>
+
+    <script src="app.js?bust={{date}}"></script>
+
+    <script>
+      System.import('app.min');
+    </script>
+
+  </body>
+</html>

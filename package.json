@@ -1,7 +1,7 @@
 {
   "name": "ng-harmony-ghpages",
   "version": "0.2.0",
-  "description": "todomvc demo",
+  "description": "todomvc demo app 4 ng-harmony",
   "main": "app/src/app.js",
   "author": {
     "name": "DI (FH) Johannes Neugschwentner",
@@ -16,20 +16,41 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "serve app/ --port 8080",
+    "start": "gulp serve",
+    "prod": "npm run build && gulp prod",
     "build": "jspm bundle-sfx app/src/app dist/app.min.js --minify --inject"
   },
   "readmeFilename": "README.md",
   "homepage": "https://github.com/joehannes/ng-harmony-ghpages",
   "devDependencies": {
-    "serve": "^1.4.0"
+    "body-parser": "^1.15.0",
+    "errorhandler": "^1.4.3",
+    "gulp": "^3.9.1",
+    "gulp-express": "^0.3.5",
+    "gulp-livereload": "^3.8.1",
+    "html": "0.0.10",
+    "jspm": "^0.16.29",
+    "method-override": "^2.3.5",
+    "serve": "^1.4.0",
+    "tiny-lr": "^0.2.1",
+    "useful-http": "^0.3.6"
   },
   "jspm": {
-    "directories": {
-      "baseURL": "."
+    "configFile": "app/system.config.js",
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.5.0",
+      "angular-resource": "github:angular/bower-angular-resource@^1.5.0",
+      "angular-route": "github:angular/bower-angular-route@^1.5.0",
+      "css": "github:systemjs/plugin-css@^0.1.20",
+      "html.js": "npm:html.js@^0.12.1",
+      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@^0.4.0",
+      "ng-harmony/ng-harmony-annotate": "github:ng-harmony/ng-harmony-annotate@^0.1.13",
+      "ng-harmony/ng-harmony-evented": "github:ng-harmony/ng-harmony-evented@^0.1.2",
+      "ng-harmony/ng-harmony-module": "github:ng-harmony/ng-harmony-module@^0.1.14",
+      "text": "github:systemjs/plugin-text@^0.0.5",
+      "todomvc-app-css": "npm:todomvc-app-css@1.0.1",
+      "todomvc-common": "npm:todomvc-common@^1.0.2"
     },
-    "configFile": "system.config.js",
-    "dependencies": {},
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.35",
       "babel-runtime": "npm:babel-runtime@^5.8.35",

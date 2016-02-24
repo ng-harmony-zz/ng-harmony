@@ -1,0 +1,30 @@
+{
+  "name": "ng-harmony-ghpages",
+  "description": "todomvc demo app 4 ng-harmony",
+  "main": "app/src/app.js",
+  "authors": [
+    "DI (FH) Johannes Neugschwentner"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "ng-harmony",
+    "angular",
+    "jspm"
+  ],
+  "homepage": "https://github.com/joehannes/ng-harmony-ghpages",
+  "moduleType": [
+    "es6"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/src/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "todomvc-app-css": "^2.0.4",
+    "todomvc-common": "^1.0.2"
+  }
+}
