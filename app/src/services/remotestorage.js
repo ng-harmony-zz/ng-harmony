@@ -15,7 +15,7 @@ export default class RemoteStorageService extends TodoStorageService {
 
         angular.copy(incompleteTodos, this.todos);
 
-        returnthis.api.delete(function () {
+        return this.api.delete(function () {
             }, function error() {
                 angular.copy(originalTodos, this.todos);
             });
@@ -24,21 +24,21 @@ export default class RemoteStorageService extends TodoStorageService {
         var originalTodos = this.todos.slice(0);
 
 		store.todos.splice(this.todos.indexOf(todo), 1);
-		returnthis.api.delete({ id: todo.id },
+		return this.api.delete({ id: todo.id },
 			function () {
 			}, function error() {
 				angular.copy(originalTodos, this.todos);
 			});
     }
     fetch () {
-		returnthis.api.query(function (resp) {
+		return this.api.query(function (resp) {
 			angular.copy(resp, this.todos);
 		});
     }
     insert (todo) {
         var originalTodos = this.todos.slice(0);
 
-        returnthis.api.save(todo,
+        return this.api.save(todo,
             function success(resp) {
                 todo.id = resp.id;
                this.todos.push(todo);
@@ -48,7 +48,7 @@ export default class RemoteStorageService extends TodoStorageService {
             .$promise;
     }
     put (todo) {
-        returnthis.api.update({ id: todo.id }, todo)
+        return this.api.update({ id: todo.id }, todo)
             .$promise;
     }
 }

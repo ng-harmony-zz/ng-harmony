@@ -8,13 +8,15 @@ var routes = {
         controller: "Todo",
         template: tpl,
         resolve: {
-            TodoStorage: ($http, RemoteStorage, LocalStorage) => {
-                return $http.get("/api")
-                    .then(() => {
-                        return RemoteStorage;
-                    }, () => {
-                        return LocalStorage;
-                    });
+            TodoStorage: ($q, $http, RemoteStorage, LocalStorage) => {
+                return $q((resolve, reject) => {
+                    $http.get("/api")
+                        .then(() => {
+                            resolve(RemoteStorage);
+                        }, () => {
+                            resolve(LocalStorage);
+                        });
+                }).then((service) => { return service; });
             }
         },
         url: "/"

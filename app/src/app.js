@@ -1,12 +1,12 @@
-import angular from "angular";
-
 import module from "./module";
 import routes from "./routes";
 
-import "./components/escape";
-import "./components/focus";
 import "./services/localstorage";
 import "./services/remotestorage";
+
+import "./components/escape";
+import "./components/focus";
+
 import "./controllers/todo";
 
 /*module.config(($locationProvider) => {
@@ -22,9 +22,4 @@ module.module.run(function($rootScope) {
 });
 
 module.routing(routes);
-//module.bootstrap();
-angular.element(document).ready(() => {
-	setTimeout(() => { 
-		angular.bootstrap(document, ["todomvc"]);
-	}, 1000);
-})
+module.bootstrap();

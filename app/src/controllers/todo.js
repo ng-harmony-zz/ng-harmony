@@ -4,7 +4,7 @@ import { Controller } from "ng-harmony/ng-harmony-annotate";
 @Controller({
 	module: "todomvc",
 	name: "Todo",
-	deps: ["$filter", "TodoStorage"]
+	deps: ["$filter", "$http", "TodoStorage"]
 })
 export default class TodoController extends Ctrl {
     constructor (...args) {
@@ -30,7 +30,7 @@ export default class TodoController extends Ctrl {
         });
     }
 
-	$addTodo () {
+	addTodo () {
         console.log("happy day sire");
 		let newTodo = {
 			title: this.$scope.newTodo.trim(),

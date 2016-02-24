@@ -22,8 +22,8 @@ System.config({
     "core-js": "npm:core-js@1.2.6",
     "css": "github:systemjs/plugin-css@0.1.20",
     "html.js": "npm:html.js@0.12.1",
-    "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.0",
-    "ng-harmony/ng-harmony-annotate": "github:ng-harmony/ng-harmony-annotate@0.1.18",
+    "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.2",
+    "ng-harmony/ng-harmony-annotate": "github:ng-harmony/ng-harmony-annotate@0.1.20",
     "ng-harmony/ng-harmony-evented": "github:ng-harmony/ng-harmony-evented@0.1.12",
     "ng-harmony/ng-harmony-module": "github:ng-harmony/ng-harmony-module@0.1.33",
     "text": "github:systemjs/plugin-text@0.0.5",
@@ -64,13 +64,13 @@ System.config({
     },
     "github:ng-harmony/ng-harmony-evented@0.1.12": {
       "fat/bean": "github:fat/bean@1.0.14",
-      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.0",
+      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.2",
       "zest": "npm:zest@0.1.3"
     },
     "github:ng-harmony/ng-harmony-module@0.1.33": {
       "angular": "github:angular/bower-angular@1.5.0",
       "angular-ui-router": "github:angular-ui/ui-router@0.2.18",
-      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.0"
+      "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.2"
     },
     "npm:align-text@0.1.4": {
       "kind-of": "npm:kind-of@3.0.2",
