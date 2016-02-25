@@ -6,14 +6,14 @@ export class Harmony {
     }
     iterate (o) {
         return (function* (_o) {
-            for (let [i, key] of Object.keys(_o).entries()) {
+            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
                 yield [key, _o[key]];
             }
         })(o);
     }
     static iterate (o) {
         return (function* (_o) {
-            for (let [i, key] of Object.keys(_o).entries()) {
+            for (let [i, key] of Object.getOwnPropertyNames(_o).entries()) {
                 yield [key, _o[key]];
             }
         })(o);
