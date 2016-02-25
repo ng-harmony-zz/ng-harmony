@@ -1,7 +1,7 @@
 <section id="todoapp" class="todoapp">
 	<header id="header">
 		<h1>todos</h1>
-		<form id="todo-form" ng-submit="$addTodo()">
+		<form id="todo-form">
 			<input id="new-todo" placeholder="What needs to be done?" ng-model="newTodo" ng-disabled="saving" autofocus>
 		</form>
 	</header>
@@ -27,13 +27,13 @@
 		</span>
 		<ul id="filters">
 			<li>
-				<a ng-class="{selected: status == ''} " href="#/">All</a>
+				<a ng-class="{selected: status == ''} " ui-sref="home">All</a>
 			</li>
 			<li>
-				<a ng-class="{selected: status == 'active'}" href="#/active">Active</a>
+				<a ng-class="{selected: status == 'active'}" ui-sref="home.active">Active</a>
 			</li>
 			<li>
-				<a ng-class="{selected: status == 'completed'}" href="#/completed">Completed</a>
+				<a ng-class="{selected: status == 'completed'}" ui-sref="home.completed">Completed</a>
 			</li>
 		</ul>
 		<button id="clear-completed" ng-click="clearCompletedTodos()" ng-show="completedCount">Clear completed</button>

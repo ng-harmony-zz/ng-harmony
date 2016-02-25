@@ -19,9 +19,14 @@ var routes = {
                 }).then((service) => { return service; });
             }
         },
-        url: "/"
+        url: ""
     },
-    default: "/"
+    "home.active": {
+        url: "active"
+    },
+    "home.completed": {
+        url: "completed"
+    }
 };
 
 export default routes;

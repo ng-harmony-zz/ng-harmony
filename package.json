@@ -45,7 +45,7 @@
       "html.js": "npm:html.js@^0.12.1",
       "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@^0.4.0",
       "ng-harmony/ng-harmony-annotate": "github:ng-harmony/ng-harmony-annotate@^0.1.13",
-      "ng-harmony/ng-harmony-evented": "github:ng-harmony/ng-harmony-evented@^0.1.2",
+      "ng-harmony/ng-harmony-evented": "github:ng-harmony/ng-harmony-evented@^0.1.12",
       "ng-harmony/ng-harmony-module": "github:ng-harmony/ng-harmony-module@^0.1.14",
       "text": "github:systemjs/plugin-text@^0.0.5",
       "todomvc-app-css": "npm:todomvc-app-css@1.0.1",

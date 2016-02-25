@@ -1,4 +1,4 @@
-import { Controller as Ctrl } from "ng-harmony/ng-harmony";
+import { EventedController as Ctrl } from "ng-harmony/ng-harmony-evented";
 import { Controller } from "ng-harmony/ng-harmony-annotate";
 
 @Controller({
@@ -22,21 +22,20 @@ export default class TodoController extends Ctrl {
         }, true);
 
         // Monitor the current route for changes and adjust the filter accordingly.
-        this.$scope.$on("$routeChangeSuccess", () => {
-            let status = this.$scope.status = this.$routeParams.status || "";
+        this.$scope.$on("$stateChangeSuccess", (ev, to, tParams, from, fParams) => {
+            
+            let status =  to.url;
             this.$scope.statusFilter = (status === "active") ?
             { completed: false } : (status === "completed") ?
             { completed: true } : {};
         });
     }
 
-	addTodo () {
-        console.log("happy day sire");
+	"form#todo-form::submit" () {
 		let newTodo = {
 			title: this.$scope.newTodo.trim(),
 			completed: false
 		};
-        console.log(newTodo);
 		if (!newTodo.title) {
 			return;
 		}

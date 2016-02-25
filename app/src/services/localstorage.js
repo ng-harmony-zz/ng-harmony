@@ -7,11 +7,15 @@ import { Service } from "ng-harmony/ng-harmony-annotate";
     deps: "$q"
 })
 export default class LocalStorageService extends TodoStorageService {
+    constructor (...args) {
+        super(...args);
+        this.fetch();
+    }
     _getFromLocalStorage () {
-		return JSON.parse(localStorage.getItem(LocalStorage.STORAGE_ID) || "[]");
+		return JSON.parse(localStorage.getItem(LocalStorageService.STORAGE_ID) || "[]");
 	}
 	_saveToLocalStorage (todos) {
-		localStorage.setItem(LocalStorage.STORAGE_ID, JSON.stringify(todos));
+		localStorage.setItem(LocalStorageService.STORAGE_ID, JSON.stringify(todos));
 	}
     clearCompleted () {
         var deferred = this.$q.defer();
