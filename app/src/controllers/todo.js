@@ -50,15 +50,44 @@ export default class TodoController extends Ctrl {
 			});
 	}
 
-	$editTodo (todo) {
-		this.$scope.editedTodo = todo;
+	"#todo-list::dblclick::label<li" () {
+		this.$scope.editedTodo = this.todos[this.$scope.i];
 
 		// Clone the original todo to restore it on demand.
-		this.$scope.originalTodo = angular.extend({}, todo);
+		this.$scope.originalTodo = angular.extend({}, this.todos[this.$scope.i]);
+	}
+
+	"#todo-list::click::button<li" () {
+		this.TodoStorage.delete(this.$scope.todos[this.$scope.i]);
+	}
+
+	"#todo-list::change::.toggle<li" (ev) {
+		this.TodoStorage
+            .put(this.$scope.todos[this.$scope.i], this.$scope.i)
+			.then(() => {}, () => {
+				this.$scope.todos[this.$scope.i].completed = !this.$scope.todos[this.$scope.i].completed;
+				this.digest();
+			});
+	}
+
+	"footer>button::click" () {
+		this.TodoStorage.clearCompleted();
+	}
+
+	"#toggle-all::click" () {
+		for (let [i, val] of this.$scope.todos.entries()) {
+			val.completed = !this.$scope.allChecked;
+		}
+	}
+
+	"#todo-list::blur::form input>li" () {
+		this.$saveEdits(this.$scope.todos[this.$scope.i], "blur");
+	}
+	"#todo-list::submit::form>li" () {
+		this.$saveEdits(this.$scope.todos[this.$scope.i], "submit");
 	}
 
     $saveEdits (todo, event) {
-
 		// Blur events are automatically triggered after the form submit event.
 		// This does some unfortunate logic handling to prevent saving twice.
 		if (event === "blur" && this.$scope.saveEvent === "submit") {
@@ -97,34 +126,7 @@ export default class TodoController extends Ctrl {
 		this.$scope.reverted = true;
 	}
 
-	$removeTodo (todo) {
-		this.TodoStorage.delete(todo);
-	}
-
 	$saveTodo (todo) {
 		this.TodoStorage.put(todo);
-	}
-
-	$toggleCompleted (todo, completed) {
-		if (angular.isDefined(completed)) {
-			todo.completed = completed;
-		}
-		this.TodoStorage
-            .put(todo, this.todos.indexOf(todo))
-			.then(function success() {}, function error() {
-				todo.completed = !todo.completed;
-			});
-	}
-
-	$clearCompletedTodos () {
-		this.TodoStorage.clearCompleted();
-	}
-
-	$markAll (completed) {
-		this.todos.forEach((todo) => {
-			if (todo.completed !== completed) {
-				this.$scope.toggleCompleted(todo, completed);
-			}
-		});
 	}
 }

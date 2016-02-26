@@ -1,6 +1,6 @@
 {
   "name": "ng-harmony-ghpages",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "todomvc demo app 4 ng-harmony",
   "main": "app/src/app.js",
   "author": {

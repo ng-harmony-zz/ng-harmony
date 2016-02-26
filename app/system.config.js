@@ -24,7 +24,7 @@ System.config({
     "html.js": "npm:html.js@0.12.1",
     "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.3",
     "ng-harmony/ng-harmony-annotate": "github:ng-harmony/ng-harmony-annotate@0.1.20",
-    "ng-harmony/ng-harmony-evented": "github:ng-harmony/ng-harmony-evented@0.1.14",
+    "ng-harmony/ng-harmony-evented": "github:ng-harmony/ng-harmony-evented@0.1.25",
     "ng-harmony/ng-harmony-module": "github:ng-harmony/ng-harmony-module@0.1.33",
     "text": "github:systemjs/plugin-text@0.0.5",
     "todomvc-app-css": "npm:todomvc-app-css@1.0.1",
@@ -62,7 +62,7 @@ System.config({
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
     },
-    "github:ng-harmony/ng-harmony-evented@0.1.14": {
+    "github:ng-harmony/ng-harmony-evented@0.1.25": {
       "fat/bean": "github:fat/bean@1.0.14",
       "ng-harmony/ng-harmony": "github:ng-harmony/ng-harmony@0.4.3",
       "zest": "npm:zest@0.1.3"
