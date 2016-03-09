@@ -33,7 +33,56 @@ export class Harmony {
         for (let [i, injectee] of this.constructor.$inject.entries()) {
             this[injectee] = args[i];
         }
+		this._constructedTimestamp = (new Date()).getTime();
     }
+```
+Little Helper Function for nice debugging and code assumptions
+```javascript
+	_validate (fn) {
+		var valid = new Promise((resolve, reject) {
+			try {
+				resolve(fn());
+			} catch (e) {
+				console.log(e);
+				reject(e);
+			}
+		}
+		return valid;
+	}
+	_isEmpty (tested) {
+		return (typeof tested === "undefined" || tested === null);
+	}
+	_isFunction (foo) {
+		return (typeof foo === "function");
+	}
+	_isPromise (foo) {
+		return !this._isEmpty(foo) && this._isFunction(foo.then);
+	}
+	_isFalsy (foo) {
+		return (this._isEmpty(foo) || foo instanceof Error);
+	}
+	_closurize (fn, ctx, ...args) {
+		return new Promise((resolve, reject) => {
+			this._validate(fn.bind(ctx, ...args))
+				.then((...args) => {
+					if (this._isPromise(args[0])) {
+						retVal
+							.then(resolve.bind(ctx))
+							.catch(reject.bind(ctx));
+					} else {
+						if (args.length > 1 || args[0] && !(args[0] instanceof Error)) {
+							resolve.call(ctx, ...args);
+						} else {
+							reject.call(ctx, ...args || null);
+						}
+					}
+				});
+			}
+		});
+	}
+	get _name () {
+		return `${this.name}::${this._constructedTimestamp}`;
+	}
 ```
 An iterator factory allowing for easy _for .. of_ iteration es6-style
 ```javascript
