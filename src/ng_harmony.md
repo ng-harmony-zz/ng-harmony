@@ -34,6 +34,11 @@ export class Harmony {
 			this[injectee] = args[i];
 		}
 		this._constructedTimestamp = (new Date()).getTime();
+		if (Array.isArray(this._mixin)) {
+			this._mixin.forEach((el, i, arr) => {
+				Reflect.construct(el, args);
+			});
+		}
 	}
 ```
 
@@ -55,7 +60,7 @@ Listener Proxy to be used across Services and StatefulControllers
 			this._LISTENERS.push(l.name.id, {
 				ctx: l.ctx,
 				name: l.name.fn,
-				createdAt: l.name.ts
+				createdAt: l.name.ts,
 				el: l.el || null
 			})
 		}
@@ -80,15 +85,14 @@ Little Helper Function for nice debugging and code assumptions
 		return this.__random;
 	}
 	_validate (fn) {
-		var valid = new Promise((resolve, reject) {
+		return new Promise((resolve, reject) => {
 			try {
 				resolve(fn());
 			} catch (e) {
 				console.log(e);
 				reject(e);
 			}
-		}
-		return valid;
+		});
 	}
 	_isEmpty (tested) {
 		return (typeof tested === "undefined" || tested === null);
@@ -118,7 +122,6 @@ Little Helper Function for nice debugging and code assumptions
 						}
 					}
 				});
-			}
 		});
 	}
 	get _name () {
@@ -176,8 +179,11 @@ Getter and Setter for the static $inject variable
 			if (truthy) {
 				if(injecteeStr.charAt(0) !== "-") {
 					_injectees.push(injecteeStr);
-				} else if (!!~(let j = this.$inject.indexOf(injecteeStr.slice(1)))) {
-					this._$inject.splice(j, 1);
+				} else {
+					let j = this.$inject.indexOf(injecteeStr.slice(1));
+					if (!!~j) {
+						this._$inject.splice(j, 1);
+					}
 				}
 			}
 		}
@@ -206,6 +212,10 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
 					enumerable: true
 				});
 			}
+			if (!Array.isArray(this._mixin)) {
+				this._mixin = [];
+			}
+			this._mixin.push(mixin.constructor);
 		}
 	}
 ```
@@ -261,3 +271,5 @@ Service.$inject = "$http";
 *0.3.2*: About to pick up development again, new logo
 
 *<0.4*: Debuggin for [demo todo-mvc page on github.io](http://ng-harmony.github.io/ng-harmony)
+
+*0.4.4*: Enhancing mixing in with constructor-mixin-support ... mixin-constructors get called in Harmony-super-constructor
