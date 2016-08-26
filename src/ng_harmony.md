@@ -34,11 +34,6 @@ export class Harmony {
 			this[injectee] = args[i];
 		}
 		this._constructedTimestamp = (new Date()).getTime();
-		if (Array.isArray(this._mixin)) {
-			this._mixin.forEach((el, i, arr) => {
-				Reflect.construct(el, args);
-			});
-		}
 	}
 ```
 
@@ -212,10 +207,6 @@ Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> imm
 					enumerable: true
 				});
 			}
-			if (!Array.isArray(this._mixin)) {
-				this._mixin = [];
-			}
-			this._mixin.push(mixin.constructor);
 		}
 	}
 ```
@@ -273,3 +264,5 @@ Service.$inject = "$http";
 *<0.4*: Debuggin for [demo todo-mvc page on github.io](http://ng-harmony.github.io/ng-harmony)
 
 *0.4.4*: Enhancing mixing in with constructor-mixin-support ... mixin-constructors get called in Harmony-super-constructor
+
+*0.4.5*: Practical difficulties with mixing constructors, getting rid of it again

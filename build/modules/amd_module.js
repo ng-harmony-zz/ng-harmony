@@ -4,11 +4,6 @@ export class Harmony {
 			this[injectee] = args[i];
 		}
 		this._constructedTimestamp = new Date().getTime();
-		if (Array.isArray(this._mixin)) {
-			this._mixin.forEach((el, i, arr) => {
-				Reflect.construct(el, args);
-			});
-		}
 	}
 
 	get LISTENERS() {
@@ -157,10 +152,6 @@ export class Harmony {
 					enumerable: true
 				});
 			}
-			if (!Array.isArray(this._mixin)) {
-				this._mixin = [];
-			}
-			this._mixin.push(mixin.constructor);
 		}
 	}
 	toString() {
