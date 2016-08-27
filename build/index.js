@@ -1,3 +1,5 @@
+import { NotImplementedError } from "ng-harmony-log";
+
 export class Harmony {
 	constructor (...args) {
 		for (let [i, injectee] of this.constructor.$inject.entries()) {
@@ -146,17 +148,26 @@ export class Harmony {
 	static mixin (...mixins) {
 		for (let [i, mixin] of mixins.entries()) {
 			for (let [k, v] of Harmony.iterate(mixin)) {
-				let p = this.prototype;
-				while (p[k] !== undefined && p[k] !== null) {
-					p = p.prototype;
-				}
-				Object.defineProperty(p, k, {
+				(this.prototype[k] === null || typeof this.prototype[k] === "undefined") &&
+				Object.defineProperty(this.prototype, k, {
 					value: v,
 					enumerable: true
 				});
 			}
 		}
 	}
+	static implement (...interfaces) {
+		for (let [i, Interface] of interfaces.entries()) {
+			for (let [k, v] of Harmony.iterate(Interface)) {
+				(this.prototype[k] === null || typeof this.prototype[k] === "undefined") &&
+				Object.defineProperty(this.prototype, k, {
+					value: () => { throw new NotImplementedError(k); },
+					enumerable: true
+				});
+			}
+		}
+	}
+
 	toString () {
 		return this.name || super.toString().match(/function\s*(.*?)\(/)[1];
 	}

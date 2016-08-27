@@ -23,6 +23,10 @@ This serves as literate-programming compiler-directive
 
 ## Compilation
 
+```javascript
+import { NotImplementedError } from "ng-harmony-log";
+```
+
 _Harmony_ is the ng-base-class for all other endeavours.
 * It provides all _injected dependencies_ as *member-vars*
 * It polyfills mixin support
@@ -193,22 +197,37 @@ Setter for the ng-registration of a service or controller
 		}
 	}
 ```
-Mixin foo to populate the prototype-chain with mixed in foos, first-come ->> immediate prototype, last ->> deeply nested
+Mixin foo to populate the prototype-chain with mixed in foos
+Should any methods exist already they are preserved === NOT overwritten
+First come, first serve ...
 ```javascript
 	static mixin (...mixins) {
 		for (let [i, mixin] of mixins.entries()) {
 			for (let [k, v] of Harmony.iterate(mixin)) {
-				let p = this.prototype;
-				while (p[k] !== undefined && p[k] !== null) {
-					p = p.prototype;
-				}
-				Object.defineProperty(p, k, {
+				(this.prototype[k] === null || typeof this.prototype[k] === "undefined") &&
+				Object.defineProperty(this.prototype, k, {
 					value: v,
 					enumerable: true
 				});
 			}
 		}
 	}
+```
+Implement foo to allow for Interface-like behaviour.
+Used by the `Implements-Mixin` of `ng-harmony-annotate/decorator`
+```javascript
+	static implement (...interfaces) {
+		for (let [i, Interface] of interfaces.entries()) {
+			for (let [k, v] of Harmony.iterate(Interface)) {
+				(this.prototype[k] === null || typeof this.prototype[k] === "undefined") &&
+				Object.defineProperty(this.prototype, k, {
+					value: () => { throw new NotImplementedError(k); },
+					enumerable: true
+				});
+			}
+		}
+	}
+
 ```
 A nice toString foo that should in theory pretty nicely return the Classe's name as declared
 ```javascript
@@ -257,12 +276,14 @@ Service.$inject = "$http";
 
 ## CHANGELOG
 
-*0.2.1*: Add conditional initialize call to default base-constructor for better mixin-support
+*0.2.1* Add conditional initialize call to default base-constructor for better mixin-support
 
-*0.3.2*: About to pick up development again, new logo
+*0.3.2* About to pick up development again, new logo
 
-*<0.4*: Debuggin for [demo todo-mvc page on github.io](http://ng-harmony.github.io/ng-harmony)
+*<0.4* Debuggin for [demo todo-mvc page on github.io](http://ng-harmony.github.io/ng-harmony)
 
-*0.4.4*: Enhancing mixing in with constructor-mixin-support ... mixin-constructors get called in Harmony-super-constructor
+*0.4.4* Enhancing mixing in with constructor-mixin-support ... mixin-constructors get called in Harmony-super-constructor
 
-*0.4.5*: Practical difficulties with mixing constructors, getting rid of it again
+*0.4.5* Practical difficulties with mixing constructors, getting rid of it again
+
+*0.4.6* Correcting Mixin plus adding Implement (Interface support), tweaking .babelrc 

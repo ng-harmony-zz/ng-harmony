@@ -1,4 +1,6 @@
-export class Harmony {
+import { NotImplementedError } from "ng-harmony-log";
+
+export let Harmony = class Harmony {
 	constructor(...args) {
 		for (let [i, injectee] of this.constructor.$inject.entries()) {
 			this[injectee] = args[i];
@@ -143,22 +145,31 @@ export class Harmony {
 	static mixin(...mixins) {
 		for (let [i, mixin] of mixins.entries()) {
 			for (let [k, v] of Harmony.iterate(mixin)) {
-				let p = this.prototype;
-				while (p[k] !== undefined && p[k] !== null) {
-					p = p.prototype;
-				}
-				Object.defineProperty(p, k, {
+				(this.prototype[k] === null || typeof this.prototype[k] === "undefined") && Object.defineProperty(this.prototype, k, {
 					value: v,
 					enumerable: true
 				});
 			}
 		}
 	}
+	static implement(...interfaces) {
+		for (let [i, Interface] of interfaces.entries()) {
+			for (let [k, v] of Harmony.iterate(Interface)) {
+				(this.prototype[k] === null || typeof this.prototype[k] === "undefined") && Object.defineProperty(this.prototype, k, {
+					value: () => {
+						throw new NotImplementedError(k);
+					},
+					enumerable: true
+				});
+			}
+		}
+	}
+
 	toString() {
 		return this.name || super.toString().match(/function\s*(.*?)\(/)[1];
 	}
-}
-export class Controller extends Harmony {
+};
+export let Controller = class Controller extends Harmony {
 	constructor(...args) {
 		super(...args);
 		for (let [key, fn] of this.iterate(this.constructor.prototype)) {
@@ -181,15 +192,15 @@ export class Controller extends Harmony {
 			"noop";
 		}
 	}
-}
+};
 Controller.$inject = "$scope";
-export class Service extends Harmony {
+export let Service = class Service extends Harmony {
 	static set $register(descriptor) {
 		for (let [module, klass] of Harmony.iterate(descriptor)) {
 			angular.module(module)[klass.type || "service"](klass.name, this);
 		}
 	}
-}
+};
 Service.$inject = "$http";
 
 //# sourceMappingURL=system_module.js.map

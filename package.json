@@ -1,44 +1,58 @@
 {
-    "name": "ng-harmony",
-    "version": "0.4.5",
-    "description": "Base Classes for all ng-harmony-modules. Ng-Harmony is a collection of modules that allow for unique Angular-Codestyle, eg. Classes in Angular 1",
-    "main": "build/index.js",
-    "dependencies": {},
+  "name": "ng-harmony",
+  "version": "0.4.6",
+  "description": "Base Classes for all ng-harmony-modules. Ng-Harmony is a collection of modules that allow for unique Angular-Codestyle, eg. Classes in Angular 1",
+  "main": "build/index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.5.1",
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-flow-strip-types": "^6.14.0",
+    "babel-preset-es2017": "^6.14.0",
+    "babel-preset-stage-3": "^6.5.0",
+    "literate-programming": "^0.8.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "literate-programming src/ng_harmony.md && npm run modules",
+    "transpile_amd": "babel --modules amd -e 1 -s -o ./build/modules/amd_module.js ./build/index.js",
+    "transpile_common": "babel --modules common -e 1 -s -o ./build/modules/common_module.js ./build/index.js",
+    "transpile_system": "babel --modules system -e 1 -s -o ./build/modules/system_module.js ./build/index.js",
+    "transpile_umd": "babel --modules umd -e 1 -s -o ./build/modules/umd_module.js ./build/index.js",
+    "modules": "npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ng-harmony/ng-harmony.git"
+  },
+  "keywords": [
+    "angular",
+    "ng",
+    "harmony",
+    "es6",
+    "class",
+    "clazz",
+    "klass",
+    "OO",
+    "object-oriented",
+    "library",
+    "collection"
+  ],
+  "author": "DI (FH) Johannes Neugschwentner <johannes.neugschwentner@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ng-harmony/ng-harmony/issues"
+  },
+  "homepage": "https://github.com/ng-harmony/ng-harmony",
+  "jspm": {
+    "dependencies": {
+      "ng-harmony/ng-harmony-log": "github:ng-harmony/ng-harmony-log@^0.1.4"
+    },
     "devDependencies": {
-        "babel-cli": "^6.5.1",
-        "babel-preset-stage-3": "^6.5.0",
-        "literate-programming": "^0.8.4"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "literate-programming src/ng_harmony.md && npm run modules",
-        "transpile_amd": "babel --modules amd -e 1 -s -o ./build/modules/amd_module.js ./build/index.js",
-        "transpile_common": "babel --modules common -e 1 -s -o ./build/modules/common_module.js ./build/index.js",
-        "transpile_system": "babel --modules system -e 1 -s -o ./build/modules/system_module.js ./build/index.js",
-        "transpile_umd": "babel --modules umd -e 1 -s -o ./build/modules/umd_module.js ./build/index.js",
-        "modules": "npm run transpile_amd && npm run transpile_common && npm run transpile_system && npm run transpile_umd"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ng-harmony/ng-harmony.git"
-    },
-    "keywords": [
-        "angular",
-        "ng",
-        "harmony",
-        "es6",
-        "class",
-        "clazz",
-        "klass",
-        "OO",
-        "object-oriented",
-        "library",
-        "collection"
-    ],
-    "author": "DI (FH) Johannes Neugschwentner <johannes.neugschwentner@gmail.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/ng-harmony/ng-harmony/issues"
-    },
-    "homepage": "https://github.com/ng-harmony/ng-harmony"
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
 }
